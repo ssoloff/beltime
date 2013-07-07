@@ -1,9 +1,9 @@
 package com.belcan.beltime;
 
-import org.eclipse.jdt.annotation.Nullable;
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import org.eclipse.jdt.annotation.Nullable;
 
 public class MainActivity extends Activity {
 
