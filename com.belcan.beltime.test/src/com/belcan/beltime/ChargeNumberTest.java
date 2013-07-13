@@ -1,5 +1,5 @@
 /*
- * JobIdTest.java
+ * ChargeNumberTest.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -17,9 +17,9 @@ package com.belcan.beltime;
 import android.test.AndroidTestCase;
 
 /**
- * A fixture for testing the {@link JobId} class.
+ * A fixture for testing the {@link ChargeNumber} class.
  */
-public final class JobIdTest
+public final class ChargeNumberTest
     extends AndroidTestCase
 {
     // ======================================================================
@@ -27,9 +27,9 @@ public final class JobIdTest
     // ======================================================================
 
     /**
-     * Initializes a new instance of the {@code JobIdTest} class.
+     * Initializes a new instance of the {@code ChargeNumberTest} class.
      */
-    public JobIdTest()
+    public ChargeNumberTest()
     {
     }
 
@@ -39,14 +39,14 @@ public final class JobIdTest
     // ======================================================================
 
     /**
-     * Ensures the {@link JobId#fromString} method correctly creates a job
-     * identifier.
+     * Ensures the {@link ChargeNumber#fromString} method correctly creates a
+     * charge number.
      */
-    public void testFromString_CreatesExpectedJobId()
+    public void testFromString_CreatesExpectedChargeNumber()
     {
         final String expectedValueAsString = "1234567.1234"; //$NON-NLS-1$
 
-        final JobId actualValue = JobId.fromString( expectedValueAsString );
+        final ChargeNumber actualValue = ChargeNumber.fromString( expectedValueAsString );
 
         assertEquals( expectedValueAsString, actualValue.toString() );
     }
