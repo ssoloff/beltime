@@ -96,7 +96,7 @@ public abstract class AbstractEquatableTestCase<T>
      * @see android.test.AndroidTestCase#setUp()
      */
     @Override
-    public void setUp()
+    protected void setUp()
         throws Exception
     {
         super.setUp();
