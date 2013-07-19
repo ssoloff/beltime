@@ -37,6 +37,9 @@ public final class MainActivity
     /** The stop job button. */
     private Button stopJobButton;
 
+    /** The time card. */
+    private final TimeCard timeCard;
+
 
     // ======================================================================
     // Constructors
@@ -49,12 +52,24 @@ public final class MainActivity
     {
         startJobButton = null;
         stopJobButton = null;
+        timeCard = new TimeCard();
     }
 
 
     // ======================================================================
     // Methods
     // ======================================================================
+
+    /**
+     * Gets the time card.
+     * 
+     * @return The time card; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    TimeCard getTimeCard()
+    {
+        return timeCard;
+    }
 
     /*
      * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -98,6 +113,7 @@ public final class MainActivity
     public void startJob(
         final View view )
     {
+        timeCard.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
         stopJobButton.setEnabled( true );
     }
 
@@ -113,6 +129,7 @@ public final class MainActivity
     public void stopJob(
         final View view )
     {
+        timeCard.stopActiveJob();
         stopJobButton.setEnabled( false );
     }
 }
