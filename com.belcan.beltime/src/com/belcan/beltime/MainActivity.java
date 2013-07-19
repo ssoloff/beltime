@@ -17,6 +17,8 @@ package com.belcan.beltime;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -26,6 +28,17 @@ public final class MainActivity
     extends Activity
 {
     // ======================================================================
+    // Fields
+    // ======================================================================
+
+    /** The start job button. */
+    private Button startJobButton;
+
+    /** The stop job button. */
+    private Button stopJobButton;
+
+
+    // ======================================================================
     // Constructors
     // ======================================================================
 
@@ -34,6 +47,8 @@ public final class MainActivity
      */
     public MainActivity()
     {
+        startJobButton = null;
+        stopJobButton = null;
     }
 
 
@@ -52,6 +67,11 @@ public final class MainActivity
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_main );
+
+        startJobButton = (Button)findViewById( R.id.startJobButton );
+        startJobButton.setEnabled( true );
+        stopJobButton = (Button)findViewById( R.id.stopJobButton );
+        stopJobButton.setEnabled( false );
     }
 
     /*
@@ -64,5 +84,35 @@ public final class MainActivity
     {
         getMenuInflater().inflate( R.menu.main, menu );
         return true;
+    }
+
+    /**
+     * Invoked when the start job button is clicked.
+     * 
+     * @param view
+     *        The start job button; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code view} is {@code null}.
+     */
+    public void startJob(
+        final View view )
+    {
+        stopJobButton.setEnabled( true );
+    }
+
+    /**
+     * Invoked when the stop job button is clicked.
+     * 
+     * @param view
+     *        The stop job button; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code view} is {@code null}.
+     */
+    public void stopJob(
+        final View view )
+    {
+        stopJobButton.setEnabled( false );
     }
 }

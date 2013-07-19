@@ -13,4 +13,21 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
 
+    <Button
+        android:id="@+id/startJobButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/stopJobButton"
+        android:onClick="startJob"
+        android:text="@string/startJobButton_text" />
+
+    <Button
+        android:id="@+id/stopJobButton"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="stopJob"
+        android:text="@string/stopJobButton_text" />
+
 </RelativeLayout>

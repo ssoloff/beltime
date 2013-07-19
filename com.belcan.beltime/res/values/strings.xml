@@ -4,5 +4,7 @@
     <string name="app_name">Beltime</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="startJobButton_text">Start Job</string>
+    <string name="stopJobButton_text">Stop Job</string>
 
 </resources>
