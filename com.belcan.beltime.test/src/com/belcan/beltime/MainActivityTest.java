@@ -16,6 +16,7 @@ package com.belcan.beltime;
 
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.KeyEvent;
 import android.widget.Button;
 
 /**
@@ -27,6 +28,12 @@ public final class MainActivityTest
     // ======================================================================
     // Fields
     // ======================================================================
+
+    /** The first charge number for use in the fixture. */
+    private static final ChargeNumber CHARGE_NUMBER_1 = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
+
+    /** The second charge number for use in the fixture. */
+    private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
     /** The instrumentation for use in the fixture. */
     private Instrumentation instrumentation_;
@@ -61,6 +68,111 @@ public final class MainActivityTest
     // Methods
     // ======================================================================
 
+    /**
+     * Clicks the start job button.
+     */
+    private void clickStartJob()
+    {
+        mainActivity_.runOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                startJobButton_.performClick();
+            }
+        } );
+
+        instrumentation_.waitForIdleSync();
+    }
+
+    /**
+     * Clicks the start job button and cancels input of the charge number.
+     */
+    private void clickStartJobAndCancelChargeNumberInput()
+    {
+        clickStartJob();
+        // TODO: clicking Cancel button; replace with Robotium
+        sendKeys( KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ENTER );
+    }
+
+    /**
+     * Clicks the start job button and inputs a default charge number.
+     */
+    @SuppressWarnings( "null" )
+    private void clickStartJobAndInputChargeNumber()
+    {
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
+    }
+
+    /**
+     * Clicks the start job button and inputs the specified charge number.
+     * 
+     * @param chargeNumber
+     *        The charge number; must not be {@code null}.
+     */
+    private void clickStartJobAndInputChargeNumber(
+        final ChargeNumber chargeNumber )
+    {
+        clickStartJob();
+        sendKeys( getChargeNumberKeys( chargeNumber ) );
+        // TODO: clicking OK button; replace with Robotium
+        sendKeys( KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ENTER );
+    }
+
+    /**
+     * Clicks the stop job button.
+     */
+    private void clickStopJob()
+    {
+        mainActivity_.runOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                stopJobButton_.performClick();
+            }
+        } );
+
+        instrumentation_.waitForIdleSync();
+    }
+
+    /**
+     * Gets the sequence of key presses required to enter the specified charge
+     * number.
+     * 
+     * @param chargeNumber
+     *        The charge number; must not be {@code null}.
+     * 
+     * @return The sequence of key presses required to enter the specified
+     *         charge number; never {@code null}.
+     */
+    private int[] getChargeNumberKeys(
+        final ChargeNumber chargeNumber )
+    {
+        final String chargeNumberAsString = chargeNumber.toString();
+        final int[] keys = new int[ chargeNumberAsString.length() ];
+        for( int index = 0; index < keys.length; ++index )
+        {
+            final char ch = chargeNumberAsString.charAt( index );
+            if( (ch >= '0') && (ch <= '9') )
+            {
+                keys[ index ] = KeyEvent.KEYCODE_0 + (ch - '0');
+            }
+            else if( ch == '.' )
+            {
+                keys[ index ] = KeyEvent.KEYCODE_PERIOD;
+            }
+            else
+            {
+                throw new AssertionError( "unsupported key code" ); //$NON-NLS-1$
+            }
+        }
+
+        return keys;
+    }
+
     /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
@@ -85,18 +197,21 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_DoesNotDisableStartJobButton()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
 
         assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures clicks the start job button does not start a new job if the
+     * charge number input is cancelled.
+     */
+    public void testClickStartJobButton_DoesNotStartNewJobIfChargeNumberInputCancelled()
+    {
+        clickStartJobAndCancelChargeNumberInput();
+
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 0 jobs in time card", 0, timeCard_.getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -104,16 +219,7 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_EnablesStopJobButton()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
 
         assertTrue( "stop job button is disabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
     }
@@ -122,22 +228,15 @@ public final class MainActivityTest
      * Ensures clicking the start job button starts a new job when the time card
      * is active.
      */
+    @SuppressWarnings( "null" )
     public void testClickStartJobButton_StartsNewJobWhenTimeCardActive()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-                startJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
 
         assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
         assertEquals( "expected 2 jobs in time card", 2, timeCard_.getJobs().size() ); //$NON-NLS-1$
+        assertEquals( "unexpected charge number", CHARGE_NUMBER_2, timeCard_.getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
     }
 
     /**
@@ -146,19 +245,11 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_StartsNewJobWhenTimeCardInactive()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
 
         assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
         assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$
+        assertEquals( "unexpected charge number", CHARGE_NUMBER_1, timeCard_.getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
     }
 
     /**
@@ -167,17 +258,8 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_DoesNotDisableStartJobButton()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-                stopJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
+        clickStopJob();
 
         assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
     }
@@ -187,17 +269,8 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_DisablesStopJobButton()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-                stopJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
+        clickStopJob();
 
         assertFalse( "stop job button is enabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
     }
@@ -207,17 +280,8 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_StopsActiveJob()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-                stopJobButton_.performClick();
-            }
-        } );
-        instrumentation_.waitForIdleSync();
+        clickStartJobAndInputChargeNumber();
+        clickStopJob();
 
         assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
         assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$

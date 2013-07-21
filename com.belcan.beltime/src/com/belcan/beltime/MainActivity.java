@@ -15,10 +15,13 @@
 package com.belcan.beltime;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -79,7 +82,37 @@ public final class MainActivity
     public void onClickStartJob(
         final View view )
     {
-        timeCard_.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
+        final EditText chargeNumberEditText = new EditText( this );
+        final AlertDialog alertDialog = new AlertDialog.Builder( this ) //
+            .setNegativeButton( R.string.chargeNumberDialog_negativeButton_text, new DialogInterface.OnClickListener()
+            {
+                @Override
+                public void onClick(
+                    @Nullable
+                    final DialogInterface dialog,
+                    final int which )
+                {
+                    // do nothing
+                }
+            } ) //
+            .setPositiveButton( R.string.chargeNumberDialog_positiveButton_text, new DialogInterface.OnClickListener()
+            {
+                @Override
+                @SuppressWarnings( "synthetic-access" )
+                public void onClick(
+                    @Nullable
+                    final DialogInterface dialog,
+                    final int which )
+                {
+                    @SuppressWarnings( "null" )
+                    final ChargeNumber chargeNumber = ChargeNumber.fromString( chargeNumberEditText.getText().toString() );
+                    timeCard_.startJob( chargeNumber );
+                }
+            } ) //
+            .setTitle( R.string.chargeNumberDialog_title ) //
+            .setView( chargeNumberEditText ) //
+            .create();
+        alertDialog.show();
     }
 
     /**
