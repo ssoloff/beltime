@@ -26,7 +26,6 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class MainActivity
     extends Activity
-    implements ITimeCardListener
 {
     // ======================================================================
     // Fields
@@ -50,8 +49,6 @@ public final class MainActivity
     {
         stopJobButton_ = null;
         timeCard_ = new TimeCard();
-
-        timeCard_.setTimeCardListener( this );
     }
 
 
@@ -111,8 +108,9 @@ public final class MainActivity
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_main );
-
         stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
+
+        timeCard_.setTimeCardListener( new TimeCardListener() );
 
         update();
     }
@@ -130,25 +128,14 @@ public final class MainActivity
     }
 
     /*
-     * @see com.belcan.beltime.ITimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+     * @see android.app.Activity#onDestroy()
      */
     @Override
-    public void onJobStarted(
-        final TimeCard timeCard,
-        final Job job )
+    protected void onDestroy()
     {
-        update();
-    }
+        timeCard_.setTimeCardListener( null );
 
-    /*
-     * @see com.belcan.beltime.ITimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
-     */
-    @Override
-    public void onJobStopped(
-        final TimeCard timeCard,
-        final Job job )
-    {
-        update();
+        super.onDestroy();
     }
 
     /**
@@ -157,5 +144,56 @@ public final class MainActivity
     private void update()
     {
         stopJobButton_.setEnabled( timeCard_.isActive() );
+    }
+
+
+    // ======================================================================
+    // Nested Types
+    // ======================================================================
+
+    /**
+     * The time card listener for the main activity.
+     */
+    @SuppressWarnings( "synthetic-access" )
+    private final class TimeCardListener
+        implements ITimeCardListener
+    {
+        // ==================================================================
+        // Constructors
+        // ==================================================================
+
+        /**
+         * Initializes a new instance of the {@code TimeCardListener} class.
+         */
+        TimeCardListener()
+        {
+        }
+
+
+        // ==================================================================
+        // Methods
+        // ==================================================================
+
+        /*
+         * @see com.belcan.beltime.ITimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+         */
+        @Override
+        public void onJobStarted(
+            final TimeCard timeCard,
+            final Job job )
+        {
+            update();
+        }
+
+        /*
+         * @see com.belcan.beltime.ITimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+         */
+        @Override
+        public void onJobStopped(
+            final TimeCard timeCard,
+            final Job job )
+        {
+            update();
+        }
     }
 }
