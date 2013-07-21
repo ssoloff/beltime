@@ -28,7 +28,7 @@ public final class JobTest
     // ======================================================================
 
     /** The job under test in the fixture. */
-    private Job job;
+    private Job job_;
 
 
     // ======================================================================
@@ -56,7 +56,7 @@ public final class JobTest
     {
         super.setUp();
 
-        job = Job.start( ChargeNumber.fromString( "1234567.1234" ) ); //$NON-NLS-1$
+        job_ = Job.start( ChargeNumber.fromString( "1234567.1234" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -65,10 +65,10 @@ public final class JobTest
      */
     public void testGetDurationInMilliseconds_ReturnsExpectedDuration()
     {
-        job.stop();
-        final long expectedDurationInMilliseconds = job.getStopTime().getTime() - job.getStartTime().getTime();
+        job_.stop();
+        final long expectedDurationInMilliseconds = job_.getStopTime().getTime() - job_.getStartTime().getTime();
 
-        assertEquals( expectedDurationInMilliseconds, job.getDurationInMilliseconds() );
+        assertEquals( expectedDurationInMilliseconds, job_.getDurationInMilliseconds() );
     }
 
     /**
@@ -79,7 +79,7 @@ public final class JobTest
     {
         try
         {
-            job.getDurationInMilliseconds();
+            job_.getDurationInMilliseconds();
             fail( "getDurationInMilliseconds() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -94,11 +94,11 @@ public final class JobTest
      */
     public void testGetStartTime_ReturnsCopy()
     {
-        final Date startTime = job.getStartTime();
+        final Date startTime = job_.getStartTime();
         final Date expectedStartTime = new Date( startTime.getTime() );
         startTime.setTime( 0L );
 
-        assertEquals( expectedStartTime, job.getStartTime() );
+        assertEquals( expectedStartTime, job_.getStartTime() );
     }
 
     /**
@@ -107,12 +107,12 @@ public final class JobTest
      */
     public void testGetStopTime_ReturnsCopy()
     {
-        job.stop();
-        final Date stopTime = job.getStopTime();
+        job_.stop();
+        final Date stopTime = job_.getStopTime();
         final Date expectedStopTime = new Date( stopTime.getTime() );
         stopTime.setTime( 0L );
 
-        assertEquals( expectedStopTime, job.getStopTime() );
+        assertEquals( expectedStopTime, job_.getStopTime() );
     }
 
     /**
@@ -123,7 +123,7 @@ public final class JobTest
     {
         try
         {
-            job.getStopTime();
+            job_.getStopTime();
             fail( "getStopTime() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -137,7 +137,7 @@ public final class JobTest
      */
     public void testStart_CreatesActiveJob()
     {
-        assertTrue( "job is not active", job.isActive() ); //$NON-NLS-1$
+        assertTrue( "job is not active", job_.isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -145,9 +145,9 @@ public final class JobTest
      */
     public void testStop_DeactivatesJob()
     {
-        job.stop();
+        job_.stop();
 
-        assertFalse( "job is active", job.isActive() ); //$NON-NLS-1$
+        assertFalse( "job is active", job_.isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -156,11 +156,11 @@ public final class JobTest
      */
     public void testStop_ThrowsExceptionIfJobInactive()
     {
-        job.stop();
+        job_.stop();
 
         try
         {
-            job.stop();
+            job_.stop();
             fail( "stop() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )

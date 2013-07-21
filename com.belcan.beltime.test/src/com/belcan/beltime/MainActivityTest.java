@@ -29,19 +29,19 @@ public final class MainActivityTest
     // ======================================================================
 
     /** The instrumentation for use in the fixture. */
-    private Instrumentation instrumentation;
+    private Instrumentation instrumentation_;
 
     /** The activity under test in the fixture. */
-    private MainActivity mainActivity;
+    private MainActivity mainActivity_;
 
     /** The start job button. */
-    private Button startJobButton;
+    private Button startJobButton_;
 
     /** The stop job button. */
-    private Button stopJobButton;
+    private Button stopJobButton_;
 
     /** The time card. */
-    private TimeCard timeCard;
+    private TimeCard timeCard_;
 
 
     // ======================================================================
@@ -72,11 +72,11 @@ public final class MainActivityTest
 
         setActivityInitialTouchMode( false );
 
-        instrumentation = getInstrumentation();
-        mainActivity = getActivity();
-        timeCard = mainActivity.getTimeCard();
-        startJobButton = (Button)mainActivity.findViewById( R.id.startJobButton );
-        stopJobButton = (Button)mainActivity.findViewById( R.id.stopJobButton );
+        instrumentation_ = getInstrumentation();
+        mainActivity_ = getActivity();
+        timeCard_ = mainActivity_.getTimeCard();
+        startJobButton_ = (Button)mainActivity_.findViewById( R.id.startJobButton );
+        stopJobButton_ = (Button)mainActivity_.findViewById( R.id.stopJobButton );
     }
 
     /**
@@ -85,18 +85,18 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_DoesNotDisableStartJobButton()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
+                startJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertTrue( "start job button is disabled", startJobButton.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -104,18 +104,18 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_EnablesStopJobButton()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
+                startJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertTrue( "stop job button is disabled", stopJobButton.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "stop job button is disabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -124,20 +124,20 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_StartsNewJobWhenTimeCardActive()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
-                startJobButton.performClick();
+                startJobButton_.performClick();
+                startJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertTrue( "time card is inactive", timeCard.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 2 jobs in time card", 2, timeCard.getJobs().size() ); //$NON-NLS-1$
+        assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 2 jobs in time card", 2, timeCard_.getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -146,19 +146,19 @@ public final class MainActivityTest
      */
     public void testClickStartJobButton_StartsNewJobWhenTimeCardInactive()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
+                startJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertTrue( "time card is inactive", timeCard.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, timeCard.getJobs().size() ); //$NON-NLS-1$
+        assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -167,19 +167,19 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_DoesNotDisableStartJobButton()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
-                stopJobButton.performClick();
+                startJobButton_.performClick();
+                stopJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertTrue( "start job button is disabled", startJobButton.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -187,19 +187,19 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_DisablesStopJobButton()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
-                stopJobButton.performClick();
+                startJobButton_.performClick();
+                stopJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertFalse( "stop job button is enabled", stopJobButton.isEnabled() ); //$NON-NLS-1$
+        assertFalse( "stop job button is enabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -207,20 +207,20 @@ public final class MainActivityTest
      */
     public void testClickStopJobButton_StopsActiveJob()
     {
-        mainActivity.runOnUiThread( new Runnable()
+        mainActivity_.runOnUiThread( new Runnable()
         {
             @Override
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                startJobButton.performClick();
-                stopJobButton.performClick();
+                startJobButton_.performClick();
+                stopJobButton_.performClick();
             }
         } );
-        instrumentation.waitForIdleSync();
+        instrumentation_.waitForIdleSync();
 
-        assertFalse( "time card is active", timeCard.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, timeCard.getJobs().size() ); //$NON-NLS-1$
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -228,9 +228,9 @@ public final class MainActivityTest
      */
     public void testPreConditions()
     {
-        assertFalse( "time card is active", timeCard.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 0 jobs in time card", 0, timeCard.getJobs().size() ); //$NON-NLS-1$
-        assertTrue( "start job button is disabled", startJobButton.isEnabled() ); //$NON-NLS-1$
-        assertFalse( "stop job button is enabled", stopJobButton.isEnabled() ); //$NON-NLS-1$
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 0 jobs in time card", 0, timeCard_.getJobs().size() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertFalse( "stop job button is enabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
     }
 }

@@ -33,10 +33,10 @@ public final class MainActivity
     // ======================================================================
 
     /** The stop job button. */
-    private Button stopJobButton;
+    private Button stopJobButton_;
 
     /** The time card. */
-    private final TimeCard timeCard;
+    private final TimeCard timeCard_;
 
 
     // ======================================================================
@@ -48,10 +48,10 @@ public final class MainActivity
      */
     public MainActivity()
     {
-        stopJobButton = null;
-        timeCard = new TimeCard();
+        stopJobButton_ = null;
+        timeCard_ = new TimeCard();
 
-        timeCard.setTimeCardListener( this );
+        timeCard_.setTimeCardListener( this );
     }
 
 
@@ -67,7 +67,7 @@ public final class MainActivity
     @SuppressWarnings( "null" )
     TimeCard getTimeCard()
     {
-        return timeCard;
+        return timeCard_;
     }
 
     /**
@@ -82,7 +82,7 @@ public final class MainActivity
     public void onClickStartJob(
         final View view )
     {
-        timeCard.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
+        timeCard_.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
     }
 
     /**
@@ -97,7 +97,7 @@ public final class MainActivity
     public void onClickStopJob(
         final View view )
     {
-        timeCard.stopActiveJob();
+        timeCard_.stopActiveJob();
     }
 
     /*
@@ -112,7 +112,7 @@ public final class MainActivity
 
         setContentView( R.layout.activity_main );
 
-        stopJobButton = (Button)findViewById( R.id.stopJobButton );
+        stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
 
         update();
     }
@@ -134,7 +134,6 @@ public final class MainActivity
      */
     @Override
     public void onJobStarted(
-        @SuppressWarnings( "hiding" )
         final TimeCard timeCard,
         final Job job )
     {
@@ -146,7 +145,6 @@ public final class MainActivity
      */
     @Override
     public void onJobStopped(
-        @SuppressWarnings( "hiding" )
         final TimeCard timeCard,
         final Job job )
     {
@@ -158,6 +156,6 @@ public final class MainActivity
      */
     private void update()
     {
-        stopJobButton.setEnabled( timeCard.isActive() );
+        stopJobButton_.setEnabled( timeCard_.isActive() );
     }
 }

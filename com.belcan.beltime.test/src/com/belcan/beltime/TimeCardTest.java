@@ -39,10 +39,10 @@ public final class TimeCardTest
     private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "2222222.2222" ); //$NON-NLS-1$
 
     /** The mocks control for use in the fixture. */
-    private IMocksControl mocksControl;
+    private IMocksControl mocksControl_;
 
     /** The time card under test in the fixture. */
-    private TimeCard timeCard;
+    private TimeCard timeCard_;
 
 
     // ======================================================================
@@ -70,8 +70,8 @@ public final class TimeCardTest
     {
         super.setUp();
 
-        mocksControl = EasyMock.createControl();
-        timeCard = new TimeCard();
+        mocksControl_ = EasyMock.createControl();
+        timeCard_ = new TimeCard();
     }
 
     /**
@@ -80,7 +80,7 @@ public final class TimeCardTest
      */
     public void testConstructor_InitialStateIsInactive()
     {
-        assertFalse( "time card is active", timeCard.isActive() ); //$NON-NLS-1$
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -91,7 +91,7 @@ public final class TimeCardTest
     {
         try
         {
-            timeCard.getActiveJob();
+            timeCard_.getActiveJob();
             fail( "getActiveJob() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -107,11 +107,11 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testGetJobs_ReturnsCopy()
     {
-        final List<Job> jobs = timeCard.getJobs();
+        final List<Job> jobs = timeCard_.getJobs();
         final List<Job> expectedJobs = new ArrayList<Job>( jobs );
         jobs.add( Job.start( CHARGE_NUMBER_1 ) );
 
-        assertEquals( expectedJobs, timeCard.getJobs() );
+        assertEquals( expectedJobs, timeCard_.getJobs() );
     }
 
     /**
@@ -120,9 +120,9 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_ActivatesTimeCard()
     {
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        assertTrue( "time card is not active", timeCard.isActive() ); //$NON-NLS-1$
+        assertTrue( "time card is not active", timeCard_.isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -132,11 +132,11 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_ActivatesNewJobIfActive()
     {
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        timeCard.startJob( CHARGE_NUMBER_2 );
+        timeCard_.startJob( CHARGE_NUMBER_2 );
 
-        assertEquals( CHARGE_NUMBER_2, timeCard.getActiveJob().getChargeNumber() );
+        assertEquals( CHARGE_NUMBER_2, timeCard_.getActiveJob().getChargeNumber() );
     }
 
     /**
@@ -146,9 +146,9 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_ActivatesNewJobIfInactive()
     {
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        assertEquals( CHARGE_NUMBER_1, timeCard.getActiveJob().getChargeNumber() );
+        assertEquals( CHARGE_NUMBER_1, timeCard_.getActiveJob().getChargeNumber() );
     }
 
     /**
@@ -158,11 +158,11 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_DeactivatesActiveJobIfActive()
     {
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        timeCard.startJob( CHARGE_NUMBER_2 );
+        timeCard_.startJob( CHARGE_NUMBER_2 );
 
-        assertFalse( "first job not deactivated", timeCard.getJobs().get( 0 ).isActive() ); //$NON-NLS-1$
+        assertFalse( "first job not deactivated", timeCard_.getJobs().get( 0 ).isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -172,16 +172,16 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_FiresOnJobStarted()
     {
-        final TimeCardListener timeCardListener = mocksControl.createMock( TimeCardListener.class );
+        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         timeCardListener.onJobStarted( EasyMock.capture( timeCardCapture ), EasyMock.notNull( Job.class ) );
-        mocksControl.replay();
+        mocksControl_.replay();
 
-        timeCard.setTimeCardListener( timeCardListener );
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        EasyMockJUnit3Utils.verify( mocksControl );
-        assertEquals( "expected fixture time card", timeCard, timeCardCapture.getValue() ); //$NON-NLS-1$
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
     }
 
     /**
@@ -191,20 +191,20 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStartJob_FiresOnJobStoppedIfJobActive()
     {
-        final TimeCardListener timeCardListener = mocksControl.createMock( TimeCardListener.class );
+        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         final Capture<Job> jobCapture = new Capture<Job>();
         timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
         timeCardListener.onJobStarted( EasyMock.notNull( TimeCard.class ), EasyMock.notNull( Job.class ) );
-        mocksControl.replay();
+        mocksControl_.replay();
 
-        timeCard.startJob( CHARGE_NUMBER_1 );
-        final Job job = timeCard.getActiveJob();
-        timeCard.setTimeCardListener( timeCardListener );
-        timeCard.startJob( CHARGE_NUMBER_2 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+        final Job job = timeCard_.getActiveJob();
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.startJob( CHARGE_NUMBER_2 );
 
-        EasyMockJUnit3Utils.verify( mocksControl );
-        assertEquals( "expected fixture time card", timeCard, timeCardCapture.getValue() ); //$NON-NLS-1$
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
         assertEquals( "expected previously active job", job, jobCapture.getValue() ); //$NON-NLS-1$
     }
 
@@ -215,11 +215,11 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStopActiveJob_DeactivatesTimeCardIfActive()
     {
-        timeCard.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_1 );
 
-        timeCard.stopActiveJob();
+        timeCard_.stopActiveJob();
 
-        assertFalse( "time card is active", timeCard.isActive() ); //$NON-NLS-1$
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
     }
 
     /**
@@ -229,19 +229,19 @@ public final class TimeCardTest
     @SuppressWarnings( "null" )
     public void testStopActiveJob_FiresOnJobStopped()
     {
-        final TimeCardListener timeCardListener = mocksControl.createMock( TimeCardListener.class );
+        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         final Capture<Job> jobCapture = new Capture<Job>();
         timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
-        mocksControl.replay();
+        mocksControl_.replay();
 
-        timeCard.startJob( CHARGE_NUMBER_1 );
-        final Job job = timeCard.getActiveJob();
-        timeCard.setTimeCardListener( timeCardListener );
-        timeCard.stopActiveJob();
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+        final Job job = timeCard_.getActiveJob();
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.stopActiveJob();
 
-        EasyMockJUnit3Utils.verify( mocksControl );
-        assertEquals( "expected fixture time card", timeCard, timeCardCapture.getValue() ); //$NON-NLS-1$
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
         assertEquals( "expected previously active job", job, jobCapture.getValue() ); //$NON-NLS-1$
     }
 
@@ -253,7 +253,7 @@ public final class TimeCardTest
     {
         try
         {
-            timeCard.stopActiveJob();
+            timeCard_.stopActiveJob();
             fail( "stopActiveJob() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )

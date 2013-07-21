@@ -30,7 +30,7 @@ public final class ChargeNumber
     // ======================================================================
 
     /** The charge number encoded as a string. */
-    private final String value;
+    private final String value_;
 
 
     // ======================================================================
@@ -46,7 +46,7 @@ public final class ChargeNumber
     private ChargeNumber(
         final String value )
     {
-        this.value = value;
+        value_ = value;
     }
 
 
@@ -73,7 +73,7 @@ public final class ChargeNumber
         }
 
         final ChargeNumber other = (ChargeNumber)o;
-        return value.equals( other.value );
+        return value_.equals( other.value_ );
     }
 
     /**
@@ -101,7 +101,7 @@ public final class ChargeNumber
     @Override
     public int hashCode()
     {
-        return value.hashCode();
+        return value_.hashCode();
     }
 
     /**
@@ -114,6 +114,6 @@ public final class ChargeNumber
     @SuppressWarnings( "null" )
     public String toString()
     {
-        return value;
+        return value_;
     }
 }

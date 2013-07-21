@@ -31,10 +31,10 @@ public final class TimeCard
      * The collection of jobs in chronological order. The active job, if any,
      * will be the the last entry.
      */
-    private final List<Job> jobs;
+    private final List<Job> jobs_;
 
     /** The time card listener or {@code null} if none. */
-    private TimeCardListener listener;
+    private TimeCardListener listener_;
 
 
     // ======================================================================
@@ -46,8 +46,8 @@ public final class TimeCard
      */
     public TimeCard()
     {
-        jobs = new ArrayList<Job>();
-        listener = null;
+        jobs_ = new ArrayList<Job>();
+        listener_ = null;
     }
 
 
@@ -82,9 +82,9 @@ public final class TimeCard
     @Nullable
     private Job getActiveJobOrNull()
     {
-        if( !jobs.isEmpty() )
+        if( !jobs_.isEmpty() )
         {
-            final Job job = jobs.get( jobs.size() - 1 );
+            final Job job = jobs_.get( jobs_.size() - 1 );
             if( job.isActive() )
             {
                 return job;
@@ -102,7 +102,7 @@ public final class TimeCard
      */
     public List<Job> getJobs()
     {
-        return new ArrayList<Job>( jobs );
+        return new ArrayList<Job>( jobs_ );
     }
 
     /**
@@ -126,7 +126,7 @@ public final class TimeCard
         @Nullable
         final TimeCardListener listener )
     {
-        this.listener = listener;
+        listener_ = listener;
     }
 
     /**
@@ -150,11 +150,11 @@ public final class TimeCard
         }
 
         final Job newJob = Job.start( chargeNumber );
-        jobs.add( newJob );
+        jobs_.add( newJob );
 
-        if( listener != null )
+        if( listener_ != null )
         {
-            listener.onJobStarted( this, newJob );
+            listener_.onJobStarted( this, newJob );
         }
     }
 
@@ -180,9 +180,9 @@ public final class TimeCard
     {
         job.stop();
 
-        if( listener != null )
+        if( listener_ != null )
         {
-            listener.onJobStopped( this, job );
+            listener_.onJobStopped( this, job );
         }
     }
 }

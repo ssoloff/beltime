@@ -26,13 +26,13 @@ public final class Job
     // ======================================================================
 
     /** The charge number to be billed. */
-    private final ChargeNumber chargeNumber;
+    private final ChargeNumber chargeNumber_;
 
     /** The time at which work on the job started. */
-    private final Date startTime;
+    private final Date startTime_;
 
     /** The time at which work on the job stopped. */
-    private Date stopTime;
+    private Date stopTime_;
 
 
     // ======================================================================
@@ -48,9 +48,9 @@ public final class Job
     private Job(
         final ChargeNumber chargeNumber )
     {
-        this.chargeNumber = chargeNumber;
-        this.startTime = new Date();
-        this.stopTime = null;
+        chargeNumber_ = chargeNumber;
+        startTime_ = new Date();
+        stopTime_ = null;
     }
 
 
@@ -66,7 +66,7 @@ public final class Job
     @SuppressWarnings( "null" )
     public ChargeNumber getChargeNumber()
     {
-        return chargeNumber;
+        return chargeNumber_;
     }
 
     /**
@@ -79,12 +79,12 @@ public final class Job
      */
     public long getDurationInMilliseconds()
     {
-        if( stopTime == null )
+        if( stopTime_ == null )
         {
             throw new IllegalStateException( "cannot get duration of an active job" ); //$NON-NLS-1$
         }
 
-        return stopTime.getTime() - startTime.getTime();
+        return stopTime_.getTime() - startTime_.getTime();
     }
 
     /**
@@ -94,7 +94,7 @@ public final class Job
      */
     public Date getStartTime()
     {
-        return new Date( startTime.getTime() );
+        return new Date( startTime_.getTime() );
     }
 
     /**
@@ -107,12 +107,12 @@ public final class Job
      */
     public Date getStopTime()
     {
-        if( stopTime == null )
+        if( stopTime_ == null )
         {
             throw new IllegalStateException( "cannot get stop time of an active job" ); //$NON-NLS-1$
         }
 
-        return new Date( stopTime.getTime() );
+        return new Date( stopTime_.getTime() );
     }
 
     /**
@@ -122,7 +122,7 @@ public final class Job
      */
     public boolean isActive()
     {
-        return stopTime == null;
+        return stopTime_ == null;
     }
 
     /**
@@ -147,11 +147,11 @@ public final class Job
      */
     public void stop()
     {
-        if( stopTime != null )
+        if( stopTime_ != null )
         {
             throw new IllegalStateException( "cannot stop an inactive job" ); //$NON-NLS-1$
         }
 
-        stopTime = new Date();
+        stopTime_ = new Date();
     }
 }
