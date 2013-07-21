@@ -33,6 +33,9 @@ public final class TimeCard
      */
     private final List<Job> jobs;
 
+    /** The time card listener or {@code null} if none. */
+    private TimeCardListener listener;
+
 
     // ======================================================================
     // Constructors
@@ -43,7 +46,8 @@ public final class TimeCard
      */
     public TimeCard()
     {
-        this.jobs = new ArrayList<Job>();
+        jobs = new ArrayList<Job>();
+        listener = null;
     }
 
 
@@ -112,6 +116,20 @@ public final class TimeCard
     }
 
     /**
+     * Sets the time card listener.
+     * 
+     * @param listener
+     *        The time card listener or {@code null} to clear the time card
+     *        listener.
+     */
+    public void setTimeCardListener(
+        @Nullable
+        final TimeCardListener listener )
+    {
+        this.listener = listener;
+    }
+
+    /**
      * Starts a new job.
      * 
      * <p>
@@ -125,13 +143,19 @@ public final class TimeCard
     public void startJob(
         final ChargeNumber chargeNumber )
     {
-        final Job activeJob = getActiveJobOrNull();
-        if( activeJob != null )
+        final Job oldJob = getActiveJobOrNull();
+        if( oldJob != null )
         {
-            activeJob.stop();
+            stopJob( oldJob );
         }
 
-        jobs.add( Job.start( chargeNumber ) );
+        final Job newJob = Job.start( chargeNumber );
+        jobs.add( newJob );
+
+        if( listener != null )
+        {
+            listener.onJobStarted( this, newJob );
+        }
     }
 
     /**
@@ -142,6 +166,23 @@ public final class TimeCard
      */
     public void stopActiveJob()
     {
-        getActiveJob().stop();
+        stopJob( getActiveJob() );
+    }
+
+    /**
+     * Stops the specified job.
+     * 
+     * @param job
+     *        The job; must not be {@code null}.
+     */
+    private void stopJob(
+        final Job job )
+    {
+        job.stop();
+
+        if( listener != null )
+        {
+            listener.onJobStopped( this, job );
+        }
     }
 }

@@ -26,13 +26,11 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class MainActivity
     extends Activity
+    implements TimeCardListener
 {
     // ======================================================================
     // Fields
     // ======================================================================
-
-    /** The start job button. */
-    private Button startJobButton;
 
     /** The stop job button. */
     private Button stopJobButton;
@@ -50,9 +48,10 @@ public final class MainActivity
      */
     public MainActivity()
     {
-        startJobButton = null;
         stopJobButton = null;
         timeCard = new TimeCard();
+
+        timeCard.setTimeCardListener( this );
     }
 
 
@@ -83,10 +82,9 @@ public final class MainActivity
 
         setContentView( R.layout.activity_main );
 
-        startJobButton = (Button)findViewById( R.id.startJobButton );
-        startJobButton.setEnabled( true );
         stopJobButton = (Button)findViewById( R.id.stopJobButton );
-        stopJobButton.setEnabled( false );
+
+        update();
     }
 
     /*
@@ -101,8 +99,32 @@ public final class MainActivity
         return true;
     }
 
+    /*
+     * @see com.belcan.beltime.TimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+     */
+    @Override
+    public void onJobStarted(
+        @SuppressWarnings( "hiding" )
+        final TimeCard timeCard,
+        final Job job )
+    {
+        update();
+    }
+
+    /*
+     * @see com.belcan.beltime.TimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+     */
+    @Override
+    public void onJobStopped(
+        @SuppressWarnings( "hiding" )
+        final TimeCard timeCard,
+        final Job job )
+    {
+        update();
+    }
+
     /**
-     * Invoked when the start job button is clicked.
+     * Called when the start job button has been clicked.
      * 
      * @param view
      *        The start job button; must not be {@code null}.
@@ -114,11 +136,10 @@ public final class MainActivity
         final View view )
     {
         timeCard.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
-        stopJobButton.setEnabled( true );
     }
 
     /**
-     * Invoked when the stop job button is clicked.
+     * Called when the stop job button has been clicked.
      * 
      * @param view
      *        The stop job button; must not be {@code null}.
@@ -130,6 +151,13 @@ public final class MainActivity
         final View view )
     {
         timeCard.stopActiveJob();
-        stopJobButton.setEnabled( false );
+    }
+
+    /**
+     * Updates the state of the activity based on the model.
+     */
+    private void update()
+    {
+        stopJobButton.setEnabled( timeCard.isActive() );
     }
 }
