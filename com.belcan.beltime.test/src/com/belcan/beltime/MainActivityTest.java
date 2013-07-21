@@ -83,7 +83,7 @@ public final class MainActivityTest
      * Ensures clicking the start job button does not disable the start job
      * button.
      */
-    public void testClickStartJobButtonDoesNotDisableStartJobButton()
+    public void testClickStartJobButton_DoesNotDisableStartJobButton()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -102,7 +102,7 @@ public final class MainActivityTest
     /**
      * Ensures clicking the start job button enables the stop job button.
      */
-    public void testClickStartJobButtonEnablesStopJobButton()
+    public void testClickStartJobButton_EnablesStopJobButton()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -122,7 +122,7 @@ public final class MainActivityTest
      * Ensures clicking the start job button starts a new job when the time card
      * is active.
      */
-    public void testClickStartJobButtonStartsNewJobWhenTimeCardActive()
+    public void testClickStartJobButton_StartsNewJobWhenTimeCardActive()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -144,7 +144,7 @@ public final class MainActivityTest
      * Ensures clicking the start job button starts a new job when the time card
      * is inactive.
      */
-    public void testClickStartJobButtonStartsNewJobWhenTimeCardInactive()
+    public void testClickStartJobButton_StartsNewJobWhenTimeCardInactive()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -165,7 +165,7 @@ public final class MainActivityTest
      * Ensures clicking the stop job button does not disable the start job
      * button.
      */
-    public void testClickStopJobButtonDoesNotDisableStartJobButton()
+    public void testClickStopJobButton_DoesNotDisableStartJobButton()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -185,7 +185,7 @@ public final class MainActivityTest
     /**
      * Ensures clicking the stop job button disables the stop job button.
      */
-    public void testClickStopJobButtonDisablesStopJobButton()
+    public void testClickStopJobButton_DisablesStopJobButton()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
@@ -205,7 +205,7 @@ public final class MainActivityTest
     /**
      * Ensures clicking the stop job button stops the active job.
      */
-    public void testClickStopJobButtonStopsActiveJob()
+    public void testClickStopJobButton_StopsActiveJob()
     {
         mainActivity.runOnUiThread( new Runnable()
         {
