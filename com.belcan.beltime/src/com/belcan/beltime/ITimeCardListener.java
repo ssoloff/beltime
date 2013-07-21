@@ -1,5 +1,5 @@
 /*
- * TimeCardListener.java
+ * ITimeCardListener.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -17,7 +17,7 @@ package com.belcan.beltime;
 /**
  * A listener of time card events.
  */
-public interface TimeCardListener
+public interface ITimeCardListener
 {
     // ======================================================================
     // Methods

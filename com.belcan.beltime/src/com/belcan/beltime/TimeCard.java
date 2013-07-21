@@ -34,7 +34,7 @@ public final class TimeCard
     private final List<Job> jobs_;
 
     /** The time card listener or {@code null} if none. */
-    private TimeCardListener listener_;
+    private ITimeCardListener listener_;
 
 
     // ======================================================================
@@ -124,7 +124,7 @@ public final class TimeCard
      */
     public void setTimeCardListener(
         @Nullable
-        final TimeCardListener listener )
+        final ITimeCardListener listener )
     {
         listener_ = listener;
     }

@@ -26,7 +26,7 @@ import org.eclipse.jdt.annotation.Nullable;
  */
 public final class MainActivity
     extends Activity
-    implements TimeCardListener
+    implements ITimeCardListener
 {
     // ======================================================================
     // Fields
@@ -130,7 +130,7 @@ public final class MainActivity
     }
 
     /*
-     * @see com.belcan.beltime.TimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+     * @see com.belcan.beltime.ITimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
      */
     @Override
     public void onJobStarted(
@@ -141,7 +141,7 @@ public final class MainActivity
     }
 
     /*
-     * @see com.belcan.beltime.TimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+     * @see com.belcan.beltime.ITimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
      */
     @Override
     public void onJobStopped(

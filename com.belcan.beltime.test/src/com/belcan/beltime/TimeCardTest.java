@@ -167,12 +167,12 @@ public final class TimeCardTest
 
     /**
      * Ensures the {@link TimeCard#startJob} method fires the
-     * {@link TimeCardListener#onJobStarted} event.
+     * {@link ITimeCardListener#onJobStarted} event.
      */
     @SuppressWarnings( "null" )
     public void testStartJob_FiresOnJobStarted()
     {
-        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         timeCardListener.onJobStarted( EasyMock.capture( timeCardCapture ), EasyMock.notNull( Job.class ) );
         mocksControl_.replay();
@@ -186,12 +186,12 @@ public final class TimeCardTest
 
     /**
      * Ensures the {@link TimeCard#startJob} method fires the
-     * {@link TimeCardListener#onJobStopped} event if there is an active job.
+     * {@link ITimeCardListener#onJobStopped} event if there is an active job.
      */
     @SuppressWarnings( "null" )
     public void testStartJob_FiresOnJobStoppedIfJobActive()
     {
-        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         final Capture<Job> jobCapture = new Capture<Job>();
         timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
@@ -224,12 +224,12 @@ public final class TimeCardTest
 
     /**
      * Ensures the {@link TimeCard#stopActiveJob} method fires the
-     * {@link TimeCardListener#onJobStopped} event.
+     * {@link ITimeCardListener#onJobStopped} event.
      */
     @SuppressWarnings( "null" )
     public void testStopActiveJob_FiresOnJobStopped()
     {
-        final TimeCardListener timeCardListener = mocksControl_.createMock( TimeCardListener.class );
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
         final Capture<Job> jobCapture = new Capture<Job>();
         timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
