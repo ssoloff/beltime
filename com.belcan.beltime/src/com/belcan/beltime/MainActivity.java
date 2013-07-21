@@ -70,6 +70,36 @@ public final class MainActivity
         return timeCard;
     }
 
+    /**
+     * Called when the start job button has been clicked.
+     * 
+     * @param view
+     *        The start job button; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code view} is {@code null}.
+     */
+    public void onClickStartJob(
+        final View view )
+    {
+        timeCard.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
+    }
+
+    /**
+     * Called when the stop job button has been clicked.
+     * 
+     * @param view
+     *        The stop job button; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code view} is {@code null}.
+     */
+    public void onClickStopJob(
+        final View view )
+    {
+        timeCard.stopActiveJob();
+    }
+
     /*
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
@@ -121,36 +151,6 @@ public final class MainActivity
         final Job job )
     {
         update();
-    }
-
-    /**
-     * Called when the start job button has been clicked.
-     * 
-     * @param view
-     *        The start job button; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code view} is {@code null}.
-     */
-    public void startJob(
-        final View view )
-    {
-        timeCard.startJob( ChargeNumber.fromString( "11111111.1111" ) ); //$NON-NLS-1$
-    }
-
-    /**
-     * Called when the stop job button has been clicked.
-     * 
-     * @param view
-     *        The stop job button; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code view} is {@code null}.
-     */
-    public void stopJob(
-        final View view )
-    {
-        timeCard.stopActiveJob();
     }
 
     /**
