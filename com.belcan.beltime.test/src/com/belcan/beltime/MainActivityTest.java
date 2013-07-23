@@ -14,10 +14,9 @@
 
 package com.belcan.beltime;
 
-import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.KeyEvent;
-import android.widget.Button;
+import android.view.View;
+import com.jayway.android.robotium.solo.Solo;
 
 /**
  * A fixture for testing the {@link MainActivity} class.
@@ -35,20 +34,8 @@ public final class MainActivityTest
     /** The second charge number for use in the fixture. */
     private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
-    /** The instrumentation for use in the fixture. */
-    private Instrumentation instrumentation_;
-
-    /** The activity under test in the fixture. */
-    private MainActivity mainActivity_;
-
-    /** The start job button. */
-    private Button startJobButton_;
-
-    /** The stop job button. */
-    private Button stopJobButton_;
-
-    /** The time card. */
-    private TimeCard timeCard_;
+    /** The Robotium manager. */
+    private Solo solo_;
 
 
     // ======================================================================
@@ -73,17 +60,7 @@ public final class MainActivityTest
      */
     private void clickStartJob()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                startJobButton_.performClick();
-            }
-        } );
-
-        instrumentation_.waitForIdleSync();
+        solo_.clickOnView( getStartJobButton() );
     }
 
     /**
@@ -92,8 +69,7 @@ public final class MainActivityTest
     private void clickStartJobAndCancelChargeNumberInput()
     {
         clickStartJob();
-        // TODO: clicking Cancel button; replace with Robotium
-        sendKeys( KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ENTER );
+        solo_.clickOnView( solo_.getView( android.R.id.button2 ) );
     }
 
     /**
@@ -115,9 +91,8 @@ public final class MainActivityTest
         final ChargeNumber chargeNumber )
     {
         clickStartJob();
-        sendKeys( getChargeNumberKeys( chargeNumber ) );
-        // TODO: clicking OK button; replace with Robotium
-        sendKeys( KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_TAB, KeyEvent.KEYCODE_ENTER );
+        solo_.enterText( 0, chargeNumber.toString() );
+        solo_.clickOnView( solo_.getView( android.R.id.button1 ) );
     }
 
     /**
@@ -125,52 +100,39 @@ public final class MainActivityTest
      */
     private void clickStopJob()
     {
-        mainActivity_.runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                stopJobButton_.performClick();
-            }
-        } );
-
-        instrumentation_.waitForIdleSync();
+        solo_.clickOnView( getStopJobButton() );
     }
 
     /**
-     * Gets the sequence of key presses required to enter the specified charge
-     * number.
+     * Gets the start job button.
      * 
-     * @param chargeNumber
-     *        The charge number; must not be {@code null}.
-     * 
-     * @return The sequence of key presses required to enter the specified
-     *         charge number; never {@code null}.
+     * @return The start job button; never {@code null}.
      */
-    private int[] getChargeNumberKeys(
-        final ChargeNumber chargeNumber )
+    @SuppressWarnings( "null" )
+    private View getStartJobButton()
     {
-        final String chargeNumberAsString = chargeNumber.toString();
-        final int[] keys = new int[ chargeNumberAsString.length() ];
-        for( int index = 0; index < keys.length; ++index )
-        {
-            final char ch = chargeNumberAsString.charAt( index );
-            if( (ch >= '0') && (ch <= '9') )
-            {
-                keys[ index ] = KeyEvent.KEYCODE_0 + (ch - '0');
-            }
-            else if( ch == '.' )
-            {
-                keys[ index ] = KeyEvent.KEYCODE_PERIOD;
-            }
-            else
-            {
-                throw new AssertionError( "unsupported key code" ); //$NON-NLS-1$
-            }
-        }
+        return solo_.getView( R.id.startJobButton );
+    }
 
-        return keys;
+    /**
+     * Gets the stop job button.
+     * 
+     * @return The stop job button; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private View getStopJobButton()
+    {
+        return solo_.getView( R.id.stopJobButton );
+    }
+
+    /**
+     * Gets the time card.
+     * 
+     * @return The time card; never {@code null}.
+     */
+    private TimeCard getTimeCard()
+    {
+        return getActivity().getTimeCard();
     }
 
     /*
@@ -184,11 +146,19 @@ public final class MainActivityTest
 
         setActivityInitialTouchMode( false );
 
-        instrumentation_ = getInstrumentation();
-        mainActivity_ = getActivity();
-        timeCard_ = mainActivity_.getTimeCard();
-        startJobButton_ = (Button)mainActivity_.findViewById( R.id.startJobButton );
-        stopJobButton_ = (Button)mainActivity_.findViewById( R.id.stopJobButton );
+        solo_ = new Solo( getInstrumentation(), getActivity() );
+    }
+
+    /*
+     * @see android.test.ActivityInstrumentationTestCase2#tearDown()
+     */
+    @Override
+    protected void tearDown()
+        throws Exception
+    {
+        solo_.finishOpenedActivities();
+
+        super.tearDown();
     }
 
     /**
@@ -199,7 +169,7 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -210,8 +180,8 @@ public final class MainActivityTest
     {
         clickStartJobAndCancelChargeNumberInput();
 
-        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 0 jobs in time card", 0, timeCard_.getJobs().size() ); //$NON-NLS-1$
+        assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 0 jobs in time card", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -221,7 +191,7 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "stop job button is disabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "stop job button is disabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -234,9 +204,9 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
 
-        assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 2 jobs in time card", 2, timeCard_.getJobs().size() ); //$NON-NLS-1$
-        assertEquals( "unexpected charge number", CHARGE_NUMBER_2, timeCard_.getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
+        assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 2 jobs in time card", 2, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        assertEquals( "unexpected charge number", CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
     }
 
     /**
@@ -247,9 +217,9 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "time card is inactive", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$
-        assertEquals( "unexpected charge number", CHARGE_NUMBER_1, timeCard_.getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
+        assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        assertEquals( "unexpected charge number", CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
     }
 
     /**
@@ -261,7 +231,7 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -272,7 +242,7 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertFalse( "stop job button is enabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
     }
 
     /**
@@ -283,8 +253,8 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, timeCard_.getJobs().size() ); //$NON-NLS-1$
+        assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
     }
 
     /**
@@ -292,9 +262,9 @@ public final class MainActivityTest
      */
     public void testPreConditions()
     {
-        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 0 jobs in time card", 0, timeCard_.getJobs().size() ); //$NON-NLS-1$
-        assertTrue( "start job button is disabled", startJobButton_.isEnabled() ); //$NON-NLS-1$
-        assertFalse( "stop job button is enabled", stopJobButton_.isEnabled() ); //$NON-NLS-1$
+        assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
+        assertEquals( "expected 0 jobs in time card", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+        assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
     }
 }
