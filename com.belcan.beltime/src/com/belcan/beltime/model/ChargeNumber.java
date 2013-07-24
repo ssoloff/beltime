@@ -12,7 +12,7 @@
  * Created on Jul 12, 2013 at 8:00:16 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.model;
 
 import org.eclipse.jdt.annotation.Nullable;
 

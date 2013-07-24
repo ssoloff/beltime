@@ -12,7 +12,7 @@
  * Created on Jul 12, 2013 at 7:49:24 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.model;
 
 import java.util.Date;
 import android.test.AndroidTestCase;

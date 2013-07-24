@@ -12,7 +12,7 @@
  * Created on Jul 18, 2013 at 11:02:32 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.model;
 
 /**
  * A listener of time card events.

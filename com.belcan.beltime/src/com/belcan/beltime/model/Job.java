@@ -12,7 +12,7 @@
  * Created on Jul 6, 2013 at 11:02:35 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.model;
 
 import java.util.Date;
 

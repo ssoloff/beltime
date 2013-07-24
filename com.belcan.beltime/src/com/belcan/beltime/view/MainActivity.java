@@ -12,7 +12,7 @@
  * Created on Jul 5, 2013 at 10:29:09 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,6 +22,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import com.belcan.beltime.R;
+import com.belcan.beltime.model.ChargeNumber;
+import com.belcan.beltime.model.ITimeCardListener;
+import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.TimeCard;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**

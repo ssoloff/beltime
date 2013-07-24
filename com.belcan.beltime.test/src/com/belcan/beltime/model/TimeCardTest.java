@@ -12,7 +12,7 @@
  * Created on Jul 13, 2013 at 8:09:43 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.model;
 
 import java.util.ArrayList;
 import java.util.List;

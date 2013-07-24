@@ -12,10 +12,13 @@
  * Created on Jul 18, 2013 at 8:52:20 PM.
  */
 
-package com.belcan.beltime;
+package com.belcan.beltime.view;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import com.belcan.beltime.R;
+import com.belcan.beltime.model.ChargeNumber;
+import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
