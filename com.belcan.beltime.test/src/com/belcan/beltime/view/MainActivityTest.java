@@ -16,6 +16,7 @@ package com.belcan.beltime.view;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
+import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.TimeCard;
@@ -107,6 +108,28 @@ public final class MainActivityTest
     }
 
     /**
+     * Gets the active job charge number text view.
+     * 
+     * @return The active job charge number text view; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private TextView getActiveJobChargeNumberTextView()
+    {
+        return (TextView)solo_.getView( R.id.activeJobChargeNumberTextView );
+    }
+
+    /**
+     * Gets the active job start time text view.
+     * 
+     * @return The active job start time text view; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private TextView getActiveJobStartTimeTextView()
+    {
+        return (TextView)solo_.getView( R.id.activeJobStartTimeTextView );
+    }
+
+    /**
      * Gets the start job button.
      * 
      * @return The start job button; never {@code null}.
@@ -138,6 +161,17 @@ public final class MainActivityTest
         return getActivity().getTimeCard();
     }
 
+    /**
+     * Gets the time card status text view.
+     * 
+     * @return The time card status text view; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private TextView getTimeCardStatusTextView()
+    {
+        return (TextView)solo_.getView( R.id.timeCardStatusTextView );
+    }
+
     /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
@@ -162,6 +196,56 @@ public final class MainActivityTest
         solo_.finishOpenedActivities();
 
         super.tearDown();
+    }
+
+    /**
+     * Ensures clicking the start job button changes the active job status text
+     * views to reflect the new job when the time card is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testClickStartJobButton_ChangesActiveJobStatusTextViewsToReflectNewJobWhenTimeCardActive()
+    {
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
+
+        assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
+        assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures clicking the start job button changes the active job status text
+     * views to reflect the new job when the time card is inactive.
+     */
+    public void testClickStartJobButton_ChangesActiveJobStatusTextViewsToReflectNewJobWhenTimeCardInactive()
+    {
+        clickStartJobAndInputChargeNumber();
+
+        assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
+        assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures clicking the start job button changes the time card status text
+     * view to indicate the time card is active when the time card is inactive.
+     */
+    public void testClickStartJobButton_ChangesTimeCardStatusTextViewToActiveWhenTimeCardInactive()
+    {
+        clickStartJobAndInputChargeNumber();
+
+        assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures clicking the start job button does not change the time card
+     * status text view when the time card is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testClickStartJobButton_DoesNotChangeTimeCardStatusTextViewWhenTimeCardActive()
+    {
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
+
+        assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
     }
 
     /**
@@ -226,6 +310,31 @@ public final class MainActivityTest
     }
 
     /**
+     * Ensures clicking the stop job button changes the time card status text
+     * view to indicate the time card is inactive.
+     */
+    public void testClickStopJobButton_ChangesTimeCardStatusTextViewToInactive()
+    {
+        clickStartJobAndInputChargeNumber();
+        clickStopJob();
+
+        assertEquals( "time card status text view indicates time card is active", solo_.getString( R.string.timeCardStatusTextView_text_inactive ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures clicking the stop job button clears the active job status text
+     * views.
+     */
+    public void testClickStopJobButton_ClearsActiveJobStatusTextViews()
+    {
+        clickStartJobAndInputChargeNumber();
+        clickStopJob();
+
+        assertEquals( "active job charge number text view is not empty", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals( "active job start time text view is not empty", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    /**
      * Ensures clicking the stop job button does not disable the start job
      * button.
      */
@@ -267,6 +376,10 @@ public final class MainActivityTest
     {
         assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
         assertEquals( "expected 0 jobs in time card", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+
+        assertEquals( "time card status text view indicates time card is active", solo_.getString( R.string.timeCardStatusTextView_text_inactive ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+        assertEquals( "active job charge number text view is not empty", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals( "active job start time text view is not empty", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
         assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
         assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
     }

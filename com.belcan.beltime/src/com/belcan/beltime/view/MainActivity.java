@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.ITimeCardListener;
@@ -39,11 +40,20 @@ public final class MainActivity
     // Fields
     // ======================================================================
 
+    /** The active job charge number text view. */
+    private TextView activeJobChargeNumberTextView_;
+
+    /** The active job start time text view. */
+    private TextView activeJobStartTimeTextView_;
+
     /** The stop job button. */
     private Button stopJobButton_;
 
     /** The time card. */
     private final TimeCard timeCard_;
+
+    /** The time card status text view. */
+    private TextView timeCardStatusTextView_;
 
 
     // ======================================================================
@@ -55,8 +65,11 @@ public final class MainActivity
      */
     public MainActivity()
     {
+        activeJobChargeNumberTextView_ = null;
+        activeJobStartTimeTextView_ = null;
         stopJobButton_ = null;
         timeCard_ = new TimeCard();
+        timeCardStatusTextView_ = null;
     }
 
 
@@ -146,7 +159,10 @@ public final class MainActivity
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_main );
+        activeJobChargeNumberTextView_ = (TextView)findViewById( R.id.activeJobChargeNumberTextView );
+        activeJobStartTimeTextView_ = (TextView)findViewById( R.id.activeJobStartTimeTextView );
         stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
+        timeCardStatusTextView_ = (TextView)findViewById( R.id.timeCardStatusTextView );
 
         timeCard_.setTimeCardListener( new TimeCardListener() );
 
@@ -181,7 +197,21 @@ public final class MainActivity
      */
     private void update()
     {
-        stopJobButton_.setEnabled( timeCard_.isActive() );
+        final boolean isTimeCardActive = timeCard_.isActive();
+        stopJobButton_.setEnabled( isTimeCardActive );
+        timeCardStatusTextView_.setText( isTimeCardActive ? R.string.timeCardStatusTextView_text_active : R.string.timeCardStatusTextView_text_inactive );
+
+        if( isTimeCardActive )
+        {
+            final Job activeJob = timeCard_.getActiveJob();
+            activeJobChargeNumberTextView_.setText( activeJob.getChargeNumber().toString() );
+            activeJobStartTimeTextView_.setText( activeJob.getStartTime().toString() );
+        }
+        else
+        {
+            activeJobChargeNumberTextView_.setText( "" ); //$NON-NLS-1$
+            activeJobStartTimeTextView_.setText( "" ); //$NON-NLS-1$
+        }
     }
 
 
