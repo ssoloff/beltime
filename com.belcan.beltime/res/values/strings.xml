@@ -8,7 +8,8 @@
     <string name="chargeNumberDialog_title">Enter Charge Number</string>
     <string name="startJobButton_text">Start Job</string>
     <string name="stopJobButton_text">Stop Job</string>
+    <string name="timeCardActivity_label">Time Card</string>
     <string name="timeCardStatusTextView_text_active">Clocked In</string>
     <string name="timeCardStatusTextView_text_inactive">Clocked Out</string>
-    
+
 </resources>
