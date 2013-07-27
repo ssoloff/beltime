@@ -134,11 +134,27 @@ public final class TimeCardTest
     }
 
     /**
-     * Ensures the {@link TimeCard#reset} method removes all jobs in the time
-     * card.
+     * Ensures the {@link TimeCard#reset} method removes all jobs if the time
+     * card is active.
      */
     @SuppressWarnings( "null" )
-    public void testReset_RemovesAllJobs()
+    public void testReset_RemovesAllJobsIfTimeCardActive()
+    {
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_2 );
+
+        timeCard_.reset();
+
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
+        assertEquals( 0, timeCard_.getJobs().size() );
+    }
+
+    /**
+     * Ensures the {@link TimeCard#reset} method removes all jobs if the time
+     * card is inactive.
+     */
+    @SuppressWarnings( "null" )
+    public void testReset_RemovesAllJobsIfTimeCardInactive()
     {
         timeCard_.startJob( CHARGE_NUMBER_1 );
         timeCard_.startJob( CHARGE_NUMBER_2 );
@@ -146,27 +162,8 @@ public final class TimeCardTest
 
         timeCard_.reset();
 
+        assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
         assertEquals( 0, timeCard_.getJobs().size() );
-    }
-
-    /**
-     * Ensures the {@link TimeCard#reset} method throws an exception if the time
-     * card is active.
-     */
-    @SuppressWarnings( "null" )
-    public void testReset_ThrowsExceptionIfTimeCardActive()
-    {
-        timeCard_.startJob( CHARGE_NUMBER_1 );
-
-        try
-        {
-            timeCard_.reset();
-            fail( "reset() did not throw IllegalStateException" ); //$NON-NLS-1$
-        }
-        catch( final IllegalStateException e )
-        {
-            // expected
-        }
     }
 
     /**
