@@ -65,7 +65,7 @@ public final class MainActivityTest
     private void clickStartJob()
     {
         solo_.clickOnView( getStartJobButton() );
-        solo_.waitForDialogToOpen( 5000L );
+        assertTrue( "the charge number dialog was not opened", solo_.waitForDialogToOpen( 5000L ) ); //$NON-NLS-1$
     }
 
     /**
@@ -75,7 +75,7 @@ public final class MainActivityTest
     {
         clickStartJob();
         solo_.clickOnView( solo_.getView( android.R.id.button2 ) );
-        solo_.waitForDialogToClose( 5000L );
+        assertTrue( "the charge number dialog was not closed", solo_.waitForDialogToClose( 5000L ) ); //$NON-NLS-1$
     }
 
     /**
@@ -99,7 +99,7 @@ public final class MainActivityTest
         clickStartJob();
         solo_.enterText( 0, chargeNumber.toString() );
         solo_.clickOnView( solo_.getView( android.R.id.button1 ) );
-        solo_.waitForDialogToClose( 5000L );
+        assertTrue( "the charge number dialog was not closed", solo_.waitForDialogToClose( 5000L ) ); //$NON-NLS-1$
     }
 
     /**
