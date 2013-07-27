@@ -103,6 +103,15 @@ public final class MainActivityTest
     }
 
     /**
+     * Clicks the start time card activity button.
+     */
+    private void clickStartTimeCardActivity()
+    {
+        solo_.clickOnView( getStartTimeCardActivityButton() );
+        assertTrue( "the time card activity was not activated", solo_.waitForActivity( TimeCardActivity.class, 5000 ) ); //$NON-NLS-1$
+    }
+
+    /**
      * Clicks the stop job button.
      */
     private void clickStopJob()
@@ -142,6 +151,17 @@ public final class MainActivityTest
     private View getStartJobButton()
     {
         return solo_.getView( R.id.startJobButton );
+    }
+
+    /**
+     * Gets the start time card activity button.
+     * 
+     * @return The start time card activity button; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private View getStartTimeCardActivityButton()
+    {
+        return solo_.getView( R.id.startTimeCardActivityButton );
     }
 
     /**
@@ -314,6 +334,17 @@ public final class MainActivityTest
     }
 
     /**
+     * Ensures clicking the start time card activity button starts the time card
+     * activity.
+     */
+    public void testClickStartTimeCardActivityButton_StartsTimeCardActivity()
+    {
+        clickStartTimeCardActivity();
+
+        solo_.assertCurrentActivity( "the time card activity is inactive", TimeCardActivity.class ); //$NON-NLS-1$
+    }
+
+    /**
      * Ensures clicking the stop job button changes the time card status text
      * view to indicate the time card is inactive.
      */
@@ -386,5 +417,6 @@ public final class MainActivityTest
         assertEquals( "active job start time text view is not empty", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
         assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
         assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+        assertTrue( "start time card activity button is disabled", getStartTimeCardActivityButton().isEnabled() ); //$NON-NLS-1$
     }
 }

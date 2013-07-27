@@ -17,6 +17,7 @@ package com.belcan.beltime.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -131,6 +132,21 @@ public final class MainActivity
             .setView( chargeNumberEditText ) //
             .create();
         alertDialog.show();
+    }
+
+    /**
+     * Called when the start time card activity button has been clicked.
+     * 
+     * @param view
+     *        The start time card activity button; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code view} is {@code null}.
+     */
+    public void onClickStartTimeCardActivity(
+        final View view )
+    {
+        startActivity( new Intent( this, TimeCardActivity.class ) );
     }
 
     /**
