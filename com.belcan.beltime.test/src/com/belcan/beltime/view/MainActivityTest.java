@@ -176,13 +176,13 @@ public final class MainActivityTest
     }
 
     /**
-     * Gets the time card.
+     * Gets the application time card.
      * 
-     * @return The time card; never {@code null}.
+     * @return The application time card; never {@code null}.
      */
     private TimeCard getTimeCard()
     {
-        return getActivity().getTimeCard();
+        return ((BeltimeApplication)getActivity().getApplication()).getTimeCard();
     }
 
     /**
@@ -194,6 +194,23 @@ public final class MainActivityTest
     private TextView getTimeCardStatusTextView()
     {
         return (TextView)solo_.getView( R.id.timeCardStatusTextView );
+    }
+
+    /**
+     * Resets the application time card.
+     */
+    private void resetTimeCard()
+    {
+        getActivity().runOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                getTimeCard().reset();
+            }
+        } );
+        getInstrumentation().waitForIdleSync();
     }
 
     /*
@@ -208,6 +225,8 @@ public final class MainActivityTest
         setActivityInitialTouchMode( false );
 
         solo_ = new Solo( getInstrumentation(), getActivity() );
+
+        resetTimeCard();
     }
 
     /*

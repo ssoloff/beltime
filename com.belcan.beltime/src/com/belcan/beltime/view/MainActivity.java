@@ -50,9 +50,6 @@ public final class MainActivity
     /** The stop job button. */
     private Button stopJobButton_;
 
-    /** The time card. */
-    private final TimeCard timeCard_;
-
     /** The time card status text view. */
     private TextView timeCardStatusTextView_;
 
@@ -69,7 +66,6 @@ public final class MainActivity
         activeJobChargeNumberTextView_ = null;
         activeJobStartTimeTextView_ = null;
         stopJobButton_ = null;
-        timeCard_ = new TimeCard();
         timeCardStatusTextView_ = null;
     }
 
@@ -83,10 +79,9 @@ public final class MainActivity
      * 
      * @return The time card; never {@code null}.
      */
-    @SuppressWarnings( "null" )
-    TimeCard getTimeCard()
+    private TimeCard getTimeCard()
     {
-        return timeCard_;
+        return ((BeltimeApplication)getApplication()).getTimeCard();
     }
 
     /**
@@ -125,7 +120,7 @@ public final class MainActivity
                 {
                     @SuppressWarnings( "null" )
                     final ChargeNumber chargeNumber = ChargeNumber.fromString( chargeNumberEditText.getText().toString() );
-                    timeCard_.startJob( chargeNumber );
+                    getTimeCard().startJob( chargeNumber );
                 }
             } ) //
             .setTitle( R.string.chargeNumberDialog_title ) //
@@ -161,7 +156,7 @@ public final class MainActivity
     public void onClickStopJob(
         final View view )
     {
-        timeCard_.stopActiveJob();
+        getTimeCard().stopActiveJob();
     }
 
     /*
@@ -180,7 +175,7 @@ public final class MainActivity
         stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
         timeCardStatusTextView_ = (TextView)findViewById( R.id.timeCardStatusTextView );
 
-        timeCard_.setTimeCardListener( new TimeCardListener() );
+        getTimeCard().setTimeCardListener( new TimeCardListener() );
 
         update();
     }
@@ -203,7 +198,7 @@ public final class MainActivity
     @Override
     protected void onDestroy()
     {
-        timeCard_.setTimeCardListener( null );
+        getTimeCard().setTimeCardListener( null );
 
         super.onDestroy();
     }
@@ -213,13 +208,13 @@ public final class MainActivity
      */
     private void update()
     {
-        final boolean isTimeCardActive = timeCard_.isActive();
+        final boolean isTimeCardActive = getTimeCard().isActive();
         stopJobButton_.setEnabled( isTimeCardActive );
         timeCardStatusTextView_.setText( isTimeCardActive ? R.string.timeCardStatusTextView_text_active : R.string.timeCardStatusTextView_text_inactive );
 
         if( isTimeCardActive )
         {
-            final Job activeJob = timeCard_.getActiveJob();
+            final Job activeJob = getTimeCard().getActiveJob();
             activeJobChargeNumberTextView_.setText( activeJob.getChargeNumber().toString() );
             activeJobStartTimeTextView_.setText( activeJob.getStartTime().toString() );
         }
@@ -276,6 +271,16 @@ public final class MainActivity
         public void onJobStopped(
             final TimeCard timeCard,
             final Job job )
+        {
+            update();
+        }
+
+        /*
+         * @see com.belcan.beltime.model.ITimeCardListener#onReset(com.belcan.beltime.model.TimeCard)
+         */
+        @Override
+        public void onReset(
+            final TimeCard timeCard )
         {
             update();
         }
