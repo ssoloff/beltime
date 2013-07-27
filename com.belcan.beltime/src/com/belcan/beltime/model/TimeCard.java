@@ -116,6 +116,27 @@ public final class TimeCard
     }
 
     /**
+     * Resets the time card.
+     * 
+     * @throws java.lang.IllegalStateException
+     *         If the time card is active.
+     */
+    public void reset()
+    {
+        if( isActive() )
+        {
+            throw new IllegalStateException( "cannot reset an active time card" ); //$NON-NLS-1$
+        }
+
+        jobs_.clear();
+
+        if( listener_ != null )
+        {
+            listener_.onReset( this );
+        }
+    }
+
+    /**
      * Sets the time card listener.
      * 
      * @param listener

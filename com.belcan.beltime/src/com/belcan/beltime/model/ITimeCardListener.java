@@ -52,4 +52,16 @@ public interface ITimeCardListener
     public void onJobStopped(
         TimeCard timeCard,
         Job job );
+
+    /**
+     * Called when the time card has been reset.
+     * 
+     * @param timeCard
+     *        The time card that fired the event; must not be {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code timeCard} is {@code null}.
+     */
+    public void onReset(
+        TimeCard timeCard );
 }

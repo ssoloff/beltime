@@ -115,6 +115,61 @@ public final class TimeCardTest
     }
 
     /**
+     * Ensures the {@link TimeCard#reset} method fires the
+     * {@link ITimeCardListener#onReset} event.
+     */
+    @SuppressWarnings( "null" )
+    public void testReset_FiresOnReset()
+    {
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
+        final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
+        timeCardListener.onReset( EasyMock.capture( timeCardCapture ) );
+        mocksControl_.replay();
+
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.reset();
+
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link TimeCard#reset} method removes all jobs in the time
+     * card.
+     */
+    @SuppressWarnings( "null" )
+    public void testReset_RemovesAllJobs()
+    {
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+        timeCard_.startJob( CHARGE_NUMBER_2 );
+        timeCard_.stopActiveJob();
+
+        timeCard_.reset();
+
+        assertEquals( 0, timeCard_.getJobs().size() );
+    }
+
+    /**
+     * Ensures the {@link TimeCard#reset} method throws an exception if the time
+     * card is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testReset_ThrowsExceptionIfTimeCardActive()
+    {
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+
+        try
+        {
+            timeCard_.reset();
+            fail( "reset() did not throw IllegalStateException" ); //$NON-NLS-1$
+        }
+        catch( final IllegalStateException e )
+        {
+            // expected
+        }
+    }
+
+    /**
      * Ensures the {@link TimeCard#startJob} method activates the time card.
      */
     @SuppressWarnings( "null" )
