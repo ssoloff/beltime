@@ -1,5 +1,5 @@
 /*
- * TimeCardActivity.java
+ * AbstractBeltimeActivity.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -9,29 +9,27 @@
  * accompanies this distribution and is available at
  * <http://www.eclipse.org/legal/epl-v10.html>.
  *
- * Created on Jul 26, 2013 at 10:02:28 PM.
+ * Created on Jul 27, 2013 at 7:59:52 PM.
  */
 
 package com.belcan.beltime.view;
 
-import android.os.Bundle;
-import com.belcan.beltime.R;
-import org.eclipse.jdt.annotation.Nullable;
+import android.app.Activity;
 
 /**
- * The time card activity.
+ * Superclass for all activities in the Beltime application.
  */
-public final class TimeCardActivity
-    extends AbstractBeltimeActivity
+public abstract class AbstractBeltimeActivity
+    extends Activity
 {
     // ======================================================================
     // Constructors
     // ======================================================================
 
     /**
-     * Initializes a new instance of the {@code TimeCardActivity} class.
+     * Initializes a new instance of the {@code AbstractBeltimeActivity} class.
      */
-    public TimeCardActivity()
+    protected AbstractBeltimeActivity()
     {
     }
 
@@ -40,16 +38,14 @@ public final class TimeCardActivity
     // Methods
     // ======================================================================
 
-    /*
-     * @see android.app.Activity#onCreate(android.os.Bundle)
+    /**
+     * Gets the Beltime application.
+     * 
+     * @return The Beltime application; never {@code null}.
      */
-    @Override
-    protected void onCreate(
-        @Nullable
-        final Bundle savedInstanceState )
+    @SuppressWarnings( "null" )
+    final BeltimeApplication getBeltimeApplication()
     {
-        super.onCreate( savedInstanceState );
-
-        setContentView( R.layout.activity_time_card );
+        return (BeltimeApplication)getApplication();
     }
 }

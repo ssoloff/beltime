@@ -182,7 +182,7 @@ public final class MainActivityTest
      */
     private TimeCard getTimeCard()
     {
-        return ((BeltimeApplication)getActivity().getApplication()).getTimeCard();
+        return getActivity().getBeltimeApplication().getTimeCard();
     }
 
     /**

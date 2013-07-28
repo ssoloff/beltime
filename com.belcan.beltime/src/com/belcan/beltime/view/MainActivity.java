@@ -14,7 +14,6 @@
 
 package com.belcan.beltime.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -35,7 +34,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * The main activity.
  */
 public final class MainActivity
-    extends Activity
+    extends AbstractBeltimeActivity
 {
     // ======================================================================
     // Fields
@@ -81,7 +80,7 @@ public final class MainActivity
      */
     private TimeCard getTimeCard()
     {
-        return ((BeltimeApplication)getApplication()).getTimeCard();
+        return getBeltimeApplication().getTimeCard();
     }
 
     /**
