@@ -14,13 +14,16 @@
 
 package com.belcan.beltime.view;
 
+import junit.framework.AssertionFailedError;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A fixture for testing the {@link MainActivity} class.
@@ -214,6 +217,32 @@ public final class MainActivityTest
     }
 
     /*
+     * @see android.test.InstrumentationTestCase#runTestOnUiThread(java.lang.Runnable)
+     */
+    @Override
+    public void runTestOnUiThread(
+        @Nullable
+        final Runnable r )
+    {
+        try
+        {
+            super.runTestOnUiThread( r );
+        }
+        catch( final RuntimeException e )
+        {
+            throw e;
+        }
+        catch( final Error e )
+        {
+            throw e;
+        }
+        catch( final Throwable e )
+        {
+            throw (Error)(new AssertionFailedError( "unexpected checked exception" ).initCause( e )); //$NON-NLS-1$
+        }
+    }
+
+    /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
     @Override
@@ -251,8 +280,16 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
 
-        assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
-        assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -263,8 +300,16 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
-        assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "active job charge number text view contains wrong charge number", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active job start time text view contains wrong start time", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -275,7 +320,15 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -288,7 +341,15 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
 
-        assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "time card status text view indicates time card is inactive", solo_.getString( R.string.timeCardStatusTextView_text_active ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -299,7 +360,15 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -310,8 +379,16 @@ public final class MainActivityTest
     {
         clickStartJobAndCancelChargeNumberInput();
 
-        assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 0 jobs in time card", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
+                assertEquals( "expected 0 jobs in time card", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -321,7 +398,15 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "stop job button is disabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "stop job button is disabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -334,9 +419,17 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
         clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
 
-        assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 2 jobs in time card", 2, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-        assertEquals( "unexpected charge number", CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
+                assertEquals( "expected 2 jobs in time card", 2, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+                assertEquals( "unexpected charge number", CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -347,9 +440,17 @@ public final class MainActivityTest
     {
         clickStartJobAndInputChargeNumber();
 
-        assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-        assertEquals( "unexpected charge number", CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "time card is inactive", getTimeCard().isActive() ); //$NON-NLS-1$
+                assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+                assertEquals( "unexpected charge number", CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -372,7 +473,15 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertEquals( "time card status text view indicates time card is active", solo_.getString( R.string.timeCardStatusTextView_text_inactive ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "time card status text view indicates time card is active", solo_.getString( R.string.timeCardStatusTextView_text_inactive ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -384,8 +493,16 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertEquals( "active job charge number text view is not empty", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals( "active job start time text view is not empty", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "active job charge number text view is not empty", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+                assertEquals( "active job start time text view is not empty", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+            }
+        } );
     }
 
     /**
@@ -397,7 +514,15 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "start job button is disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -408,7 +533,15 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertFalse( "stop job button is enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
@@ -419,13 +552,22 @@ public final class MainActivityTest
         clickStartJobAndInputChargeNumber();
         clickStopJob();
 
-        assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
-        assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
+                assertEquals( "expected 1 job in time card", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+            }
+        } );
     }
 
     /**
      * Ensures the activity pre-conditions are satisfied.
      */
+    @UiThreadTest
     public void testPreConditions()
     {
         assertFalse( "time card is active", getTimeCard().isActive() ); //$NON-NLS-1$
