@@ -14,14 +14,13 @@
 
 package com.belcan.beltime.view;
 
-import android.test.ActivityInstrumentationTestCase2;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
  * A fixture for testing the {@link TimeCardActivity} class.
  */
 public final class TimeCardActivityTest
-    extends ActivityInstrumentationTestCase2<TimeCardActivity>
+    extends AbstractBeltimeActivityInstrumentationTestCase<TimeCardActivity>
 {
     // ======================================================================
     // Fields

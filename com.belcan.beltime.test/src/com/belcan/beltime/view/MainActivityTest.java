@@ -14,8 +14,6 @@
 
 package com.belcan.beltime.view;
 
-import junit.framework.AssertionFailedError;
-import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.view.View;
 import android.widget.TextView;
@@ -23,13 +21,12 @@ import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
-import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A fixture for testing the {@link MainActivity} class.
  */
 public final class MainActivityTest
-    extends ActivityInstrumentationTestCase2<MainActivity>
+    extends AbstractBeltimeActivityInstrumentationTestCase<MainActivity>
 {
     // ======================================================================
     // Fields
@@ -214,32 +211,6 @@ public final class MainActivityTest
             }
         } );
         getInstrumentation().waitForIdleSync();
-    }
-
-    /*
-     * @see android.test.InstrumentationTestCase#runTestOnUiThread(java.lang.Runnable)
-     */
-    @Override
-    public void runTestOnUiThread(
-        @Nullable
-        final Runnable r )
-    {
-        try
-        {
-            super.runTestOnUiThread( r );
-        }
-        catch( final RuntimeException e )
-        {
-            throw e;
-        }
-        catch( final Error e )
-        {
-            throw e;
-        }
-        catch( final Throwable e )
-        {
-            throw (Error)(new AssertionFailedError( "unexpected checked exception" ).initCause( e )); //$NON-NLS-1$
-        }
     }
 
     /*
