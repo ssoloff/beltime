@@ -173,10 +173,6 @@ public final class MainActivity
         activeJobStartTimeTextView_ = (TextView)findViewById( R.id.activeJobStartTimeTextView );
         stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
         timeCardStatusTextView_ = (TextView)findViewById( R.id.timeCardStatusTextView );
-
-        getTimeCard().setTimeCardListener( new TimeCardListener() );
-
-        update();
     }
 
     /*
@@ -192,14 +188,26 @@ public final class MainActivity
     }
 
     /*
-     * @see android.app.Activity#onDestroy()
+     * @see android.app.Activity#onPause()
      */
     @Override
-    protected void onDestroy()
+    protected void onPause()
     {
-        getTimeCard().setTimeCardListener( null );
+        super.onPause();
 
-        super.onDestroy();
+        getTimeCard().setTimeCardListener( null );
+    }
+
+    /*
+     * @see android.app.Activity#onResume()
+     */
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+
+        getTimeCard().setTimeCardListener( new TimeCardListener() );
+        update();
     }
 
     /**
