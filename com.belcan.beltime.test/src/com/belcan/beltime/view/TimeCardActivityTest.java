@@ -134,7 +134,6 @@ public final class TimeCardActivityTest
                 jobRef.set( getTimeCard().getActiveJob() );
             }
         } );
-        getInstrumentation().waitForIdleSync();
         return jobRef.get();
     }
 

@@ -69,7 +69,7 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
      */
     final void resetTimeCard()
     {
-        getActivity().runOnUiThread( new Runnable()
+        runTestOnUiThread( new Runnable()
         {
             @Override
             public void run()
@@ -77,7 +77,6 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
                 getTimeCard().reset();
             }
         } );
-        getInstrumentation().waitForIdleSync();
     }
 
     /*
