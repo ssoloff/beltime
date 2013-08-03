@@ -238,7 +238,7 @@ public final class MainActivity
     // ======================================================================
 
     /**
-     * The time card listener for the main activity.
+     * The time card listener for the activity.
      */
     @SuppressWarnings( "synthetic-access" )
     private final class TimeCardListener
