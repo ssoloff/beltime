@@ -1,58 +1,52 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
-
-    <TextView
-        android:gravity="center"
-        android:id="@+id/timeCardStatusTextView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
-
-    <TextView
-        android:id="@+id/activeJobChargeNumberTextView"
-        android:gravity="center"
-        android:layout_below="@+id/timeCardStatusTextView"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
-    
-    <TextView
-        android:id="@+id/activeJobStartTimeTextView"
-        android:gravity="center"
-        android:layout_below="@+id/activeJobChargeNumberTextView"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
-    
-    <Button
-        android:id="@+id/startJobButton"
-        android:layout_above="@+id/stopJobButton"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:onClick="onClickStartJob"
-        android:text="@string/startJobButton_text" />
-
-    <Button
-        android:id="@+id/stopJobButton"
-        android:layout_above="@+id/startTimeCardActivityButton"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:onClick="onClickStopJob"
-        android:text="@string/stopJobButton_text" />
-
-    <Button
-        android:id="@+id/startTimeCardActivityButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:onClick="onClickStartTimeCardActivity"
-        android:text="@string/startTimeCardActivityButton_text" />
-    
+<RelativeLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin"
+		tools:context=".MainActivity"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools">
+	<TextView
+			android:gravity="center"
+			android:id="@+id/timeCardStatusTextView"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
+	<TextView
+			android:gravity="center"
+			android:id="@+id/activeJobChargeNumberTextView"
+			android:layout_below="@+id/timeCardStatusTextView"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
+	<TextView
+			android:gravity="center"
+			android:id="@+id/activeJobStartTimeTextView"
+			android:layout_below="@+id/activeJobChargeNumberTextView"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
+	<Button
+			android:id="@+id/startJobButton"
+			android:layout_above="@+id/stopJobButton"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:onClick="onClickStartJob"
+			android:text="@string/startJobButton_text" />
+	<Button
+			android:id="@+id/stopJobButton"
+			android:layout_above="@+id/startTimeCardActivityButton"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:onClick="onClickStopJob"
+			android:text="@string/stopJobButton_text" />
+	<Button
+			android:id="@+id/startTimeCardActivityButton"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentLeft="true"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent"
+			android:onClick="onClickStartTimeCardActivity"
+			android:text="@string/startTimeCardActivityButton_text" />
 </RelativeLayout>
