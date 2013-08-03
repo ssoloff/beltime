@@ -16,6 +16,7 @@ package com.belcan.beltime.view;
 
 import junit.framework.AssertionFailedError;
 import android.test.ActivityInstrumentationTestCase2;
+import com.belcan.beltime.model.TimeCard;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -42,7 +43,7 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
      * @throws java.lang.NullPointerException
      *         If {@code activityClass} is {@code null}.
      */
-    protected AbstractBeltimeActivityInstrumentationTestCase(
+    AbstractBeltimeActivityInstrumentationTestCase(
         final Class<T> activityClass )
     {
         super( activityClass );
@@ -52,6 +53,32 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
     // ======================================================================
     // Methods
     // ======================================================================
+
+    /**
+     * Gets the application time card.
+     * 
+     * @return The application time card; never {@code null}.
+     */
+    final TimeCard getTimeCard()
+    {
+        return getActivity().getTimeCard();
+    }
+
+    /**
+     * Resets the application time card.
+     */
+    final void resetTimeCard()
+    {
+        getActivity().runOnUiThread( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                getTimeCard().reset();
+            }
+        } );
+        getInstrumentation().waitForIdleSync();
+    }
 
     /*
      * @see android.test.InstrumentationTestCase#runTestOnUiThread(java.lang.Runnable)

@@ -21,7 +21,6 @@ import android.widget.ListView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
-import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -97,33 +96,6 @@ public final class TimeCardActivityTest
         return (ListView)solo_.getView( R.id.jobsListView );
     }
 
-    /**
-     * Gets the application time card.
-     * 
-     * @return The application time card; never {@code null}.
-     */
-    private TimeCard getTimeCard()
-    {
-        return getActivity().getBeltimeApplication().getTimeCard();
-    }
-
-    /**
-     * Resets the application time card.
-     */
-    private void resetTimeCard()
-    {
-        getActivity().runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                getTimeCard().reset();
-            }
-        } );
-        getInstrumentation().waitForIdleSync();
-    }
-
     /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
@@ -156,7 +128,6 @@ public final class TimeCardActivityTest
         runTestOnUiThread( new Runnable()
         {
             @Override
-            @SuppressWarnings( "synthetic-access" )
             public void run()
             {
                 getTimeCard().startJob( chargeNumber );

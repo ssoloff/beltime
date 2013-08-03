@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
-import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -176,16 +175,6 @@ public final class MainActivityTest
     }
 
     /**
-     * Gets the application time card.
-     * 
-     * @return The application time card; never {@code null}.
-     */
-    private TimeCard getTimeCard()
-    {
-        return getActivity().getBeltimeApplication().getTimeCard();
-    }
-
-    /**
      * Gets the time card status text view.
      * 
      * @return The time card status text view; never {@code null}.
@@ -194,23 +183,6 @@ public final class MainActivityTest
     private TextView getTimeCardStatusTextView()
     {
         return (TextView)solo_.getView( R.id.timeCardStatusTextView );
-    }
-
-    /**
-     * Resets the application time card.
-     */
-    private void resetTimeCard()
-    {
-        getActivity().runOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                getTimeCard().reset();
-            }
-        } );
-        getInstrumentation().waitForIdleSync();
     }
 
     /*
@@ -353,7 +325,6 @@ public final class MainActivityTest
         runTestOnUiThread( new Runnable()
         {
             @Override
-            @SuppressWarnings( "synthetic-access" )
             public void run()
             {
                 assertFalse( "expected time card to be inactive but was active", getTimeCard().isActive() ); //$NON-NLS-1$
@@ -526,7 +497,6 @@ public final class MainActivityTest
         runTestOnUiThread( new Runnable()
         {
             @Override
-            @SuppressWarnings( "synthetic-access" )
             public void run()
             {
                 assertFalse( "expected time card to be inactive but was active", getTimeCard().isActive() ); //$NON-NLS-1$
