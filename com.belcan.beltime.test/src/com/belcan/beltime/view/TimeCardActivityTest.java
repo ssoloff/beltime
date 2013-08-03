@@ -14,6 +14,14 @@
 
 package com.belcan.beltime.view;
 
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Pattern;
+import android.test.UiThreadTest;
+import android.widget.ListView;
+import com.belcan.beltime.R;
+import com.belcan.beltime.model.ChargeNumber;
+import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.TimeCard;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -25,6 +33,12 @@ public final class TimeCardActivityTest
     // ======================================================================
     // Fields
     // ======================================================================
+
+    /** The first charge number for use in the fixture. */
+    private static final ChargeNumber CHARGE_NUMBER_1 = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
+
+    /** The second charge number for use in the fixture. */
+    private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
     /** The Robotium manager. */
     private Solo solo_;
@@ -47,6 +61,69 @@ public final class TimeCardActivityTest
     // Methods
     // ======================================================================
 
+    /**
+     * Asserts that the specified job is found in the jobs list view.
+     * 
+     * @param job
+     *        The job to find; must not be {@code null}.
+     * 
+     * @throws junit.framework.AssertionFailedError
+     *         If the specified job is not found.
+     */
+    private void assertJobFound(
+        final Job job )
+    {
+        final AtomicReference<ChargeNumber> chargeNumberRef = new AtomicReference<ChargeNumber>();
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                chargeNumberRef.set( job.getChargeNumber() );
+            }
+        } );
+
+        assertTrue( String.format( "expected to find charge number '%s' in jobs list view", chargeNumberRef.get() ), solo_.searchText( Pattern.quote( chargeNumberRef.get().toString() ) ) ); //$NON-NLS-1$
+    }
+
+    /**
+     * Gets the jobs list view.
+     * 
+     * @return The jobs list view; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private ListView getJobsListView()
+    {
+        return (ListView)solo_.getView( R.id.jobsListView );
+    }
+
+    /**
+     * Gets the application time card.
+     * 
+     * @return The application time card; never {@code null}.
+     */
+    private TimeCard getTimeCard()
+    {
+        return getActivity().getBeltimeApplication().getTimeCard();
+    }
+
+    /**
+     * Resets the application time card.
+     */
+    private void resetTimeCard()
+    {
+        getActivity().runOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                getTimeCard().reset();
+            }
+        } );
+        getInstrumentation().waitForIdleSync();
+    }
+
     /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
@@ -59,6 +136,35 @@ public final class TimeCardActivityTest
         setActivityInitialTouchMode( false );
 
         solo_ = new Solo( getInstrumentation(), getActivity() );
+
+        resetTimeCard();
+    }
+
+    /**
+     * Starts a new job with the specified charge number.
+     * 
+     * @param chargeNumber
+     *        The charge number; must not be {@code null}.
+     * 
+     * @return The job that was started; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    private Job startJob(
+        final ChargeNumber chargeNumber )
+    {
+        final AtomicReference<Job> jobRef = new AtomicReference<Job>();
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                getTimeCard().startJob( chargeNumber );
+                jobRef.set( getTimeCard().getActiveJob() );
+            }
+        } );
+        getInstrumentation().waitForIdleSync();
+        return jobRef.get();
     }
 
     /*
@@ -76,8 +182,31 @@ public final class TimeCardActivityTest
     /**
      * Ensures the activity pre-conditions are satisfied.
      */
+    @UiThreadTest
     public void testPreConditions()
     {
-        assertTrue( "TODO", true ); //$NON-NLS-1$
+        assertEquals( "jobs list view item count", 0, getJobsListView().getCount() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures starting a new job updates the jobs list view.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartJob_UpdatesJobsListView()
+    {
+        final Job job1 = startJob( CHARGE_NUMBER_1 );
+        final Job job2 = startJob( CHARGE_NUMBER_2 );
+
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertEquals( "jobs list view item count", 2, getJobsListView().getCount() ); //$NON-NLS-1$
+            }
+        } );
+        assertJobFound( job1 );
+        assertJobFound( job2 );
     }
 }
