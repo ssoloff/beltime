@@ -74,16 +74,6 @@ public final class MainActivity
     // ======================================================================
 
     /**
-     * Gets the time card.
-     * 
-     * @return The time card; never {@code null}.
-     */
-    private TimeCard getTimeCard()
-    {
-        return getBeltimeApplication().getTimeCard();
-    }
-
-    /**
      * Called when the start job button has been clicked.
      * 
      * @param view
@@ -111,7 +101,6 @@ public final class MainActivity
             .setPositiveButton( R.string.chargeNumberDialog_positiveButton_text, new DialogInterface.OnClickListener()
             {
                 @Override
-                @SuppressWarnings( "synthetic-access" )
                 public void onClick(
                     @Nullable
                     final DialogInterface dialog,

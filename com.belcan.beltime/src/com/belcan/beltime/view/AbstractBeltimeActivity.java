@@ -15,6 +15,7 @@
 package com.belcan.beltime.view;
 
 import android.app.Activity;
+import com.belcan.beltime.model.TimeCard;
 
 /**
  * Superclass for all activities in the Beltime application.
@@ -29,7 +30,7 @@ public abstract class AbstractBeltimeActivity
     /**
      * Initializes a new instance of the {@code AbstractBeltimeActivity} class.
      */
-    protected AbstractBeltimeActivity()
+    AbstractBeltimeActivity()
     {
     }
 
@@ -47,5 +48,15 @@ public abstract class AbstractBeltimeActivity
     final BeltimeApplication getBeltimeApplication()
     {
         return (BeltimeApplication)getApplication();
+    }
+
+    /**
+     * Gets the time card.
+     * 
+     * @return The time card; never {@code null}.
+     */
+    final TimeCard getTimeCard()
+    {
+        return getBeltimeApplication().getTimeCard();
     }
 }

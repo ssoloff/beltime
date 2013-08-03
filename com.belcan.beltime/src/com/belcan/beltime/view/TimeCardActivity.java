@@ -84,16 +84,6 @@ public final class TimeCardActivity
         return new SimpleAdapter( this, jobsData, R.layout.view_job, from, to );
     }
 
-    /**
-     * Gets the time card.
-     * 
-     * @return The time card; never {@code null}.
-     */
-    private TimeCard getTimeCard()
-    {
-        return getBeltimeApplication().getTimeCard();
-    }
-
     /*
      * @see android.app.Activity#onCreate(android.os.Bundle)
      */
