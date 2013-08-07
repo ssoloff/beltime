@@ -14,10 +14,13 @@
 
 package com.belcan.beltime.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.regex.Pattern;
 import android.test.UiThreadTest;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
@@ -61,28 +64,41 @@ public final class TimeCardActivityTest
     // ======================================================================
 
     /**
-     * Asserts that the specified job is found in the jobs list view.
+     * Asserts that the jobs list view contains each of the specified jobs.
      * 
-     * @param job
-     *        The job to find; must not be {@code null}.
+     * @param jobs
+     *        The collection of jobs; must not be {@code null}.
      * 
      * @throws junit.framework.AssertionFailedError
-     *         If the specified job is not found.
+     *         If the jobs list view does not contain the specified jobs.
      */
-    private void assertJobFound(
-        final Job job )
+    private void assertJobsListViewContains(
+        final List<Job> jobs )
     {
-        final AtomicReference<ChargeNumber> chargeNumberRef = new AtomicReference<ChargeNumber>();
-        runTestOnUiThread( new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                chargeNumberRef.set( job.getChargeNumber() );
-            }
-        } );
+        final ListView jobsListView = getJobsListView();
+        final int itemCount = getJobsListView().getCount();
+        assertEquals( "jobs list view item count", jobs.size(), itemCount ); //$NON-NLS-1$
 
-        assertTrue( String.format( "expected to find charge number '%s' in jobs list view", chargeNumberRef.get() ), solo_.searchText( Pattern.quote( chargeNumberRef.get().toString() ) ) ); //$NON-NLS-1$
+        for( int index = 0; index < itemCount; ++index )
+        {
+            final Job job = jobs.get( index );
+            final View row = jobsListView.getChildAt( index );
+            assertNotNull( String.format( "expected item in jobs list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
+
+            final TextView chargeNumberTextView = (TextView)row.findViewById( R.id.chargeNumberTextView );
+            assertNotNull( "expected charge number text view", chargeNumberTextView ); //$NON-NLS-1$
+            assertEquals( "charge number text view text", job.getChargeNumber().toString(), chargeNumberTextView.getText() ); //$NON-NLS-1$
+
+            final TextView startTimeTextView = (TextView)row.findViewById( R.id.startTimeTextView );
+            assertNotNull( "expected start time text view", startTimeTextView ); //$NON-NLS-1$
+            final String expectedStartTimeTextViewText = job.getStartTime().toString();
+            assertEquals( "start time text view text", expectedStartTimeTextViewText, startTimeTextView.getText() ); //$NON-NLS-1$
+
+            final TextView stopTimeTextView = (TextView)row.findViewById( R.id.stopTimeTextView );
+            assertNotNull( "expected stop time text view", stopTimeTextView ); //$NON-NLS-1$
+            final String expectedStopTimeTextViewText = job.isActive() ? solo_.getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime().toString();
+            assertEquals( "stop time text view text", expectedStopTimeTextViewText, stopTimeTextView.getText() ); //$NON-NLS-1$
+        }
     }
 
     /**
@@ -173,10 +189,8 @@ public final class TimeCardActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertEquals( "jobs list view item count", 2, getJobsListView().getCount() ); //$NON-NLS-1$
+                assertJobsListViewContains( Arrays.asList( job1, job2 ) );
             }
         } );
-        assertJobFound( job1 );
-        assertJobFound( job2 );
     }
 }

@@ -7,4 +7,12 @@
 			android:id="@+id/chargeNumberTextView"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent" />
+	<TextView
+			android:id="@+id/startTimeTextView"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
+	<TextView
+			android:id="@+id/stopTimeTextView"
+			android:layout_height="wrap_content"
+			android:layout_width="fill_parent" />
 </LinearLayout>

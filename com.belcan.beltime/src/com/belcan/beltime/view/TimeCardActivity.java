@@ -66,11 +66,17 @@ public final class TimeCardActivity
     private ListAdapter createJobsAdapter()
     {
         final String chargeNumberColumnName = "chargeNumber"; //$NON-NLS-1$
+        final String startTimeColumnName = "startTime"; //$NON-NLS-1$
+        final String stopTimeColumnName = "stopTime"; //$NON-NLS-1$
         final String[] from = {
-            chargeNumberColumnName
+            chargeNumberColumnName, //
+            startTimeColumnName, //
+            stopTimeColumnName
         };
         final int[] to = {
-            R.id.chargeNumberTextView
+            R.id.chargeNumberTextView, //
+            R.id.startTimeTextView, //
+            R.id.stopTimeTextView
         };
 
         final List<Map<String, Object>> jobsData = new ArrayList<Map<String, Object>>();
@@ -78,6 +84,8 @@ public final class TimeCardActivity
         {
             final Map<String, Object> jobData = new HashMap<String, Object>();
             jobData.put( chargeNumberColumnName, job.getChargeNumber() );
+            jobData.put( startTimeColumnName, job.getStartTime() );
+            jobData.put( stopTimeColumnName, job.isActive() ? getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime() );
             jobsData.add( jobData );
         }
 
