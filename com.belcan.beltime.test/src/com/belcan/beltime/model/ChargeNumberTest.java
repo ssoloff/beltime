@@ -14,13 +14,13 @@
 
 package com.belcan.beltime.model;
 
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 
 /**
  * A fixture for testing the {@link ChargeNumber} class.
  */
 public final class ChargeNumberTest
-    extends AndroidTestCase
+    extends TestCase
 {
     // ======================================================================
     // Constructors

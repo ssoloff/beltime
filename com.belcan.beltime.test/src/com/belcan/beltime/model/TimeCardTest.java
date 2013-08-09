@@ -17,7 +17,7 @@ package com.belcan.beltime.model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 import com.belcan.beltime.test.EasyMockJUnit3Utils;
 import org.easymock.Capture;
 import org.easymock.EasyMock;
@@ -27,7 +27,7 @@ import org.easymock.IMocksControl;
  * A fixture for testing the {@link TimeCard} class.
  */
 public final class TimeCardTest
-    extends AndroidTestCase
+    extends TestCase
 {
     // ======================================================================
     // Fields

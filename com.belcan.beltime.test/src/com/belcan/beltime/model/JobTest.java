@@ -15,13 +15,13 @@
 package com.belcan.beltime.model;
 
 import java.util.Date;
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 
 /**
  * A fixture for testing the {@link Job} class.
  */
 public final class JobTest
-    extends AndroidTestCase
+    extends TestCase
 {
     // ======================================================================
     // Fields

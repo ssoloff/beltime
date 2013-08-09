@@ -16,7 +16,7 @@ package com.belcan.beltime.test;
 
 import java.util.Collection;
 import java.util.Collections;
-import android.test.AndroidTestCase;
+import junit.framework.TestCase;
 
 /**
  * A fixture for testing the basic aspects of classes that are equatable.
@@ -30,7 +30,7 @@ import android.test.AndroidTestCase;
  *        The type of the equatable class.
  */
 public abstract class AbstractEquatableTestCase<T>
-    extends AndroidTestCase
+    extends TestCase
 {
     // ======================================================================
     // Fields
