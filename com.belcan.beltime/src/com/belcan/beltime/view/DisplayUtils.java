@@ -27,6 +27,9 @@ final class DisplayUtils
     // Fields
     // ======================================================================
 
+    /** The number of milliseconds per hour. */
+    private static final double MILLISECONDS_PER_HOUR = 86400000.0;
+
     /** The application context. */
     private final Context context_;
 
@@ -69,7 +72,7 @@ final class DisplayUtils
             return context_.getString( R.string.displayUtils_job_duration_active );
         }
 
-        final double jobDurationInHours = job.getDurationInMilliseconds() / 86400000.0;
+        final double jobDurationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
         return context_.getString( R.string.displayUtils_job_duration_inactive, Double.valueOf( jobDurationInHours ) );
     }
 }
