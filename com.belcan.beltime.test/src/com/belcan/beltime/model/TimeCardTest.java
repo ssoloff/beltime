@@ -15,6 +15,7 @@
 package com.belcan.beltime.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import android.test.AndroidTestCase;
 import com.belcan.beltime.test.EasyMockJUnit3Utils;
@@ -109,7 +110,7 @@ public final class TimeCardTest
     {
         final List<Job> jobs = timeCard_.getJobs();
         final List<Job> expectedJobs = new ArrayList<Job>( jobs );
-        jobs.add( Job.start( CHARGE_NUMBER_1 ) );
+        jobs.add( Job.start( CHARGE_NUMBER_1, new Date() ) );
 
         assertEquals( expectedJobs, timeCard_.getJobs() );
     }
@@ -258,6 +259,24 @@ public final class TimeCardTest
         EasyMockJUnit3Utils.verify( mocksControl_ );
         assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
         assertEquals( "expected previously active job", job, jobCapture.getValue() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startJob} method sets the stop time of the
+     * active job equal to the start time of the new job if the time card is
+     * active.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartJob_SetsStopTimeOfActiveJobEqualToStartTimeOfNewJobIfActive()
+    {
+        timeCard_.startJob( CHARGE_NUMBER_1 );
+
+        timeCard_.startJob( CHARGE_NUMBER_2 );
+
+        final List<Job> jobs = timeCard_.getJobs();
+        final Job previousJob = jobs.get( 0 );
+        final Job activeJob = jobs.get( 1 );
+        assertEquals( "stop time of previous job should be equal to start time of active job", previousJob.getStopTime(), activeJob.getStartTime() ); //$NON-NLS-1$
     }
 
     /**

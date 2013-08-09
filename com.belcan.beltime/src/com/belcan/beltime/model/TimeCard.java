@@ -15,6 +15,7 @@
 package com.belcan.beltime.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -156,13 +157,15 @@ public final class TimeCard
     public void startJob(
         final ChargeNumber chargeNumber )
     {
+        final Date currentTime = new Date();
+
         final Job oldJob = getActiveJobOrNull();
         if( oldJob != null )
         {
-            stopJob( oldJob );
+            stopJob( oldJob, currentTime );
         }
 
-        final Job newJob = Job.start( chargeNumber );
+        final Job newJob = Job.start( chargeNumber, currentTime );
         jobs_.add( newJob );
 
         if( listener_ != null )
@@ -179,7 +182,7 @@ public final class TimeCard
      */
     public void stopActiveJob()
     {
-        stopJob( getActiveJob() );
+        stopJob( getActiveJob(), new Date() );
     }
 
     /**
@@ -187,11 +190,15 @@ public final class TimeCard
      * 
      * @param job
      *        The job; must not be {@code null}.
+     * @param stopTime
+     *        The time at which work on the job stopped; must not be
+     *        {@code null}.
      */
     private void stopJob(
-        final Job job )
+        final Job job,
+        final Date stopTime )
     {
-        job.stop();
+        job.stop( stopTime );
 
         if( listener_ != null )
         {

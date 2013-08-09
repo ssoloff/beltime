@@ -44,12 +44,16 @@ public final class Job
      * 
      * @param chargeNumber
      *        The charge number to be billed; must not be {@code null}.
+     * @param startTime
+     *        The time at which work on the job started; must not be
+     *        {@code null}.
      */
     private Job(
-        final ChargeNumber chargeNumber )
+        final ChargeNumber chargeNumber,
+        final Date startTime )
     {
         chargeNumber_ = chargeNumber;
-        startTime_ = new Date();
+        startTime_ = new Date( startTime.getTime() );
         stopTime_ = null;
     }
 
@@ -130,28 +134,49 @@ public final class Job
      * 
      * @param chargeNumber
      *        The charge number to be billed; must not be {@code null}.
+     * @param startTime
+     *        The time at which work on the job started; must not be
+     *        {@code null}.
      * 
      * @return A new job; never {@code null}.
+     * 
+     * @throws java.lang.NullPointerException
+     *         If {@code chargeNumber} or {@code startTime} is {@code null}.
      */
     public static Job start(
-        final ChargeNumber chargeNumber )
+        final ChargeNumber chargeNumber,
+        final Date startTime )
     {
-        return new Job( chargeNumber );
+        return new Job( chargeNumber, startTime );
     }
 
     /**
      * Stops the job.
      * 
+     * @param stopTime
+     *        The time at which work on the job stopped; must not be
+     *        {@code null}.
+     * 
+     * @throws java.lang.IllegalArgumentException
+     *         If {@code stopTime} is less than the time at which work on the
+     *         job started.
      * @throws java.lang.IllegalStateException
      *         If the job is inactive.
+     * @throws java.lang.NullPointerException
+     *         If {@code stopTime} is {@code null}.
      */
-    public void stop()
+    public void stop(
+        final Date stopTime )
     {
-        if( stopTime_ != null )
+        if( stopTime.compareTo( startTime_ ) < 0 )
+        {
+            throw new IllegalArgumentException( "stop time must be greater than or equal to start time" ); //$NON-NLS-1$
+        }
+        else if( stopTime_ != null )
         {
             throw new IllegalStateException( "cannot stop an inactive job" ); //$NON-NLS-1$
         }
 
-        stopTime_ = new Date();
+        stopTime_ = new Date( stopTime.getTime() );
     }
 }
