@@ -42,6 +42,9 @@ public final class TimeCardActivityTest
     /** The second charge number for use in the fixture. */
     private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
+    /** The display utilities for use in the fixture. */
+    private DisplayUtils displayUtils_;
+
     /** The Robotium manager. */
     private Solo solo_;
 
@@ -98,6 +101,11 @@ public final class TimeCardActivityTest
             assertNotNull( "expected stop time text view", stopTimeTextView ); //$NON-NLS-1$
             final String expectedStopTimeTextViewText = job.isActive() ? solo_.getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime().toString();
             assertEquals( "stop time text view text", expectedStopTimeTextViewText, stopTimeTextView.getText() ); //$NON-NLS-1$
+
+            final TextView durationTextView = (TextView)row.findViewById( R.id.durationTextView );
+            assertNotNull( "expected duration text view", durationTextView ); //$NON-NLS-1$
+            final String expectedDurationTextViewText = displayUtils_.formatJobDuration( job );
+            assertEquals( "duration text view text", expectedDurationTextViewText, durationTextView.getText() ); //$NON-NLS-1$
         }
     }
 
@@ -116,6 +124,7 @@ public final class TimeCardActivityTest
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
     @Override
+    @SuppressWarnings( "null" )
     protected void setUp()
         throws Exception
     {
@@ -123,6 +132,7 @@ public final class TimeCardActivityTest
 
         setActivityInitialTouchMode( false );
 
+        displayUtils_ = new DisplayUtils( getActivity() );
         solo_ = new Solo( getInstrumentation(), getActivity() );
 
         resetTimeCard();

@@ -38,6 +38,9 @@ public final class TimeCardActivity
     // Fields
     // ======================================================================
 
+    /** The display utilities. */
+    private final DisplayUtils displayUtils_;
+
     /** The jobs list view. */
     private ListView jobsListView_;
 
@@ -51,6 +54,7 @@ public final class TimeCardActivity
      */
     public TimeCardActivity()
     {
+        displayUtils_ = new DisplayUtils( this );
     }
 
 
@@ -68,15 +72,18 @@ public final class TimeCardActivity
         final String chargeNumberColumnName = "chargeNumber"; //$NON-NLS-1$
         final String startTimeColumnName = "startTime"; //$NON-NLS-1$
         final String stopTimeColumnName = "stopTime"; //$NON-NLS-1$
+        final String durationColumnName = "duration"; //$NON-NLS-1$
         final String[] from = {
             chargeNumberColumnName, //
             startTimeColumnName, //
-            stopTimeColumnName
+            stopTimeColumnName, //
+            durationColumnName
         };
         final int[] to = {
             R.id.chargeNumberTextView, //
             R.id.startTimeTextView, //
-            R.id.stopTimeTextView
+            R.id.stopTimeTextView, //
+            R.id.durationTextView
         };
 
         final List<Map<String, Object>> jobsData = new ArrayList<Map<String, Object>>();
@@ -86,6 +93,7 @@ public final class TimeCardActivity
             jobData.put( chargeNumberColumnName, job.getChargeNumber() );
             jobData.put( startTimeColumnName, job.getStartTime() );
             jobData.put( stopTimeColumnName, job.isActive() ? getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime() );
+            jobData.put( durationColumnName, displayUtils_.formatJobDuration( job ) );
             jobsData.add( jobData );
         }
 
