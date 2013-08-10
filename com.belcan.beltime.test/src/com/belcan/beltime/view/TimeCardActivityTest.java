@@ -100,7 +100,7 @@ public final class TimeCardActivityTest
 
             final TextView durationTextView = (TextView)row.findViewById( R.id.durationTextView );
             assertNotNull( "expected duration text view", durationTextView ); //$NON-NLS-1$
-            final String expectedDurationTextViewText = displayUtils_.formatJobDuration( job );
+            final String expectedDurationTextViewText = displayUtils_.formatDuration( job );
             assertEquals( "duration text view text", expectedDurationTextViewText, durationTextView.getText() ); //$NON-NLS-1$
         }
     }

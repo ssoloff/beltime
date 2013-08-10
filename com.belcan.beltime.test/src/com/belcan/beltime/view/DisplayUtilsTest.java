@@ -70,69 +70,69 @@ public final class DisplayUtilsTest
     }
 
     /**
-     * Ensures the {@link DisplayUtils#formatJobDuration} method returns the
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is active.
      */
     @SuppressWarnings( "null" )
-    public void testFormatJobDuration_WhenJobActive()
+    public void testFormatDuration_WhenJobActive()
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date() );
 
-        assertEquals( getContext().getString( R.string.displayUtils_job_duration_active ), displayUtils_.formatJobDuration( job ) );
+        assertEquals( getContext().getString( R.string.displayUtils_jobActive ), displayUtils_.formatDuration( job ) );
     }
 
     /**
-     * Ensures the {@link DisplayUtils#formatJobDuration} method returns the
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is inactive and the job duration is zero.
      */
     @SuppressWarnings( "null" )
-    public void testFormatJobDuration_WhenJobInactiveAndDurationZero()
+    public void testFormatDuration_WhenJobInactiveAndDurationZero()
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( 0L ) );
 
-        assertEquals( "0.0", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "0.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link DisplayUtils#formatJobDuration} method returns the
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is inactive and the job duration should not
      * be rounded.
      */
     @SuppressWarnings( "null" )
-    public void testFormatJobDuration_WhenJobInactiveAndDurationShouldNotRound()
+    public void testFormatDuration_WhenJobInactiveAndDurationShouldNotRound()
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR ) );
 
-        assertEquals( "1.0", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "1.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link DisplayUtils#formatJobDuration} method returns the
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is inactive and the job duration should be
      * rounded down.
      */
     @SuppressWarnings( "null" )
-    public void testFormatJobDuration_WhenJobInactiveAndDurationShouldRoundDown()
+    public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundDown()
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
 
-        assertEquals( "0.9", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "0.9", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link DisplayUtils#formatJobDuration} method returns the
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is inactive and the job duration should be
      * rounded up.
      */
     @SuppressWarnings( "null" )
-    public void testFormatJobDuration_WhenJobInactiveAndDurationShouldRoundUp()
+    public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundUp()
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
 
-        assertEquals( "1.1", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "1.1", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 }

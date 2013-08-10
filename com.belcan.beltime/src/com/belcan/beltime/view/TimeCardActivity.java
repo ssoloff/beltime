@@ -93,7 +93,7 @@ public final class TimeCardActivity
             jobData.put( chargeNumberColumnName, job.getChargeNumber() );
             jobData.put( startTimeColumnName, job.getStartTime() );
             jobData.put( stopTimeColumnName, job.isActive() ? getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime() );
-            jobData.put( durationColumnName, displayUtils_.formatJobDuration( job ) );
+            jobData.put( durationColumnName, displayUtils_.formatDuration( job ) );
             jobsData.add( jobData );
         }
 

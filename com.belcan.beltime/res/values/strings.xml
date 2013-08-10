@@ -6,8 +6,8 @@
     <string name="chargeNumberDialog_negativeButton_text">Cancel</string>
     <string name="chargeNumberDialog_positiveButton_text">OK</string>
     <string name="chargeNumberDialog_title">Enter Charge Number</string>
-    <string name="displayUtils_job_duration_active">(active)</string>
-    <string name="displayUtils_job_duration_inactive">%.1f</string>
+    <string name="displayUtils_duration">%.1f</string>
+    <string name="displayUtils_jobActive">(active)</string>
     <string name="startTimeCardActivityButton_text">View Time Card</string>
     <string name="startJobButton_text">Start Job</string>
     <string name="stopJobButton_text">Stop Job</string>

@@ -64,15 +64,15 @@ final class DisplayUtils
      * @return The formatted duration; never {@code null}.
      */
     @SuppressWarnings( "null" )
-    String formatJobDuration(
+    String formatDuration(
         final Job job )
     {
         if( job.isActive() )
         {
-            return context_.getString( R.string.displayUtils_job_duration_active );
+            return context_.getString( R.string.displayUtils_jobActive );
         }
 
-        final double jobDurationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
-        return context_.getString( R.string.displayUtils_job_duration_inactive, Double.valueOf( jobDurationInHours ) );
+        final double durationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
+        return context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) );
     }
 }
