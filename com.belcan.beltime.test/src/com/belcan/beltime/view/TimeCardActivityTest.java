@@ -16,6 +16,7 @@ package com.belcan.beltime.view;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import android.test.UiThreadTest;
 import android.view.View;
@@ -81,7 +82,7 @@ public final class TimeCardActivityTest
         {
             final Job job = jobs.get( index );
             final View row = jobsListView.getChildAt( index );
-            assertNotNull( String.format( "expected item in jobs list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
+            assertNotNull( String.format( Locale.US, "expected item in jobs list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
 
             final TextView chargeNumberTextView = (TextView)row.findViewById( R.id.chargeNumberTextView );
             assertNotNull( "expected charge number text view", chargeNumberTextView ); //$NON-NLS-1$
