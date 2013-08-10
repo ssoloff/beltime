@@ -15,7 +15,6 @@
 package com.belcan.beltime.view;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
@@ -27,6 +26,7 @@ import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TestChargeNumbers;
+import com.belcan.beltime.util.Dates;
 import com.belcan.beltime.util.NullAnalysis;
 import com.jayway.android.robotium.solo.Solo;
 
@@ -153,7 +153,7 @@ public final class TimeCardActivityTest
             @Override
             public void run()
             {
-                getTimeCard().startJob( chargeNumber, new Date() );
+                getTimeCard().startJob( chargeNumber, Dates.now() );
                 jobRef.set( getTimeCard().getActiveJob() );
             }
         } );
