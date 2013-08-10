@@ -14,6 +14,7 @@
 
 package com.belcan.beltime.view;
 
+import java.util.Date;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -108,7 +109,7 @@ public final class MainActivity
                     final int which )
                 {
                     final ChargeNumber chargeNumber = ChargeNumber.fromString( NullAnalysis.nonNull( chargeNumberEditText.getText().toString() ) );
-                    getTimeCard().startJob( chargeNumber );
+                    getTimeCard().startJob( chargeNumber, new Date() );
                 }
             } ) //
             .setTitle( R.string.chargeNumberDialog_title ) //
@@ -144,7 +145,7 @@ public final class MainActivity
     public void onClickStopJob(
         final View view )
     {
-        getTimeCard().stopActiveJob();
+        getTimeCard().stopActiveJob( new Date() );
     }
 
     /*

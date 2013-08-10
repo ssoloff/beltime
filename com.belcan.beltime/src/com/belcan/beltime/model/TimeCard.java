@@ -153,23 +153,6 @@ public final class TimeCard
      * 
      * @param chargeNumber
      *        The charge number to be billed; must not be {@code null}.
-     */
-    public void startJob(
-        final ChargeNumber chargeNumber )
-    {
-        startJob( chargeNumber, new Date() );
-    }
-
-    /**
-     * Starts a new job at the specified time.
-     * 
-     * <p>
-     * If a job is currently active, it will be stopped, and a new job will be
-     * started.
-     * </p>
-     * 
-     * @param chargeNumber
-     *        The charge number to be billed; must not be {@code null}.
      * @param startTime
      *        The time at which work on the new job started; must not be
      *        {@code null}.
@@ -177,8 +160,10 @@ public final class TimeCard
      * @throws java.lang.IllegalArgumentException
      *         If a job is currently active and {@code startTime} is less than
      *         the time at which work on the active job started.
+     * @throws java.lang.NullPointerException
+     *         If {@code chargeNumber} or {@code startTime} is {@code null}.
      */
-    void startJob(
+    public void startJob(
         final ChargeNumber chargeNumber,
         final Date startTime )
     {
@@ -199,17 +184,6 @@ public final class TimeCard
     /**
      * Stops the active job.
      * 
-     * @throws java.lang.IllegalStateException
-     *         If the time card is inactive.
-     */
-    public void stopActiveJob()
-    {
-        stopActiveJob( new Date() );
-    }
-
-    /**
-     * Stops the active job at the specified time.
-     * 
      * @param stopTime
      *        The time at which work on the active job stopped; must not be
      *        {@code null}.
@@ -219,8 +193,10 @@ public final class TimeCard
      *         active job started.
      * @throws java.lang.IllegalStateException
      *         If the time card is inactive.
+     * @throws java.lang.NullPointerException
+     *         If {@code stopTime} is {@code null}.
      */
-    void stopActiveJob(
+    public void stopActiveJob(
         final Date stopTime )
     {
         final Job job = getActiveJob();

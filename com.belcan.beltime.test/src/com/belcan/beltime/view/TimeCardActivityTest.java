@@ -15,6 +15,7 @@
 package com.belcan.beltime.view;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
@@ -152,7 +153,7 @@ public final class TimeCardActivityTest
             @Override
             public void run()
             {
-                getTimeCard().startJob( chargeNumber );
+                getTimeCard().startJob( chargeNumber, new Date() );
                 jobRef.set( getTimeCard().getActiveJob() );
             }
         } );
