@@ -56,6 +56,21 @@ final class DisplayUtils
     // ======================================================================
 
     /**
+     * Formats the charge number of the specified job.
+     * 
+     * @param job
+     *        The job; must not be {@code null}.
+     * 
+     * @return The formatted charge number; never {@code null}.
+     */
+    @SuppressWarnings( "static-method" )
+    String formatChargeNumber(
+        final Job job )
+    {
+        return job.getChargeNumber().toString();
+    }
+
+    /**
      * Formats the duration of the specified job.
      * 
      * @param job
@@ -69,10 +84,47 @@ final class DisplayUtils
     {
         if( job.isActive() )
         {
-            return context_.getString( R.string.displayUtils_jobActive );
+            return context_.getString( R.string.displayUtils_duration_active );
         }
 
         final double durationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
         return context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) );
+    }
+
+    /**
+     * Formats the start time of the specified job.
+     * 
+     * @param job
+     *        The job; must not be {@code null}.
+     * 
+     * @return The formatted start time; never {@code null}.
+     */
+    @SuppressWarnings( {
+        "null", "static-method"
+    } )
+    String formatStartTime(
+        final Job job )
+    {
+        return job.getStartTime().toString();
+    }
+
+    /**
+     * Formats the stop time of the specified job.
+     * 
+     * @param job
+     *        The job; must not be {@code null}.
+     * 
+     * @return The formatted stop time; never {@code null}.
+     */
+    @SuppressWarnings( "null" )
+    String formatStopTime(
+        final Job job )
+    {
+        if( job.isActive() )
+        {
+            return context_.getString( R.string.displayUtils_stopTime_active );
+        }
+
+        return job.getStopTime().toString();
     }
 }

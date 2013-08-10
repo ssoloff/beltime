@@ -89,10 +89,11 @@ public final class TimeCardActivity
         final List<Map<String, Object>> jobsData = new ArrayList<Map<String, Object>>();
         for( final Job job : getTimeCard().getJobs() )
         {
+            assert job != null;
             final Map<String, Object> jobData = new HashMap<String, Object>();
-            jobData.put( chargeNumberColumnName, job.getChargeNumber() );
-            jobData.put( startTimeColumnName, job.getStartTime() );
-            jobData.put( stopTimeColumnName, job.isActive() ? getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime() );
+            jobData.put( chargeNumberColumnName, displayUtils_.formatChargeNumber( job ) );
+            jobData.put( startTimeColumnName, displayUtils_.formatStartTime( job ) );
+            jobData.put( stopTimeColumnName, displayUtils_.formatStopTime( job ) );
             jobData.put( durationColumnName, displayUtils_.formatDuration( job ) );
             jobsData.add( jobData );
         }

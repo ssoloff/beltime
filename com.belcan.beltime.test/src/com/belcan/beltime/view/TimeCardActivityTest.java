@@ -81,21 +81,23 @@ public final class TimeCardActivityTest
         for( int index = 0; index < itemCount; ++index )
         {
             final Job job = jobs.get( index );
+            assert job != null;
             final View row = jobsListView.getChildAt( index );
             assertNotNull( String.format( Locale.US, "expected item in jobs list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
 
             final TextView chargeNumberTextView = (TextView)row.findViewById( R.id.chargeNumberTextView );
             assertNotNull( "expected charge number text view", chargeNumberTextView ); //$NON-NLS-1$
-            assertEquals( "charge number text view text", job.getChargeNumber().toString(), chargeNumberTextView.getText() ); //$NON-NLS-1$
+            final String expectedChargeNumberTextViewText = displayUtils_.formatChargeNumber( job );
+            assertEquals( "charge number text view text", expectedChargeNumberTextViewText, chargeNumberTextView.getText() ); //$NON-NLS-1$
 
             final TextView startTimeTextView = (TextView)row.findViewById( R.id.startTimeTextView );
             assertNotNull( "expected start time text view", startTimeTextView ); //$NON-NLS-1$
-            final String expectedStartTimeTextViewText = job.getStartTime().toString();
+            final String expectedStartTimeTextViewText = displayUtils_.formatStartTime( job );
             assertEquals( "start time text view text", expectedStartTimeTextViewText, startTimeTextView.getText() ); //$NON-NLS-1$
 
             final TextView stopTimeTextView = (TextView)row.findViewById( R.id.stopTimeTextView );
             assertNotNull( "expected stop time text view", stopTimeTextView ); //$NON-NLS-1$
-            final String expectedStopTimeTextViewText = job.isActive() ? solo_.getString( R.string.timeCardActivity_jobStopTime_active ) : job.getStopTime().toString();
+            final String expectedStopTimeTextViewText = displayUtils_.formatStopTime( job );
             assertEquals( "stop time text view text", expectedStopTimeTextViewText, stopTimeTextView.getText() ); //$NON-NLS-1$
 
             final TextView durationTextView = (TextView)row.findViewById( R.id.durationTextView );

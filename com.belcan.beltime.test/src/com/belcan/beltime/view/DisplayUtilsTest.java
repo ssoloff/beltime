@@ -39,6 +39,9 @@ public final class DisplayUtilsTest
     /** The job start time for use in the fixture. */
     private static final Date START_TIME = new Date( 0L );
 
+    /** The job stop time for use in the fixture. */
+    private static final Date STOP_TIME = new Date( 86400000L );
+
     /** The display utilities under test in the fixture. */
     private DisplayUtils displayUtils_;
 
@@ -73,6 +76,18 @@ public final class DisplayUtilsTest
     }
 
     /**
+     * Ensures the {@link DisplayUtils#formatChargeNumber} method returns the
+     * expected value.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatChargeNumber()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+
+        assertEquals( TestChargeNumbers.CHARGE_NUMBER_1.toString(), displayUtils_.formatChargeNumber( job ) );
+    }
+
+    /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
      * expected value when the job is active.
      */
@@ -81,7 +96,7 @@ public final class DisplayUtilsTest
     {
         final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
-        assertEquals( getContext().getString( R.string.displayUtils_jobActive ), displayUtils_.formatDuration( job ) );
+        assertEquals( getContext().getString( R.string.displayUtils_duration_active ), displayUtils_.formatDuration( job ) );
     }
 
     /**
@@ -137,5 +152,55 @@ public final class DisplayUtilsTest
         job.stop( START_TIME );
 
         assertEquals( "0.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link DisplayUtils#formatStartTime} method returns the
+     * expected value when the job is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatStartTime_WhenJobActive()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+
+        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( job ) );
+    }
+
+    /**
+     * Ensures the {@link DisplayUtils#formatStartTime} method returns the
+     * expected value when the job is inactive.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatStartTime_WhenJobInactive()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( STOP_TIME );
+
+        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( job ) );
+    }
+
+    /**
+     * Ensures the {@link DisplayUtils#formatStopTime} method returns the
+     * expected value when the job is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatStopTime_WhenJobActive()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+
+        assertEquals( getContext().getString( R.string.displayUtils_stopTime_active ), displayUtils_.formatStopTime( job ) );
+    }
+
+    /**
+     * Ensures the {@link DisplayUtils#formatStopTime} method returns the
+     * expected value when the job is inactive.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatStopTime_WhenJobInactive()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( STOP_TIME );
+
+        assertEquals( STOP_TIME.toString(), displayUtils_.formatStopTime( job ) );
     }
 }
