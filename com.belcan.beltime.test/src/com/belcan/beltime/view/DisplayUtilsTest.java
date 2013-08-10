@@ -17,8 +17,8 @@ package com.belcan.beltime.view;
 import java.util.Date;
 import android.test.AndroidTestCase;
 import com.belcan.beltime.R;
-import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.TestChargeNumbers;
 
 /**
  * A fixture for testing the {@link DisplayUtils} class.
@@ -29,9 +29,6 @@ public final class DisplayUtilsTest
     // ======================================================================
     // Fields
     // ======================================================================
-
-    /** The charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
 
     /** The number of milliseconds per decihour. */
     private static final long MILLISECONDS_PER_DECIHOUR = 8640000L;
@@ -79,7 +76,7 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatJobDuration_WhenJobActive()
     {
-        final Job job = Job.start( CHARGE_NUMBER, new Date() );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date() );
 
         assertEquals( getContext().getString( R.string.displayUtils_job_duration_active ), displayUtils_.formatJobDuration( job ) );
     }
@@ -91,7 +88,7 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatJobDuration_WhenJobInactiveAndDurationZero()
     {
-        final Job job = Job.start( CHARGE_NUMBER, new Date( 0L ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( 0L ) );
 
         assertEquals( "0.0", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
@@ -105,7 +102,7 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatJobDuration_WhenJobInactiveAndDurationShouldNotRound()
     {
-        final Job job = Job.start( CHARGE_NUMBER, new Date( 0L ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR ) );
 
         assertEquals( "1.0", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
@@ -119,7 +116,7 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatJobDuration_WhenJobInactiveAndDurationShouldRoundDown()
     {
-        final Job job = Job.start( CHARGE_NUMBER, new Date( 0L ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
 
         assertEquals( "0.9", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$
@@ -133,7 +130,7 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatJobDuration_WhenJobInactiveAndDurationShouldRoundUp()
     {
-        final Job job = Job.start( CHARGE_NUMBER, new Date( 0L ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
         job.stop( new Date( MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
 
         assertEquals( "1.1", displayUtils_.formatJobDuration( job ) ); //$NON-NLS-1$

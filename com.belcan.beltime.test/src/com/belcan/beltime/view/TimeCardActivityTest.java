@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.TestChargeNumbers;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -35,12 +36,6 @@ public final class TimeCardActivityTest
     // ======================================================================
     // Fields
     // ======================================================================
-
-    /** The first charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER_1 = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
-
-    /** The second charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
     /** The display utilities for use in the fixture. */
     private DisplayUtils displayUtils_;
@@ -190,8 +185,8 @@ public final class TimeCardActivityTest
     @SuppressWarnings( "null" )
     public void testStartJob_UpdatesJobsListView()
     {
-        final Job job1 = startJob( CHARGE_NUMBER_1 );
-        final Job job2 = startJob( CHARGE_NUMBER_2 );
+        final Job job1 = startJob( TestChargeNumbers.CHARGE_NUMBER_1 );
+        final Job job2 = startJob( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {

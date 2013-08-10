@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
+import com.belcan.beltime.model.TestChargeNumbers;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -30,12 +31,6 @@ public final class MainActivityTest
     // ======================================================================
     // Fields
     // ======================================================================
-
-    /** The first charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER_1 = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
-
-    /** The second charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER_2 = ChargeNumber.fromString( "87654321.4321" ); //$NON-NLS-1$
 
     /** The Robotium manager. */
     private Solo solo_;
@@ -83,7 +78,7 @@ public final class MainActivityTest
     @SuppressWarnings( "null" )
     private void clickStartJobAndInputChargeNumber()
     {
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
     }
 
     /**
@@ -220,8 +215,8 @@ public final class MainActivityTest
     @SuppressWarnings( "null" )
     public void testClickStartJobButton_ChangesActiveJobStatusTextViewsToReflectNewJobWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -281,8 +276,8 @@ public final class MainActivityTest
     @SuppressWarnings( "null" )
     public void testClickStartJobButton_DoesNotChangeTimeCardStatusTextViewWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -358,18 +353,17 @@ public final class MainActivityTest
     @SuppressWarnings( "null" )
     public void testClickStartJobButton_StartsNewJobWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( CHARGE_NUMBER_2 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
             @Override
-            @SuppressWarnings( "synthetic-access" )
             public void run()
             {
                 assertTrue( "expected time card to be active but was inactive", getTimeCard().isActive() ); //$NON-NLS-1$
                 assertEquals( "time card job count", 2, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-                assertEquals( "latest time card job charge number", CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
+                assertEquals( "latest time card job charge number", TestChargeNumbers.CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
             }
         } );
     }
@@ -385,12 +379,11 @@ public final class MainActivityTest
         runTestOnUiThread( new Runnable()
         {
             @Override
-            @SuppressWarnings( "synthetic-access" )
             public void run()
             {
                 assertTrue( "expected time card to be active but was inactive", getTimeCard().isActive() ); //$NON-NLS-1$
                 assertEquals( "time card job count", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-                assertEquals( "latest time card job charge number", CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
+                assertEquals( "latest time card job charge number", TestChargeNumbers.CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
             }
         } );
     }

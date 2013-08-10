@@ -27,9 +27,6 @@ public final class JobTest
     // Fields
     // ======================================================================
 
-    /** The charge number for use in the fixture. */
-    private static final ChargeNumber CHARGE_NUMBER = ChargeNumber.fromString( "12345678.1234" ); //$NON-NLS-1$
-
     /** The start time for use in the fixture. */
     private static final Date START_TIME = new Date( 0L );
 
@@ -66,7 +63,7 @@ public final class JobTest
     {
         super.setUp();
 
-        job_ = Job.start( CHARGE_NUMBER, START_TIME );
+        job_ = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
     }
 
     /**
@@ -152,7 +149,7 @@ public final class JobTest
     {
         final Date startTime = new Date( START_TIME.getTime() );
 
-        final Job job = Job.start( CHARGE_NUMBER, startTime );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, startTime );
         startTime.setTime( Long.MAX_VALUE );
 
         assertEquals( START_TIME, job.getStartTime() );
