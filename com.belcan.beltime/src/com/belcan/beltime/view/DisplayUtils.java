@@ -28,7 +28,7 @@ final class DisplayUtils
     // ======================================================================
 
     /** The number of milliseconds per hour. */
-    private static final double MILLISECONDS_PER_HOUR = 86400000.0;
+    private static final double MILLISECONDS_PER_HOUR = 60.0 * 60.0 * 1000.0;
 
     /** The application context. */
     private final Context context_;

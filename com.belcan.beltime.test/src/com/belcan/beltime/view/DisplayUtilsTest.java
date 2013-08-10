@@ -30,11 +30,14 @@ public final class DisplayUtilsTest
     // Fields
     // ======================================================================
 
-    /** The number of milliseconds per decihour. */
-    private static final long MILLISECONDS_PER_DECIHOUR = 8640000L;
-
     /** The number of milliseconds per hour. */
-    private static final long MILLISECONDS_PER_HOUR = 86400000L;
+    private static final long MILLISECONDS_PER_HOUR = 60L * 60L * 1000L;
+
+    /** The number of milliseconds per decihour. */
+    private static final long MILLISECONDS_PER_DECIHOUR = MILLISECONDS_PER_HOUR / 10L;
+
+    /** The job start time for use in the fixture. */
+    private static final Date START_TIME = new Date( 0L );
 
     /** The display utilities under test in the fixture. */
     private DisplayUtils displayUtils_;
@@ -76,22 +79,9 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatDuration_WhenJobActive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date() );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
         assertEquals( getContext().getString( R.string.displayUtils_jobActive ), displayUtils_.formatDuration( job ) );
-    }
-
-    /**
-     * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is inactive and the job duration is zero.
-     */
-    @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobInactiveAndDurationZero()
-    {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
-        job.stop( new Date( 0L ) );
-
-        assertEquals( "0.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 
     /**
@@ -102,8 +92,8 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatDuration_WhenJobInactiveAndDurationShouldNotRound()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
-        job.stop( new Date( MILLISECONDS_PER_HOUR ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR ) );
 
         assertEquals( "1.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
@@ -116,8 +106,8 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundDown()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
-        job.stop( new Date( MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
 
         assertEquals( "0.9", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
@@ -130,9 +120,22 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundUp()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( 0L ) );
-        job.stop( new Date( MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
 
         assertEquals( "1.1", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link DisplayUtils#formatDuration} method returns the
+     * expected value when the job is inactive and the job duration is zero.
+     */
+    @SuppressWarnings( "null" )
+    public void testFormatDuration_WhenJobInactiveAndDurationZero()
+    {
+        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        job.stop( START_TIME );
+
+        assertEquals( "0.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
     }
 }
