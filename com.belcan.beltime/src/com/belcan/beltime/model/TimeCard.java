@@ -157,20 +157,42 @@ public final class TimeCard
     public void startJob(
         final ChargeNumber chargeNumber )
     {
-        final Date currentTime = new Date();
+        startJob( chargeNumber, new Date() );
+    }
 
-        final Job oldJob = getActiveJobOrNull();
-        if( oldJob != null )
+    /**
+     * Starts a new job at the specified time.
+     * 
+     * <p>
+     * If a job is currently active, it will be stopped, and a new job will be
+     * started.
+     * </p>
+     * 
+     * @param chargeNumber
+     *        The charge number to be billed; must not be {@code null}.
+     * @param startTime
+     *        The time at which work on the new job started; must not be
+     *        {@code null}.
+     * 
+     * @throws java.lang.IllegalArgumentException
+     *         If a job is currently active and {@code startTime} is less than
+     *         the time at which work on the active job started.
+     */
+    void startJob(
+        final ChargeNumber chargeNumber,
+        final Date startTime )
+    {
+        if( isActive() )
         {
-            stopJob( oldJob, currentTime );
+            stopActiveJob( startTime );
         }
 
-        final Job newJob = Job.start( chargeNumber, currentTime );
-        jobs_.add( newJob );
+        final Job job = Job.start( chargeNumber, startTime );
+        jobs_.add( job );
 
         if( listener_ != null )
         {
-            listener_.onJobStarted( this, newJob );
+            listener_.onJobStarted( this, job );
         }
     }
 
@@ -182,22 +204,26 @@ public final class TimeCard
      */
     public void stopActiveJob()
     {
-        stopJob( getActiveJob(), new Date() );
+        stopActiveJob( new Date() );
     }
 
     /**
-     * Stops the specified job.
+     * Stops the active job at the specified time.
      * 
-     * @param job
-     *        The job; must not be {@code null}.
      * @param stopTime
-     *        The time at which work on the job stopped; must not be
+     *        The time at which work on the active job stopped; must not be
      *        {@code null}.
+     * 
+     * @throws java.lang.IllegalArgumentException
+     *         If {@code stopTime} is less than the time at which work on the
+     *         active job started.
+     * @throws java.lang.IllegalStateException
+     *         If the time card is inactive.
      */
-    private void stopJob(
-        final Job job,
+    void stopActiveJob(
         final Date stopTime )
     {
+        final Job job = getActiveJob();
         job.stop( stopTime );
 
         if( listener_ != null )
