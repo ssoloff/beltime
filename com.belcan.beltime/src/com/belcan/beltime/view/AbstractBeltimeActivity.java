@@ -16,6 +16,7 @@ package com.belcan.beltime.view;
 
 import android.app.Activity;
 import com.belcan.beltime.model.TimeCard;
+import com.belcan.beltime.util.NullAnalysis;
 
 /**
  * Superclass for all activities in the Beltime application.
@@ -44,10 +45,9 @@ public abstract class AbstractBeltimeActivity
      * 
      * @return The Beltime application; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     final BeltimeApplication getBeltimeApplication()
     {
-        return (BeltimeApplication)getApplication();
+        return NullAnalysis.nonNull( (BeltimeApplication)getApplication() );
     }
 
     /**

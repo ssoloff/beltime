@@ -26,6 +26,7 @@ import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TestChargeNumbers;
+import com.belcan.beltime.util.NullAnalysis;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -112,17 +113,15 @@ public final class TimeCardActivityTest
      * 
      * @return The jobs list view; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private ListView getJobsListView()
     {
-        return (ListView)solo_.getView( R.id.jobsListView );
+        return NullAnalysis.nonNull( (ListView)solo_.getView( R.id.jobsListView ) );
     }
 
     /*
      * @see android.test.ActivityInstrumentationTestCase2#setUp()
      */
     @Override
-    @SuppressWarnings( "null" )
     protected void setUp()
         throws Exception
     {
@@ -130,7 +129,7 @@ public final class TimeCardActivityTest
 
         setActivityInitialTouchMode( false );
 
-        displayUtils_ = new DisplayUtils( getActivity() );
+        displayUtils_ = new DisplayUtils( NullAnalysis.nonNull( getActivity() ) );
         solo_ = new Solo( getInstrumentation(), getActivity() );
 
         resetTimeCard();
@@ -144,7 +143,6 @@ public final class TimeCardActivityTest
      * 
      * @return The job that was started; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private Job startJob(
         final ChargeNumber chargeNumber )
     {
@@ -158,7 +156,7 @@ public final class TimeCardActivityTest
                 jobRef.set( getTimeCard().getActiveJob() );
             }
         } );
-        return jobRef.get();
+        return NullAnalysis.nonNull( jobRef.get() );
     }
 
     /*

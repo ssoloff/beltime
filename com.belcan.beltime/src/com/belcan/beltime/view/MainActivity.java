@@ -28,6 +28,7 @@ import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.ITimeCardListener;
 import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TimeCard;
+import com.belcan.beltime.util.NullAnalysis;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
@@ -106,8 +107,7 @@ public final class MainActivity
                     final DialogInterface dialog,
                     final int which )
                 {
-                    @SuppressWarnings( "null" )
-                    final ChargeNumber chargeNumber = ChargeNumber.fromString( chargeNumberEditText.getText().toString() );
+                    final ChargeNumber chargeNumber = ChargeNumber.fromString( NullAnalysis.nonNull( chargeNumberEditText.getText().toString() ) );
                     getTimeCard().startJob( chargeNumber );
                 }
             } ) //

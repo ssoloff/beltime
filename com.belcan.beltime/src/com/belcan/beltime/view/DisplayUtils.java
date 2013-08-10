@@ -17,6 +17,7 @@ package com.belcan.beltime.view;
 import android.content.Context;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.Job;
+import com.belcan.beltime.util.NullAnalysis;
 
 /**
  * A collection of useful methods for formatting objects for display.
@@ -78,17 +79,16 @@ final class DisplayUtils
      * 
      * @return The formatted duration; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     String formatDuration(
         final Job job )
     {
         if( job.isActive() )
         {
-            return context_.getString( R.string.displayUtils_duration_active );
+            return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration_active ) );
         }
 
         final double durationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
-        return context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) );
+        return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) ) );
     }
 
     /**
@@ -99,13 +99,11 @@ final class DisplayUtils
      * 
      * @return The formatted start time; never {@code null}.
      */
-    @SuppressWarnings( {
-        "null", "static-method"
-    } )
+    @SuppressWarnings( "static-method" )
     String formatStartTime(
         final Job job )
     {
-        return job.getStartTime().toString();
+        return NullAnalysis.nonNull( job.getStartTime().toString() );
     }
 
     /**
@@ -116,15 +114,14 @@ final class DisplayUtils
      * 
      * @return The formatted stop time; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     String formatStopTime(
         final Job job )
     {
         if( job.isActive() )
         {
-            return context_.getString( R.string.displayUtils_stopTime_active );
+            return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_stopTime_active ) );
         }
 
-        return job.getStopTime().toString();
+        return NullAnalysis.nonNull( job.getStopTime().toString() );
     }
 }

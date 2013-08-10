@@ -19,6 +19,7 @@ import android.test.AndroidTestCase;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TestChargeNumbers;
+import com.belcan.beltime.util.NullAnalysis;
 
 /**
  * A fixture for testing the {@link DisplayUtils} class.
@@ -66,13 +67,12 @@ public final class DisplayUtilsTest
      * @see android.test.AndroidTestCase#setUp()
      */
     @Override
-    @SuppressWarnings( "null" )
     protected void setUp()
         throws Exception
     {
         super.setUp();
 
-        displayUtils_ = new DisplayUtils( getContext() );
+        displayUtils_ = new DisplayUtils( NullAnalysis.nonNull( getContext() ) );
     }
 
     /**

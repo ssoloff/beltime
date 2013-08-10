@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.belcan.beltime.R;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.TestChargeNumbers;
+import com.belcan.beltime.util.NullAnalysis;
 import com.jayway.android.robotium.solo.Solo;
 
 /**
@@ -119,10 +120,9 @@ public final class MainActivityTest
      * 
      * @return The active job charge number text view; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private TextView getActiveJobChargeNumberTextView()
     {
-        return (TextView)solo_.getView( R.id.activeJobChargeNumberTextView );
+        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeJobChargeNumberTextView ) );
     }
 
     /**
@@ -130,10 +130,9 @@ public final class MainActivityTest
      * 
      * @return The active job start time text view; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private TextView getActiveJobStartTimeTextView()
     {
-        return (TextView)solo_.getView( R.id.activeJobStartTimeTextView );
+        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeJobStartTimeTextView ) );
     }
 
     /**
@@ -141,10 +140,9 @@ public final class MainActivityTest
      * 
      * @return The start job button; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private View getStartJobButton()
     {
-        return solo_.getView( R.id.startJobButton );
+        return NullAnalysis.nonNull( solo_.getView( R.id.startJobButton ) );
     }
 
     /**
@@ -152,10 +150,9 @@ public final class MainActivityTest
      * 
      * @return The start time card activity button; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private View getStartTimeCardActivityButton()
     {
-        return solo_.getView( R.id.startTimeCardActivityButton );
+        return NullAnalysis.nonNull( solo_.getView( R.id.startTimeCardActivityButton ) );
     }
 
     /**
@@ -163,10 +160,9 @@ public final class MainActivityTest
      * 
      * @return The stop job button; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private View getStopJobButton()
     {
-        return solo_.getView( R.id.stopJobButton );
+        return NullAnalysis.nonNull( solo_.getView( R.id.stopJobButton ) );
     }
 
     /**
@@ -174,10 +170,9 @@ public final class MainActivityTest
      * 
      * @return The time card status text view; never {@code null}.
      */
-    @SuppressWarnings( "null" )
     private TextView getTimeCardStatusTextView()
     {
-        return (TextView)solo_.getView( R.id.timeCardStatusTextView );
+        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.timeCardStatusTextView ) );
     }
 
     /*
