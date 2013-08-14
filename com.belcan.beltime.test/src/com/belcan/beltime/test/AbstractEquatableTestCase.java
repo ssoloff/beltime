@@ -93,7 +93,7 @@ public abstract class AbstractEquatableTestCase<T>
         throws Exception;
 
     /*
-     * @see android.test.AndroidTestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     @Override
     protected void setUp()

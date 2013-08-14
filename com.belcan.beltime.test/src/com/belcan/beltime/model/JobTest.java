@@ -54,7 +54,7 @@ public final class JobTest
     // ======================================================================
 
     /*
-     * @see android.test.AndroidTestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     @Override
     @SuppressWarnings( "null" )

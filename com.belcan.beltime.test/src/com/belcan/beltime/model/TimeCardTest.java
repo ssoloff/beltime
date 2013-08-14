@@ -57,7 +57,7 @@ public final class TimeCardTest
     // ======================================================================
 
     /*
-     * @see android.test.AndroidTestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     @Override
     protected void setUp()
