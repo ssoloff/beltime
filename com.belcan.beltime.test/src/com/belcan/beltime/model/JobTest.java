@@ -104,7 +104,7 @@ public final class JobTest
     {
         final Date startTime = job_.getStartTime();
         final Date expectedStartTime = new Date( startTime.getTime() );
-        startTime.setTime( 0L );
+        startTime.setTime( startTime.getTime() + 1L );
 
         assertEquals( expectedStartTime, job_.getStartTime() );
     }
@@ -119,7 +119,7 @@ public final class JobTest
         job_.stop( STOP_TIME );
         final Date stopTime = job_.getStopTime();
         final Date expectedStopTime = new Date( stopTime.getTime() );
-        stopTime.setTime( 0L );
+        stopTime.setTime( stopTime.getTime() + 1L );
 
         assertEquals( expectedStopTime, job_.getStopTime() );
     }
