@@ -59,7 +59,7 @@ public final class TimeCard
     /**
      * Gets the active job.
      * 
-     * @return The active job; never {@code null}.
+     * @return The active job.
      * 
      * @throws java.lang.IllegalStateException
      *         If the time card is inactive.
@@ -99,7 +99,7 @@ public final class TimeCard
      * Gets the collection of jobs in chronological order. The active job, if
      * any, will be the the last entry.
      * 
-     * @return The collection of jobs; never {@code null}.
+     * @return The collection of jobs.
      */
     public List<Job> getJobs()
     {
@@ -152,16 +152,13 @@ public final class TimeCard
      * </p>
      * 
      * @param chargeNumber
-     *        The charge number to be billed; must not be {@code null}.
+     *        The charge number to be billed.
      * @param startTime
-     *        The time at which work on the new job started; must not be
-     *        {@code null}.
+     *        The time at which work on the new job started.
      * 
      * @throws java.lang.IllegalArgumentException
      *         If a job is currently active and {@code startTime} is less than
      *         the time at which work on the active job started.
-     * @throws java.lang.NullPointerException
-     *         If {@code chargeNumber} or {@code startTime} is {@code null}.
      */
     public void startJob(
         final ChargeNumber chargeNumber,
@@ -185,16 +182,13 @@ public final class TimeCard
      * Stops the active job.
      * 
      * @param stopTime
-     *        The time at which work on the active job stopped; must not be
-     *        {@code null}.
+     *        The time at which work on the active job stopped.
      * 
      * @throws java.lang.IllegalArgumentException
      *         If {@code stopTime} is less than the time at which work on the
      *         active job started.
      * @throws java.lang.IllegalStateException
      *         If the time card is inactive.
-     * @throws java.lang.NullPointerException
-     *         If {@code stopTime} is {@code null}.
      */
     public void stopActiveJob(
         final Date stopTime )

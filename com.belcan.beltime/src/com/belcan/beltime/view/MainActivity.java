@@ -79,10 +79,7 @@ public final class MainActivity
      * Called when the start job button has been clicked.
      * 
      * @param view
-     *        The start job button; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code view} is {@code null}.
+     *        The start job button.
      */
     public void onClickStartJob(
         final View view )
@@ -122,10 +119,7 @@ public final class MainActivity
      * Called when the start time card activity button has been clicked.
      * 
      * @param view
-     *        The start time card activity button; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code view} is {@code null}.
+     *        The start time card activity button.
      */
     public void onClickStartTimeCardActivity(
         final View view )
@@ -137,10 +131,7 @@ public final class MainActivity
      * Called when the stop job button has been clicked.
      * 
      * @param view
-     *        The stop job button; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code view} is {@code null}.
+     *        The stop job button.
      */
     public void onClickStopJob(
         final View view )

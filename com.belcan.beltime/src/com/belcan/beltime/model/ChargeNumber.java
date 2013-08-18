@@ -41,7 +41,7 @@ public final class ChargeNumber
      * Initializes a new instance of the {@code ChargeNumber} class.
      * 
      * @param value
-     *        The charge number encoded as a string; must not be {@code null}.
+     *        The charge number encoded as a string.
      */
     private ChargeNumber(
         final String value )
@@ -81,13 +81,9 @@ public final class ChargeNumber
      * specified string representation.
      * 
      * @param value
-     *        The charge number encoded as a string; must not be {@code null}.
+     *        The charge number encoded as a string.
      * 
-     * @return A new instance of the {@code ChargeNumber} class; never
-     *         {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code value} is {@code null}.
+     * @return A new instance of the {@code ChargeNumber} class.
      */
     public static ChargeNumber fromString(
         final String value )

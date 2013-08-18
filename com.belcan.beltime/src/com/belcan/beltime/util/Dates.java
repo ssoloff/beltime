@@ -40,7 +40,7 @@ public final class Dates
     /**
      * Gets a date that represents the current time.
      * 
-     * @return The current time; never {@code null}.
+     * @return The current time.
      */
     public static Date now()
     {

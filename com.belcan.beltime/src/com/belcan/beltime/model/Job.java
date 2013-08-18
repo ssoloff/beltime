@@ -44,10 +44,9 @@ public final class Job
      * Initializes a new instance of the {@code Job} class.
      * 
      * @param chargeNumber
-     *        The charge number to be billed; must not be {@code null}.
+     *        The charge number to be billed.
      * @param startTime
-     *        The time at which work on the job started; must not be
-     *        {@code null}.
+     *        The time at which work on the job started.
      */
     private Job(
         final ChargeNumber chargeNumber,
@@ -66,7 +65,7 @@ public final class Job
     /**
      * Gets the charge number to be billed.
      * 
-     * @return The charge number to be billed; never {@code null}.
+     * @return The charge number to be billed.
      */
     @SuppressWarnings( "null" )
     public ChargeNumber getChargeNumber()
@@ -77,7 +76,7 @@ public final class Job
     /**
      * Gets the duration of the job.
      * 
-     * @return The duration of the job; never {@code null}.
+     * @return The duration of the job.
      * 
      * @throws java.lang.IllegalStateException
      *         If the job is active.
@@ -95,7 +94,7 @@ public final class Job
     /**
      * Gets the time at which work on the job started.
      * 
-     * @return The time at which work on the job started; never {@code null}.
+     * @return The time at which work on the job started.
      */
     public Date getStartTime()
     {
@@ -105,7 +104,7 @@ public final class Job
     /**
      * Gets the time at which work on the job stopped.
      * 
-     * @return The time at which work on the job stopped; never {@code null}.
+     * @return The time at which work on the job stopped.
      * 
      * @throws java.lang.IllegalStateException
      *         If the job is active.
@@ -134,15 +133,11 @@ public final class Job
      * Starts a new job.
      * 
      * @param chargeNumber
-     *        The charge number to be billed; must not be {@code null}.
+     *        The charge number to be billed.
      * @param startTime
-     *        The time at which work on the job started; must not be
-     *        {@code null}.
+     *        The time at which work on the job started.
      * 
-     * @return A new job; never {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code chargeNumber} or {@code startTime} is {@code null}.
+     * @return A new job.
      */
     public static Job start(
         final ChargeNumber chargeNumber,
@@ -155,16 +150,13 @@ public final class Job
      * Stops the job.
      * 
      * @param stopTime
-     *        The time at which work on the job stopped; must not be
-     *        {@code null}.
+     *        The time at which work on the job stopped.
      * 
      * @throws java.lang.IllegalArgumentException
      *         If {@code stopTime} is less than the time at which work on the
      *         job started.
      * @throws java.lang.IllegalStateException
      *         If the job is inactive.
-     * @throws java.lang.NullPointerException
-     *         If {@code stopTime} is {@code null}.
      */
     public void stop(
         final Date stopTime )

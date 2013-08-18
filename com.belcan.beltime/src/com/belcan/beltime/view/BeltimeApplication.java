@@ -51,7 +51,7 @@ public final class BeltimeApplication
     /**
      * Gets the time card.
      * 
-     * @return The time card; never {@code null}.
+     * @return The time card.
      */
     @SuppressWarnings( "null" )
     TimeCard getTimeCard()

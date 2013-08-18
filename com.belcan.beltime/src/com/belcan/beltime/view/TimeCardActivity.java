@@ -65,7 +65,7 @@ public final class TimeCardActivity
     /**
      * Creates the adapter for the jobs list view.
      * 
-     * @return The adapter for the jobs list view; never {@code null}.
+     * @return The adapter for the jobs list view.
      */
     private ListAdapter createJobsAdapter()
     {

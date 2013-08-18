@@ -43,7 +43,7 @@ public abstract class AbstractBeltimeActivity
     /**
      * Gets the Beltime application.
      * 
-     * @return The Beltime application; never {@code null}.
+     * @return The Beltime application.
      */
     final BeltimeApplication getBeltimeApplication()
     {
@@ -53,7 +53,7 @@ public abstract class AbstractBeltimeActivity
     /**
      * Gets the time card.
      * 
-     * @return The time card; never {@code null}.
+     * @return The time card.
      */
     final TimeCard getTimeCard()
     {

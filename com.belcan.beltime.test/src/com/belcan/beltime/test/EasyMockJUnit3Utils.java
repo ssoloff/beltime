@@ -42,10 +42,8 @@ public final class EasyMockJUnit3Utils
      * Verifies that all expectations were met in the specified mocks control.
      * 
      * @param mocksControl
-     *        The mocks control; must not be {@code null}.
+     *        The mocks control.
      * 
-     * @throws java.lang.NullPointerException
-     *         If {@code mocksControl} is {@code null}.
      * @throws junit.framework.AssertionFailedError
      *         If an expectation is not met.
      */

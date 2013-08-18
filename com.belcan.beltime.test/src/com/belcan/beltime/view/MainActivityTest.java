@@ -86,7 +86,7 @@ public final class MainActivityTest
      * Clicks the start job button and inputs the specified charge number.
      * 
      * @param chargeNumber
-     *        The charge number; must not be {@code null}.
+     *        The charge number.
      */
     private void clickStartJobAndInputChargeNumber(
         final ChargeNumber chargeNumber )
@@ -118,7 +118,7 @@ public final class MainActivityTest
     /**
      * Gets the active job charge number text view.
      * 
-     * @return The active job charge number text view; never {@code null}.
+     * @return The active job charge number text view.
      */
     private TextView getActiveJobChargeNumberTextView()
     {
@@ -128,7 +128,7 @@ public final class MainActivityTest
     /**
      * Gets the active job start time text view.
      * 
-     * @return The active job start time text view; never {@code null}.
+     * @return The active job start time text view.
      */
     private TextView getActiveJobStartTimeTextView()
     {
@@ -138,7 +138,7 @@ public final class MainActivityTest
     /**
      * Gets the start job button.
      * 
-     * @return The start job button; never {@code null}.
+     * @return The start job button.
      */
     private View getStartJobButton()
     {
@@ -148,7 +148,7 @@ public final class MainActivityTest
     /**
      * Gets the start time card activity button.
      * 
-     * @return The start time card activity button; never {@code null}.
+     * @return The start time card activity button.
      */
     private View getStartTimeCardActivityButton()
     {
@@ -158,7 +158,7 @@ public final class MainActivityTest
     /**
      * Gets the stop job button.
      * 
-     * @return The stop job button; never {@code null}.
+     * @return The stop job button.
      */
     private View getStopJobButton()
     {
@@ -168,7 +168,7 @@ public final class MainActivityTest
     /**
      * Gets the time card status text view.
      * 
-     * @return The time card status text view; never {@code null}.
+     * @return The time card status text view.
      */
     private TextView getTimeCardStatusTextView()
     {

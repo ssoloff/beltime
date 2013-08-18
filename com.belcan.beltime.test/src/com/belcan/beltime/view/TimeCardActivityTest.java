@@ -68,7 +68,7 @@ public final class TimeCardActivityTest
      * Asserts that the jobs list view contains each of the specified jobs.
      * 
      * @param jobs
-     *        The collection of jobs; must not be {@code null}.
+     *        The collection of jobs.
      * 
      * @throws junit.framework.AssertionFailedError
      *         If the jobs list view does not contain the specified jobs.
@@ -112,7 +112,7 @@ public final class TimeCardActivityTest
     /**
      * Gets the jobs list view.
      * 
-     * @return The jobs list view; never {@code null}.
+     * @return The jobs list view.
      */
     private ListView getJobsListView()
     {
@@ -140,9 +140,9 @@ public final class TimeCardActivityTest
      * Starts a new job with the specified charge number.
      * 
      * @param chargeNumber
-     *        The charge number; must not be {@code null}.
+     *        The charge number.
      * 
-     * @return The job that was started; never {@code null}.
+     * @return The job that was started.
      */
     private Job startJob(
         final ChargeNumber chargeNumber )

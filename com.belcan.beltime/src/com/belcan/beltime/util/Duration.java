@@ -79,7 +79,7 @@ public final class Duration
      * @param milliseconds
      *        The duration value in milliseconds.
      * 
-     * @return A new instance of the {@code Duration} class; never {@code null}.
+     * @return A new instance of the {@code Duration} class.
      */
     public static Duration fromMilliseconds(
         final long milliseconds )

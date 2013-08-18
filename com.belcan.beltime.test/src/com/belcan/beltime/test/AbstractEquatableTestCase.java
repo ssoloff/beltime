@@ -65,7 +65,7 @@ public abstract class AbstractEquatableTestCase<T>
      * other instance returned by this method.
      * </p>
      * 
-     * @return A reference instance; never {@code null}.
+     * @return A reference instance.
      * 
      * @throws java.lang.Exception
      *         If an error occurs.
@@ -84,7 +84,7 @@ public abstract class AbstractEquatableTestCase<T>
      * </p>
      * 
      * @return A collection of instances that are unequal to the reference
-     *         instance; never {@code null}.
+     *         instance.
      * 
      * @throws java.lang.Exception
      *         If an error occurs.

@@ -38,10 +38,7 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
      * {@code AbstractBeltimeActivityInstrumentationTestCase} class.
      * 
      * @param activityClass
-     *        The class of the activity to test; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code activityClass} is {@code null}.
+     *        The class of the activity to test.
      */
     AbstractBeltimeActivityInstrumentationTestCase(
         final Class<T> activityClass )
@@ -57,7 +54,7 @@ public class AbstractBeltimeActivityInstrumentationTestCase<T extends AbstractBe
     /**
      * Gets the application time card.
      * 
-     * @return The application time card; never {@code null}.
+     * @return The application time card.
      */
     final TimeCard getTimeCard()
     {

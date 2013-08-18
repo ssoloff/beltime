@@ -27,12 +27,9 @@ public interface ITimeCardListener
      * Called when a job has been started.
      * 
      * @param timeCard
-     *        The time card that fired the event; must not be {@code null}.
+     *        The time card that fired the event.
      * @param job
-     *        The job that has been started; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code timeCard} or {@code job} is {@code null}.
+     *        The job that has been started.
      */
     public void onJobStarted(
         TimeCard timeCard,
@@ -42,12 +39,9 @@ public interface ITimeCardListener
      * Called when a job has been stopped.
      * 
      * @param timeCard
-     *        The time card that fired the event; must not be {@code null}.
+     *        The time card that fired the event.
      * @param job
-     *        The job that has been stopped; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code timeCard} or {@code job} is {@code null}.
+     *        The job that has been stopped.
      */
     public void onJobStopped(
         TimeCard timeCard,
@@ -57,10 +51,7 @@ public interface ITimeCardListener
      * Called when the time card has been reset.
      * 
      * @param timeCard
-     *        The time card that fired the event; must not be {@code null}.
-     * 
-     * @throws java.lang.NullPointerException
-     *         If {@code timeCard} is {@code null}.
+     *        The time card that fired the event.
      */
     public void onReset(
         TimeCard timeCard );

@@ -43,7 +43,7 @@ final class DisplayUtils
      * Initializes a new instance of the {@code DisplayUtils} class.
      * 
      * @param context
-     *        The application context; must not be {@code null}.
+     *        The application context.
      */
     DisplayUtils(
         final Context context )
@@ -60,9 +60,9 @@ final class DisplayUtils
      * Formats the charge number of the specified job.
      * 
      * @param job
-     *        The job; must not be {@code null}.
+     *        The job.
      * 
-     * @return The formatted charge number; never {@code null}.
+     * @return The formatted charge number.
      */
     @SuppressWarnings( "static-method" )
     String formatChargeNumber(
@@ -75,9 +75,9 @@ final class DisplayUtils
      * Formats the duration of the specified job.
      * 
      * @param job
-     *        The job; must not be {@code null}.
+     *        The job.
      * 
-     * @return The formatted duration; never {@code null}.
+     * @return The formatted duration.
      */
     String formatDuration(
         final Job job )
@@ -95,9 +95,9 @@ final class DisplayUtils
      * Formats the start time of the specified job.
      * 
      * @param job
-     *        The job; must not be {@code null}.
+     *        The job.
      * 
-     * @return The formatted start time; never {@code null}.
+     * @return The formatted start time.
      */
     @SuppressWarnings( "static-method" )
     String formatStartTime(
@@ -110,9 +110,9 @@ final class DisplayUtils
      * Formats the stop time of the specified job.
      * 
      * @param job
-     *        The job; must not be {@code null}.
+     *        The job.
      * 
-     * @return The formatted stop time; never {@code null}.
+     * @return The formatted stop time.
      */
     String formatStopTime(
         final Job job )
