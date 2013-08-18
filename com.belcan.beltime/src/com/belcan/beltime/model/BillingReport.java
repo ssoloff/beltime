@@ -17,6 +17,8 @@ package com.belcan.beltime.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import com.belcan.beltime.util.NullAnalysis;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A billing report.
@@ -75,6 +77,30 @@ public final class BillingReport
     // Methods
     // ======================================================================
 
+    /*
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        @Nullable
+        final Object o )
+    {
+        if( o == this )
+        {
+            return true;
+        }
+
+        if( !(o instanceof BillingReport) )
+        {
+            return false;
+        }
+
+        final BillingReport other = (BillingReport)o;
+        return beginDate_.equals( other.beginDate_ ) //
+            && endDate_.equals( other.endDate_ ) //
+            && bills_.equals( other.bills_ );
+    }
+
     /**
      * Gets the beginning date of the report, inclusive.
      * 
@@ -105,5 +131,36 @@ public final class BillingReport
     public Date getEndDate()
     {
         return new Date( endDate_.getTime() );
+    }
+
+    /*
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        int hashCode = 17;
+        hashCode = 31 * hashCode + beginDate_.hashCode();
+        hashCode = 31 * hashCode + bills_.hashCode();
+        hashCode = 31 * hashCode + endDate_.hashCode();
+        return hashCode;
+    }
+
+    /*
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder();
+        sb.append( "BillingReport[" ); //$NON-NLS-1$
+        sb.append( "beginDate=" ); //$NON-NLS-1$
+        sb.append( beginDate_ );
+        sb.append( ", endDate=" ); //$NON-NLS-1$
+        sb.append( endDate_ );
+        sb.append( ", bills=" ); //$NON-NLS-1$
+        sb.append( bills_ );
+        sb.append( "]" ); //$NON-NLS-1$
+        return NullAnalysis.nonNull( sb.toString() );
     }
 }

@@ -15,6 +15,8 @@
 package com.belcan.beltime.model;
 
 import com.belcan.beltime.util.Duration;
+import com.belcan.beltime.util.NullAnalysis;
+import org.eclipse.jdt.annotation.Nullable;
 
 /**
  * A bill for all activities performed against a job over a specific period of
@@ -49,7 +51,7 @@ public final class Bill
      *        The cumulative duration of all activities performed against the
      *        job over the period of time covered by this bill.
      */
-    public Bill(
+    Bill(
         final ChargeNumber chargeNumber,
         final Duration duration )
     {
@@ -61,6 +63,29 @@ public final class Bill
     // ======================================================================
     // Methods
     // ======================================================================
+
+    /*
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(
+        @Nullable
+        final Object o )
+    {
+        if( o == this )
+        {
+            return true;
+        }
+
+        if( !(o instanceof Bill) )
+        {
+            return false;
+        }
+
+        final Bill other = (Bill)o;
+        return chargeNumber_.equals( other.chargeNumber_ ) //
+            && duration_.equals( other.duration_ );
+    }
 
     /**
      * Gets the charge number of the job to be billed.
@@ -84,5 +109,33 @@ public final class Bill
     public Duration getDuration()
     {
         return duration_;
+    }
+
+    /*
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        int hashCode = 17;
+        hashCode = 31 * hashCode + chargeNumber_.hashCode();
+        hashCode = 31 * hashCode + duration_.hashCode();
+        return hashCode;
+    }
+
+    /*
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString()
+    {
+        final StringBuilder sb = new StringBuilder();
+        sb.append( "Bill[" ); //$NON-NLS-1$
+        sb.append( "chargeNumber=" ); //$NON-NLS-1$
+        sb.append( chargeNumber_ );
+        sb.append( ", duration=" ); //$NON-NLS-1$
+        sb.append( duration_ );
+        sb.append( "]" ); //$NON-NLS-1$
+        return NullAnalysis.nonNull( sb.toString() );
     }
 }
