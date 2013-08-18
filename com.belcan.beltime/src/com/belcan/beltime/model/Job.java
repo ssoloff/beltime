@@ -15,6 +15,7 @@
 package com.belcan.beltime.model;
 
 import java.util.Date;
+import com.belcan.beltime.util.Duration;
 
 /**
  * A continuous unit of work that is billed to a single charge number.
@@ -74,21 +75,21 @@ public final class Job
     }
 
     /**
-     * Gets the duration of the job in milliseconds.
+     * Gets the duration of the job.
      * 
-     * @return The duration of the job in milliseconds.
+     * @return The duration of the job; never {@code null}.
      * 
      * @throws java.lang.IllegalStateException
      *         If the job is active.
      */
-    public long getDurationInMilliseconds()
+    public Duration getDuration()
     {
         if( stopTime_ == null )
         {
             throw new IllegalStateException( "cannot get duration of an active job" ); //$NON-NLS-1$
         }
 
-        return stopTime_.getTime() - startTime_.getTime();
+        return Duration.fromMilliseconds( stopTime_.getTime() - startTime_.getTime() );
     }
 
     /**

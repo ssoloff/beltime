@@ -16,6 +16,7 @@ package com.belcan.beltime.model;
 
 import java.util.Date;
 import junit.framework.TestCase;
+import com.belcan.beltime.util.Duration;
 
 /**
  * A fixture for testing the {@link Job} class.
@@ -67,28 +68,27 @@ public final class JobTest
     }
 
     /**
-     * Ensures the {@link Job#getDurationInMilliseconds} method returns the
-     * expected duration.
+     * Ensures the {@link Job#getDuration} method returns the expected duration.
      */
     @SuppressWarnings( "null" )
-    public void testGetDurationInMilliseconds_ReturnsExpectedDuration()
+    public void testGetDuration_ReturnsExpectedDuration()
     {
         job_.stop( STOP_TIME );
-        final long expectedDurationInMilliseconds = job_.getStopTime().getTime() - job_.getStartTime().getTime();
+        final Duration expectedDuration = Duration.fromMilliseconds( job_.getStopTime().getTime() - job_.getStartTime().getTime() );
 
-        assertEquals( expectedDurationInMilliseconds, job_.getDurationInMilliseconds() );
+        assertEquals( expectedDuration, job_.getDuration() );
     }
 
     /**
-     * Ensures the {@link Job#getDurationInMilliseconds} method throws an
-     * exception if the job is active.
+     * Ensures the {@link Job#getDuration} method throws an exception if the job
+     * is active.
      */
-    public void testGetDurationInMilliseconds_ThrowsExceptionIfJobActive()
+    public void testGetDuration_ThrowsExceptionIfJobActive()
     {
         try
         {
-            job_.getDurationInMilliseconds();
-            fail( "getDurationInMilliseconds() did not throw IllegalStateException" ); //$NON-NLS-1$
+            job_.getDuration();
+            fail( "getDuration() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
         {

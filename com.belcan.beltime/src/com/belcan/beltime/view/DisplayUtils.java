@@ -87,7 +87,7 @@ final class DisplayUtils
             return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration_active ) );
         }
 
-        final double durationInHours = job.getDurationInMilliseconds() / MILLISECONDS_PER_HOUR;
+        final double durationInHours = job.getDuration().toMilliseconds() / MILLISECONDS_PER_HOUR;
         return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) ) );
     }
 

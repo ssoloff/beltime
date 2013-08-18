@@ -14,6 +14,8 @@
 
 package com.belcan.beltime.model;
 
+import com.belcan.beltime.util.Duration;
+
 /**
  * A bill for all activities performed against a job over a specific period of
  * time.
@@ -28,10 +30,10 @@ public final class Bill
     private final ChargeNumber chargeNumber_;
 
     /**
-     * The cumulative duration in milliseconds of all activities performed
-     * against the job over the period of time covered by this bill.
+     * The cumulative duration of all activities performed against the job over
+     * the period of time covered by this bill.
      */
-    private final long durationInMilliseconds_;
+    private final Duration duration_;
 
 
     // ======================================================================
@@ -43,17 +45,16 @@ public final class Bill
      * 
      * @param chargeNumber
      *        The charge number of the job to be billed.
-     * @param durationInMilliseconds
-     *        The cumulative duration in milliseconds of all activities
-     *        performed against the job over the period of time covered by this
-     *        bill.
+     * @param duration
+     *        The cumulative duration of all activities performed against the
+     *        job over the period of time covered by this bill.
      */
     public Bill(
         final ChargeNumber chargeNumber,
-        final long durationInMilliseconds )
+        final Duration duration )
     {
         chargeNumber_ = chargeNumber;
-        durationInMilliseconds_ = durationInMilliseconds;
+        duration_ = duration;
     }
 
 
@@ -73,15 +74,15 @@ public final class Bill
     }
 
     /**
-     * Gets the cumulative duration in milliseconds of all activities performed
-     * against the job over the period of time covered by this bill.
+     * Gets the cumulative duration of all activities performed against the job
+     * over the period of time covered by this bill.
      * 
-     * @return The cumulative duration in milliseconds of all activities
-     *         performed against the job over the period of time covered by this
-     *         bill.
+     * @return The cumulative duration of all activities performed against the
+     *         job over the period of time covered by this bill.
      */
-    public long getDurationInMilliseconds()
+    @SuppressWarnings( "null" )
+    public Duration getDuration()
     {
-        return durationInMilliseconds_;
+        return duration_;
     }
 }

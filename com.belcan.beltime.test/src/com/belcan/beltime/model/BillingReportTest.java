@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import junit.framework.TestCase;
+import com.belcan.beltime.util.Duration;
 
 /**
  * A fixture for testing the {@link BillingReport} class.
@@ -83,7 +84,7 @@ public final class BillingReportTest
     {
         final Collection<Bill> bills = billingReport_.getBills();
         final Collection<Bill> expectedBills = new ArrayList<Bill>( bills );
-        bills.add( new Bill( TestChargeNumbers.CHARGE_NUMBER_1, 0L ) );
+        bills.add( new Bill( TestChargeNumbers.CHARGE_NUMBER_1, Duration.fromMilliseconds( 0L ) ) );
 
         assertEquals( expectedBills, billingReport_.getBills() );
     }
