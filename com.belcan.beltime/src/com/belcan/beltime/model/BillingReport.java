@@ -50,17 +50,15 @@ public final class BillingReport
      * Initializes a new instance of the {@code BillingReport} class.
      * 
      * @param beginDate
-     *        The beginning date of the report, inclusive; must not be
-     *        {@code null}. No copy is made of this value and it must not be
-     *        modified after calling this method.
+     *        The beginning date of the report, inclusive. No copy is made of
+     *        this value and it must not be modified after calling this method.
      * @param endDate
-     *        The ending date of the report, inclusive; must not be {@code null}
-     *        . No copy is made of this value and it must not be modified after
-     *        calling this method.
+     *        The ending date of the report, inclusive. No copy is made of this
+     *        value and it must not be modified after calling this method.
      * @param bills
      *        The collection of bills charged during the time period of the
-     *        report; must not be {@code null}. No copy is made of this
-     *        collection and it must not be modified after calling this method.
+     *        report. No copy is made of this collection and it must not be
+     *        modified after calling this method.
      */
     BillingReport(
         final Date beginDate,
@@ -80,7 +78,7 @@ public final class BillingReport
     /**
      * Gets the beginning date of the report, inclusive.
      * 
-     * @return The beginning date of the report, inclusive; never {@code null}.
+     * @return The beginning date of the report, inclusive.
      */
     public Date getBeginDate()
     {
@@ -92,7 +90,7 @@ public final class BillingReport
      * report.
      * 
      * @return The collection of bills charged during the time period of the
-     *         report; never {@code null}.
+     *         report.
      */
     public Collection<Bill> getBills()
     {
@@ -102,7 +100,7 @@ public final class BillingReport
     /**
      * Gets the ending date of the report, inclusive.
      * 
-     * @return The ending date of the report, inclusive; never {@code null}.
+     * @return The ending date of the report, inclusive.
      */
     public Date getEndDate()
     {
