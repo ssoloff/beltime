@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * </p>
  */
 public final class ChargeNumber
+    implements Comparable<ChargeNumber>
 {
     // ======================================================================
     // Fields
@@ -55,6 +56,22 @@ public final class ChargeNumber
     // ======================================================================
 
     /*
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    @Override
+    public int compareTo(
+        @Nullable
+        final ChargeNumber another )
+    {
+        if( another == null )
+        {
+            return 1;
+        }
+
+        return value_.compareTo( another.value_ );
+    }
+
+    /*
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -72,8 +89,7 @@ public final class ChargeNumber
             return false;
         }
 
-        final ChargeNumber other = (ChargeNumber)o;
-        return value_.equals( other.value_ );
+        return compareTo( (ChargeNumber)o ) == 0;
     }
 
     /**

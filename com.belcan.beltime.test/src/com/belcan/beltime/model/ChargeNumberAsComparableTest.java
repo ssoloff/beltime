@@ -1,5 +1,5 @@
 /*
- * ChargeNumberAsEquatableTest.java
+ * ChargeNumberAsComparableTest.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -16,24 +16,24 @@ package com.belcan.beltime.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import com.belcan.beltime.test.AbstractEquatableTestCase;
+import com.belcan.beltime.test.AbstractComparableTestCase;
 
 /**
  * A fixture for testing the {@link ChargeNumber} class to ensure it does not
- * violate the contract of the equatable interface.
+ * violate the contract of the {@link Comparable} interface.
  */
-public final class ChargeNumberAsEquatableTest
-    extends AbstractEquatableTestCase<ChargeNumber>
+public final class ChargeNumberAsComparableTest
+    extends AbstractComparableTestCase<ChargeNumber>
 {
     // ======================================================================
     // Constructors
     // ======================================================================
 
     /**
-     * Initializes a new instance of the {@code ChargeNumberAsEquatableTest}
+     * Initializes a new instance of the {@code ChargeNumberAsComparableTest}
      * class.
      */
-    public ChargeNumberAsEquatableTest()
+    public ChargeNumberAsComparableTest()
     {
     }
 
@@ -41,6 +41,28 @@ public final class ChargeNumberAsEquatableTest
     // ======================================================================
     // Methods
     // ======================================================================
+
+    /*
+     * @see com.belcan.beltime.test.AbstractComparableTestCase#createGreaterThanInstances()
+     */
+    @Override
+    protected Collection<ChargeNumber> createGreaterThanInstances()
+    {
+        final Collection<ChargeNumber> others = new ArrayList<ChargeNumber>();
+        others.add( ChargeNumber.fromString( "2222222.2222" ) ); //$NON-NLS-1$
+        return others;
+    }
+
+    /*
+     * @see com.belcan.beltime.test.AbstractComparableTestCase#createLessThanInstances()
+     */
+    @Override
+    protected Collection<ChargeNumber> createLessThanInstances()
+    {
+        final Collection<ChargeNumber> others = new ArrayList<ChargeNumber>();
+        others.add( ChargeNumber.fromString( "0000000.0000" ) ); //$NON-NLS-1$
+        return others;
+    }
 
     /*
      * @see com.belcan.beltime.test.AbstractEquatableTestCase#createReferenceInstance()
