@@ -29,10 +29,10 @@ public final class Job
     /** The charge number to be billed. */
     private final ChargeNumber chargeNumber_;
 
-    /** The time at which work on the job started. */
+    /** The time at which work on the job started, inclusive. */
     private final Date startTime_;
 
-    /** The time at which work on the job stopped. */
+    /** The time at which work on the job stopped, exclusive. */
     private Date stopTime_;
 
 
@@ -46,7 +46,7 @@ public final class Job
      * @param chargeNumber
      *        The charge number to be billed.
      * @param startTime
-     *        The time at which work on the job started.
+     *        The time at which work on the job started, inclusive.
      */
     private Job(
         final ChargeNumber chargeNumber,
@@ -92,9 +92,9 @@ public final class Job
     }
 
     /**
-     * Gets the time at which work on the job started.
+     * Gets the time at which work on the job started, inclusive.
      * 
-     * @return The time at which work on the job started.
+     * @return The time at which work on the job started, inclusive.
      */
     public Date getStartTime()
     {
@@ -102,9 +102,9 @@ public final class Job
     }
 
     /**
-     * Gets the time at which work on the job stopped.
+     * Gets the time at which work on the job stopped, exclusive.
      * 
-     * @return The time at which work on the job stopped.
+     * @return The time at which work on the job stopped, exclusive.
      * 
      * @throws java.lang.IllegalStateException
      *         If the job is active.
@@ -135,7 +135,7 @@ public final class Job
      * @param chargeNumber
      *        The charge number to be billed.
      * @param startTime
-     *        The time at which work on the job started.
+     *        The time at which work on the job started, inclusive.
      * 
      * @return A new job.
      */
@@ -150,7 +150,7 @@ public final class Job
      * Stops the job.
      * 
      * @param stopTime
-     *        The time at which work on the job stopped.
+     *        The time at which work on the job stopped, exclusive.
      * 
      * @throws java.lang.IllegalArgumentException
      *         If {@code stopTime} is less than the time at which work on the

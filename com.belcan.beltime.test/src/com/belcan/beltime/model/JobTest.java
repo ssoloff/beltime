@@ -32,7 +32,7 @@ public final class JobTest
     private static final Date START_TIME = new Date( 0L );
 
     /** The stop time for use in the fixture. */
-    private static final Date STOP_TIME = new Date( 86400L );
+    private static final Date STOP_TIME = new Date( 86400000L );
 
     /** The job under test in the fixture. */
     private Job job_;
@@ -74,7 +74,7 @@ public final class JobTest
     public void testGetDuration_ReturnsExpectedDuration()
     {
         job_.stop( STOP_TIME );
-        final Duration expectedDuration = Duration.fromMilliseconds( job_.getStopTime().getTime() - job_.getStartTime().getTime() );
+        final Duration expectedDuration = Duration.fromMilliseconds( STOP_TIME.getTime() - START_TIME.getTime() );
 
         assertEquals( expectedDuration, job_.getDuration() );
     }
