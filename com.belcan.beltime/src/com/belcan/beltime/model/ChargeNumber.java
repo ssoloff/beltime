@@ -65,7 +65,7 @@ public final class ChargeNumber
     {
         if( another == null )
         {
-            return 1;
+            return +1;
         }
 
         return value_.compareTo( another.value_ );
