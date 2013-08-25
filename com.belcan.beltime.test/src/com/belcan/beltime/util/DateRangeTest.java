@@ -78,7 +78,7 @@ public final class DateRangeTest
         final DateRange dateRange = new DateRange( beginDate, END_DATE );
         beginDate.setTime( beginDate.getTime() + 1L );
 
-        assertEquals( BEGIN_DATE, dateRange.getBeginDateInclusive() );
+        assertEquals( BEGIN_DATE, dateRange.getBeginDate() );
     }
 
     /**
@@ -92,7 +92,7 @@ public final class DateRangeTest
         final DateRange dateRange = new DateRange( BEGIN_DATE, endDate );
         endDate.setTime( endDate.getTime() + 1L );
 
-        assertEquals( END_DATE, dateRange.getEndDateInclusive() );
+        assertEquals( END_DATE, dateRange.getEndDate() );
     }
 
     /**
@@ -116,90 +116,28 @@ public final class DateRangeTest
     }
 
     /**
-     * Ensures the {@link DateRange#getBeginDateExclusive} method returns a copy
-     * of the begin date.
+     * Ensures the {@link DateRange#getBeginDate} method returns a copy of the
+     * begin date.
      */
-    public void testGetBeginDateExclusive_ReturnsCopy()
+    public void testGetBeginDate_ReturnsCopy()
     {
-        final Date beginDate = dateRange_.getBeginDateExclusive();
+        final Date beginDate = dateRange_.getBeginDate();
         final Date expectedBeginDate = new Date( beginDate.getTime() );
         beginDate.setTime( beginDate.getTime() + 1L );
 
-        assertEquals( expectedBeginDate, dateRange_.getBeginDateExclusive() );
+        assertEquals( expectedBeginDate, dateRange_.getBeginDate() );
     }
 
     /**
-     * Ensures the {@link DateRange#getBeginDateExclusive} method returns the
-     * exclusive begin date.
+     * Ensures the {@link DateRange#getEndDate} method returns a copy of the end
+     * date.
      */
-    public void testGetBeginDateExclusive_ReturnsExclusiveBeginDate()
+    public void testGetEndDate_ReturnsCopy()
     {
-        assertEquals( new Date( BEGIN_DATE.getTime() + 1L ), dateRange_.getBeginDateExclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getBeginDateInclusive} method returns a copy
-     * of the begin date.
-     */
-    public void testGetBeginDateInclusive_ReturnsCopy()
-    {
-        final Date beginDate = dateRange_.getBeginDateInclusive();
-        final Date expectedBeginDate = new Date( beginDate.getTime() );
-        beginDate.setTime( beginDate.getTime() + 1L );
-
-        assertEquals( expectedBeginDate, dateRange_.getBeginDateInclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getBeginDateInclusive} method returns the
-     * inclusive begin date.
-     */
-    public void testGetBeginDateInclusive_ReturnsInclusiveBeginDate()
-    {
-        assertEquals( BEGIN_DATE, dateRange_.getBeginDateInclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getEndDateExclusive} method returns a copy
-     * of the end date.
-     */
-    public void testGetEndDateExclusive_ReturnsCopy()
-    {
-        final Date endDate = dateRange_.getEndDateExclusive();
+        final Date endDate = dateRange_.getEndDate();
         final Date expectedEndDate = new Date( endDate.getTime() );
         endDate.setTime( endDate.getTime() + 1L );
 
-        assertEquals( expectedEndDate, dateRange_.getEndDateExclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getEndDateExclusive} method returns the
-     * exclusive end date.
-     */
-    public void testGetEndDateExclusive_ReturnsExclusiveEndDate()
-    {
-        assertEquals( new Date( END_DATE.getTime() - 1L ), dateRange_.getEndDateExclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getEndDateInclusive} method returns a copy
-     * of the end date.
-     */
-    public void testGetEndDateInclusive_ReturnsCopy()
-    {
-        final Date endDate = dateRange_.getEndDateInclusive();
-        final Date expectedEndDate = new Date( endDate.getTime() );
-        endDate.setTime( endDate.getTime() + 1L );
-
-        assertEquals( expectedEndDate, dateRange_.getEndDateInclusive() );
-    }
-
-    /**
-     * Ensures the {@link DateRange#getEndDateInclusive} method returns the
-     * inclusive end date.
-     */
-    public void testGetEndDateInclusive_ReturnsInclusiveEndDate()
-    {
-        assertEquals( END_DATE, dateRange_.getEndDateInclusive() );
+        assertEquals( expectedEndDate, dateRange_.getEndDate() );
     }
 }

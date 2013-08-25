@@ -90,33 +90,13 @@ public final class DateRange
     }
 
     /**
-     * Gets the beginning date of the range, exclusive.
-     * 
-     * @return The beginning date of the range, exclusive.
-     */
-    public Date getBeginDateExclusive()
-    {
-        return new Date( beginDate_.getTime() + 1L );
-    }
-
-    /**
      * Gets the beginning date of the range, inclusive.
      * 
      * @return The beginning date of the range, inclusive.
      */
-    public Date getBeginDateInclusive()
+    public Date getBeginDate()
     {
         return new Date( beginDate_.getTime() );
-    }
-
-    /**
-     * Gets the ending date of the range, exclusive.
-     * 
-     * @return The ending date of the range, exclusive.
-     */
-    public Date getEndDateExclusive()
-    {
-        return new Date( endDate_.getTime() - 1L );
     }
 
     /**
@@ -124,7 +104,7 @@ public final class DateRange
      * 
      * @return The ending date of the range, inclusive.
      */
-    public Date getEndDateInclusive()
+    public Date getEndDate()
     {
         return new Date( endDate_.getTime() );
     }
