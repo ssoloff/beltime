@@ -62,10 +62,8 @@ public final class BillingReports
      * Creates a new billing report for the specified day and collection of
      * charge number durations.
      * 
-     * @param beginDate
-     *        The beginning date of the report, inclusive.
-     * @param endDate
-     *        The ending date of the report, inclusive.
+     * @param day
+     *        The date range defining the day associated with report.
      * @param durations
      *        The collection of durations billed to each charge number. The key
      *        is the charge number. The value is the cumulative duration of all
@@ -76,8 +74,7 @@ public final class BillingReports
      * @return A new billing report.
      */
     private static BillingReport createBillingReport(
-        final Date beginDate,
-        final Date endDate,
+        final DateRange day,
         final Map<ChargeNumber, Duration> durations )
     {
         final List<Bill> bills = new ArrayList<Bill>();
@@ -105,7 +102,7 @@ public final class BillingReports
 
         durations.clear();
 
-        return new BillingReport( new DateRange( beginDate, endDate ), bills );
+        return new BillingReport( day, bills );
     }
 
     /**
@@ -141,32 +138,27 @@ public final class BillingReports
         final Collection<BillingReport> billingReports = new ArrayList<BillingReport>();
         final Map<ChargeNumber, Duration> durations = new HashMap<ChargeNumber, Duration>();
 
-        Date currentStartOfDay = null;
-        Date currentEndOfDay = null;
+        DateRange currentDay = null;
         for( final Job job : timeCard.getJobs() )
         {
             for( final DateRange day : getJobDays( NullAnalysis.nonNull( job ) ) )
             {
-                final Date startOfDay = day.getBeginDate();
-                final Date endOfDay = day.getEndDate();
-
-                if( (currentStartOfDay != null) && (currentEndOfDay != null) && !currentStartOfDay.equals( startOfDay ) )
+                if( (currentDay != null) && !currentDay.getBeginDate().equals( day.getBeginDate() ) )
                 {
-                    billingReports.add( createBillingReport( currentStartOfDay, currentEndOfDay, durations ) );
+                    billingReports.add( createBillingReport( currentDay, durations ) );
                 }
 
-                final long startTime = Math.max( job.getStartTime().getTime(), startOfDay.getTime() );
-                final long stopTime = Math.min( job.getStopTime().getTime(), endOfDay.getTime() + 1L ); // add +1 to endOfDay because stopTime is exclusive
+                final long startTime = Math.max( job.getStartTime().getTime(), day.getBeginDate().getTime() );
+                final long stopTime = Math.min( job.getStopTime().getTime(), day.getEndDate().getTime() + 1L ); // add +1 to day.getEndDate() because stopTime is exclusive
                 updateDuration( durations, job.getChargeNumber(), startTime, stopTime );
 
-                currentStartOfDay = startOfDay;
-                currentEndOfDay = endOfDay;
+                currentDay = day;
             }
         }
 
-        if( (currentStartOfDay != null) && (currentEndOfDay != null) && !durations.isEmpty() )
+        if( (currentDay != null) && !durations.isEmpty() )
         {
-            billingReports.add( createBillingReport( currentStartOfDay, currentEndOfDay, durations ) );
+            billingReports.add( createBillingReport( currentDay, durations ) );
         }
 
         return billingReports;
