@@ -19,6 +19,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import com.belcan.beltime.test.AbstractEquatableTestCase;
+import com.belcan.beltime.util.DateRange;
 import com.belcan.beltime.util.Duration;
 
 /**
@@ -32,15 +33,12 @@ public final class BillingReportAsEquatableTest
     // Fields
     // ======================================================================
 
-    /** The reference billing report beginning date. */
-    private static final Date BEGIN_DATE = new Date( 1000L );
-
     /** The reference billing report bills collection. */
     @SuppressWarnings( "null" )
     private static final Collection<Bill> BILLS = Arrays.asList( new Bill( TestChargeNumbers.CHARGE_NUMBER_1, Duration.fromMilliseconds( 1000L ) ) );
 
-    /** The reference billing report ending date. */
-    private static final Date END_DATE = new Date( 1000L );
+    /** The reference billing report date range. */
+    private static final DateRange DATE_RANGE = new DateRange( new Date( 0L ), new Date( 1000L ) );
 
 
     // ======================================================================
@@ -67,7 +65,7 @@ public final class BillingReportAsEquatableTest
     @SuppressWarnings( "null" )
     protected BillingReport createReferenceInstance()
     {
-        return new BillingReport( BEGIN_DATE, END_DATE, BILLS );
+        return new BillingReport( DATE_RANGE, BILLS );
     }
 
     /*
@@ -78,9 +76,8 @@ public final class BillingReportAsEquatableTest
     protected Collection<BillingReport> createUnequalInstances()
     {
         final Collection<BillingReport> others = new ArrayList<BillingReport>();
-        others.add( new BillingReport( new Date( BEGIN_DATE.getTime() + 1L ), END_DATE, BILLS ) );
-        others.add( new BillingReport( BEGIN_DATE, new Date( END_DATE.getTime() + 1L ), BILLS ) );
-        others.add( new BillingReport( BEGIN_DATE, END_DATE, Arrays.asList( new Bill( TestChargeNumbers.CHARGE_NUMBER_2, Duration.fromMilliseconds( 2000L ) ) ) ) );
+        others.add( new BillingReport( DATE_RANGE, Arrays.asList( new Bill( TestChargeNumbers.CHARGE_NUMBER_2, Duration.fromMilliseconds( 2000L ) ) ) ) );
+        others.add( new BillingReport( new DateRange( new Date( DATE_RANGE.getBeginDate().getTime() + 1L ), DATE_RANGE.getEndDate() ), BILLS ) );
         return others;
     }
 }

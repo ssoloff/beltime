@@ -79,8 +79,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -106,8 +105,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -116,8 +114,7 @@ public final class BillingReportsTest
                     ) //
             ), //
             new BillingReport( //
-                new Date( DAY_2_START_TIME ), //
-                new Date( DAY_2_END_TIME ), //
+                new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -146,8 +143,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -156,8 +152,7 @@ public final class BillingReportsTest
                     ) //
             ), //
             new BillingReport( //
-                new Date( DAY_2_START_TIME ), //
-                new Date( DAY_2_END_TIME ), //
+                new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -187,8 +182,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -220,8 +214,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -251,8 +244,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -261,8 +253,7 @@ public final class BillingReportsTest
                     ) //
             ), //
             new BillingReport( //
-                new Date( DAY_2_START_TIME ), //
-                new Date( DAY_2_END_TIME ), //
+                new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_2, //
@@ -292,8 +283,7 @@ public final class BillingReportsTest
     {
         final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
             new BillingReport( //
-                new Date( DAY_1_START_TIME ), //
-                new Date( DAY_1_END_TIME ), //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //
@@ -302,8 +292,7 @@ public final class BillingReportsTest
                     ) //
             ), //
             new BillingReport( //
-                new Date( DAY_2_START_TIME ), //
-                new Date( DAY_2_END_TIME ), //
+                new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ), //
                 Arrays.asList( //
                     new Bill( //
                         TestChargeNumbers.CHARGE_NUMBER_1, //

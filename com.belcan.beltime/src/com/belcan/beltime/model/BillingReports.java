@@ -105,7 +105,7 @@ public final class BillingReports
 
         durations.clear();
 
-        return new BillingReport( beginDate, endDate, bills );
+        return new BillingReport( new DateRange( beginDate, endDate ), bills );
     }
 
     /**

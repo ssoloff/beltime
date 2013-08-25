@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import junit.framework.TestCase;
+import com.belcan.beltime.util.DateRange;
 import com.belcan.beltime.util.Duration;
 
 /**
@@ -59,20 +60,7 @@ public final class BillingReportTest
     {
         super.setUp();
 
-        billingReport_ = new BillingReport( new Date( 0L ), new Date( 3600000L ), new ArrayList<Bill>() );
-    }
-
-    /**
-     * Ensures the {@link BillingReport#getBeginDate} method returns a copy of
-     * the beginning date.
-     */
-    public void testGetBeginDate_ReturnsCopy()
-    {
-        final Date beginDate = billingReport_.getBeginDate();
-        final Date expectedBeginDate = new Date( beginDate.getTime() );
-        beginDate.setTime( beginDate.getTime() + 1L );
-
-        assertEquals( expectedBeginDate, billingReport_.getBeginDate() );
+        billingReport_ = new BillingReport( new DateRange( new Date( 0L ), new Date( 3600000L ) ), new ArrayList<Bill>() );
     }
 
     /**
@@ -87,18 +75,5 @@ public final class BillingReportTest
         bills.add( new Bill( TestChargeNumbers.CHARGE_NUMBER_1, Duration.fromMilliseconds( 0L ) ) );
 
         assertEquals( expectedBills, billingReport_.getBills() );
-    }
-
-    /**
-     * Ensures the {@link BillingReport#getEndDate} method returns a copy of the
-     * ending date.
-     */
-    public void testGetEndDate_ReturnsCopy()
-    {
-        final Date endDate = billingReport_.getEndDate();
-        final Date expectedEndDate = new Date( endDate.getTime() );
-        endDate.setTime( endDate.getTime() + 1L );
-
-        assertEquals( expectedEndDate, billingReport_.getEndDate() );
     }
 }
