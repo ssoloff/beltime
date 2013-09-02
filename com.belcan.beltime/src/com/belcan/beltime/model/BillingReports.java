@@ -133,13 +133,11 @@ public final class BillingReports
     public static Collection<BillingReport> daily(
         final TimeCard timeCard )
     {
-        // TODO: need to define how to handle active jobs
-
         final Collection<BillingReport> billingReports = new ArrayList<BillingReport>();
         final Map<ChargeNumber, Duration> durations = new HashMap<ChargeNumber, Duration>();
 
         DateRange currentDay = null;
-        for( final Job job : timeCard.getJobs() )
+        for( final Job job : getInactiveJobs( timeCard ) )
         {
             for( final DateRange day : getJobDays( NullAnalysis.nonNull( job ) ) )
             {
@@ -182,6 +180,23 @@ public final class BillingReports
         calendar.set( Calendar.SECOND, 59 );
         calendar.set( Calendar.MILLISECOND, 999 );
         return NullAnalysis.nonNull( calendar.getTime() );
+    }
+
+    /**
+     * Gets the collection of inactive jobs in chronological order from the
+     * specified time card.
+     * 
+     * @param timeCard
+     *        The time card.
+     * 
+     * @return The collection of inactive jobs.
+     */
+    private static List<Job> getInactiveJobs(
+        final TimeCard timeCard )
+    {
+        final List<Job> jobs = timeCard.getJobs();
+        final int lastIndex = jobs.size() - 1;
+        return (lastIndex >= 0) && jobs.get( lastIndex ).isActive() ? NullAnalysis.nonNull( jobs.subList( 0, lastIndex ) ) : jobs;
     }
 
     /**

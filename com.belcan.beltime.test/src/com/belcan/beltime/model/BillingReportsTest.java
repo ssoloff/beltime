@@ -71,6 +71,32 @@ public final class BillingReportsTest
 
     /**
      * Ensures the {@link BillingReports#daily} method returns the correct
+     * billing reports when the time card contains an active activity.
+     */
+    @SuppressWarnings( "null" )
+    public void testDaily_IgnoresActiveActivities()
+    {
+        final Collection<BillingReport> expectedBillingReports = Arrays.asList( //
+            new BillingReport( //
+                new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
+                Arrays.asList( //
+                    new Bill( //
+                        TestChargeNumbers.CHARGE_NUMBER_1, //
+                        Duration.fromMilliseconds( ONE_HOUR ) //
+                    ) //
+                    ) //
+            ) //
+            );
+        final TimeCard timeCard = new TimeCard();
+        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
+
+        assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
+    }
+
+    /**
+     * Ensures the {@link BillingReports#daily} method returns the correct
      * billing reports when the time card contains one activity that occurs over
      * one day.
      */
