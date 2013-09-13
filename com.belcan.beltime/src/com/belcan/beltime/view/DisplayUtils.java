@@ -16,7 +16,7 @@ package com.belcan.beltime.view;
 
 import android.content.Context;
 import com.belcan.beltime.R;
-import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.Activity;
 import com.belcan.beltime.util.NullAnalysis;
 
 /**
@@ -57,71 +57,71 @@ final class DisplayUtils
     // ======================================================================
 
     /**
-     * Formats the charge number of the specified job.
+     * Formats the charge number of the specified activity.
      * 
-     * @param job
-     *        The job.
+     * @param activity
+     *        The activity.
      * 
      * @return The formatted charge number.
      */
     @SuppressWarnings( "static-method" )
     String formatChargeNumber(
-        final Job job )
+        final Activity activity )
     {
-        return job.getChargeNumber().toString();
+        return activity.getChargeNumber().toString();
     }
 
     /**
-     * Formats the duration of the specified job.
+     * Formats the duration of the specified activity.
      * 
-     * @param job
-     *        The job.
+     * @param activity
+     *        The activity.
      * 
      * @return The formatted duration.
      */
     String formatDuration(
-        final Job job )
+        final Activity activity )
     {
-        if( job.isActive() )
+        if( activity.isActive() )
         {
             return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration_active ) );
         }
 
-        final double durationInHours = job.getDuration().toMilliseconds() / MILLISECONDS_PER_HOUR;
+        final double durationInHours = activity.getDuration().toMilliseconds() / MILLISECONDS_PER_HOUR;
         return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_duration, Double.valueOf( durationInHours ) ) );
     }
 
     /**
-     * Formats the start time of the specified job.
+     * Formats the start time of the specified activity.
      * 
-     * @param job
-     *        The job.
+     * @param activity
+     *        The activity.
      * 
      * @return The formatted start time.
      */
     @SuppressWarnings( "static-method" )
     String formatStartTime(
-        final Job job )
+        final Activity activity )
     {
-        return NullAnalysis.nonNull( job.getStartTime().toString() );
+        return NullAnalysis.nonNull( activity.getStartTime().toString() );
     }
 
     /**
-     * Formats the stop time of the specified job.
+     * Formats the stop time of the specified activity.
      * 
-     * @param job
-     *        The job.
+     * @param activity
+     *        The activity.
      * 
      * @return The formatted stop time.
      */
     String formatStopTime(
-        final Job job )
+        final Activity activity )
     {
-        if( job.isActive() )
+        if( activity.isActive() )
         {
             return NullAnalysis.nonNull( context_.getString( R.string.displayUtils_stopTime_active ) );
         }
 
-        return NullAnalysis.nonNull( job.getStopTime().toString() );
+        return NullAnalysis.nonNull( activity.getStopTime().toString() );
     }
 }

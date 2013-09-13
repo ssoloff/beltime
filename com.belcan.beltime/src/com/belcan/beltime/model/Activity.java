@@ -1,5 +1,5 @@
 /*
- * Job.java
+ * Activity.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -18,21 +18,21 @@ import java.util.Date;
 import com.belcan.beltime.util.Duration;
 
 /**
- * A continuous unit of work that is billed to a single charge number.
+ * A continuous period of billable work performed against a job.
  */
-public final class Job
+public final class Activity
 {
     // ======================================================================
     // Fields
     // ======================================================================
 
-    /** The charge number to be billed. */
+    /** The charge number of the job to be billed. */
     private final ChargeNumber chargeNumber_;
 
-    /** The time at which work on the job started, inclusive. */
+    /** The time at which the activity started, inclusive. */
     private final Date startTime_;
 
-    /** The time at which work on the job stopped, exclusive. */
+    /** The time at which the activity stopped, exclusive. */
     private Date stopTime_;
 
 
@@ -41,14 +41,14 @@ public final class Job
     // ======================================================================
 
     /**
-     * Initializes a new instance of the {@code Job} class.
+     * Initializes a new instance of the {@code Activity} class.
      * 
      * @param chargeNumber
-     *        The charge number to be billed.
+     *        The charge number of the job to be billed.
      * @param startTime
-     *        The time at which work on the job started, inclusive.
+     *        The time at which the activity started, inclusive.
      */
-    private Job(
+    private Activity(
         final ChargeNumber chargeNumber,
         final Date startTime )
     {
@@ -63,9 +63,9 @@ public final class Job
     // ======================================================================
 
     /**
-     * Gets the charge number to be billed.
+     * Gets the charge number of the job to be billed.
      * 
-     * @return The charge number to be billed.
+     * @return The charge number of the job to be billed.
      */
     @SuppressWarnings( "null" )
     public ChargeNumber getChargeNumber()
@@ -74,27 +74,27 @@ public final class Job
     }
 
     /**
-     * Gets the duration of the job.
+     * Gets the duration of the activity.
      * 
-     * @return The duration of the job.
+     * @return The duration of the activity.
      * 
      * @throws java.lang.IllegalStateException
-     *         If the job is active.
+     *         If the activity is active.
      */
     public Duration getDuration()
     {
         if( stopTime_ == null )
         {
-            throw new IllegalStateException( "cannot get duration of an active job" ); //$NON-NLS-1$
+            throw new IllegalStateException( "cannot get duration of an active activity" ); //$NON-NLS-1$
         }
 
         return Duration.fromMilliseconds( stopTime_.getTime() - startTime_.getTime() );
     }
 
     /**
-     * Gets the time at which work on the job started, inclusive.
+     * Gets the time at which the activity started, inclusive.
      * 
-     * @return The time at which work on the job started, inclusive.
+     * @return The time at which the activity started, inclusive.
      */
     public Date getStartTime()
     {
@@ -102,27 +102,27 @@ public final class Job
     }
 
     /**
-     * Gets the time at which work on the job stopped, exclusive.
+     * Gets the time at which the activity stopped, exclusive.
      * 
-     * @return The time at which work on the job stopped, exclusive.
+     * @return The time at which the activity stopped, exclusive.
      * 
      * @throws java.lang.IllegalStateException
-     *         If the job is active.
+     *         If the activity is active.
      */
     public Date getStopTime()
     {
         if( stopTime_ == null )
         {
-            throw new IllegalStateException( "cannot get stop time of an active job" ); //$NON-NLS-1$
+            throw new IllegalStateException( "cannot get stop time of an active activity" ); //$NON-NLS-1$
         }
 
         return new Date( stopTime_.getTime() );
     }
 
     /**
-     * Indicates the job is active.
+     * Indicates the activity is active.
      * 
-     * @return {@code true} if the job is active; otherwise {@code false}.
+     * @return {@code true} if the activity is active; otherwise {@code false}.
      */
     public boolean isActive()
     {
@@ -130,33 +130,33 @@ public final class Job
     }
 
     /**
-     * Starts a new job.
+     * Starts a new activity.
      * 
      * @param chargeNumber
-     *        The charge number to be billed.
+     *        The charge number of the job to be billed.
      * @param startTime
-     *        The time at which work on the job started, inclusive.
+     *        The time at which the activity started, inclusive.
      * 
-     * @return A new job.
+     * @return A new activity.
      */
-    public static Job start(
+    public static Activity start(
         final ChargeNumber chargeNumber,
         final Date startTime )
     {
-        return new Job( chargeNumber, startTime );
+        return new Activity( chargeNumber, startTime );
     }
 
     /**
-     * Stops the job.
+     * Stops the activity.
      * 
      * @param stopTime
-     *        The time at which work on the job stopped, exclusive.
+     *        The time at which the activity stopped, exclusive.
      * 
      * @throws java.lang.IllegalArgumentException
-     *         If {@code stopTime} is less than the time at which work on the
-     *         job started.
+     *         If {@code stopTime} is less than the time at which the activity
+     *         started.
      * @throws java.lang.IllegalStateException
-     *         If the job is inactive.
+     *         If the activity is inactive.
      */
     public void stop(
         final Date stopTime )
@@ -167,7 +167,7 @@ public final class Job
         }
         else if( stopTime_ != null )
         {
-            throw new IllegalStateException( "cannot stop an inactive job" ); //$NON-NLS-1$
+            throw new IllegalStateException( "cannot stop an inactive activity" ); //$NON-NLS-1$
         }
 
         stopTime_ = new Date( stopTime.getTime() );

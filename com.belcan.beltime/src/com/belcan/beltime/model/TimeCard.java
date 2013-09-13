@@ -29,10 +29,10 @@ public final class TimeCard
     // ======================================================================
 
     /**
-     * The collection of jobs in chronological order. The active job, if any,
-     * will be the the last entry.
+     * The collection of activities in chronological order. The active activity,
+     * if any, will be the the last entry.
      */
-    private final List<Job> jobs_;
+    private final List<Activity> activities_;
 
     /** The time card listener or {@code null} if none. */
     private ITimeCardListener listener_;
@@ -47,7 +47,7 @@ public final class TimeCard
      */
     public TimeCard()
     {
-        jobs_ = new ArrayList<Job>();
+        activities_ = new ArrayList<Activity>();
         listener_ = null;
     }
 
@@ -57,38 +57,38 @@ public final class TimeCard
     // ======================================================================
 
     /**
-     * Gets the active job.
+     * Gets the active activity.
      * 
-     * @return The active job.
+     * @return The active activity.
      * 
      * @throws java.lang.IllegalStateException
      *         If the time card is inactive.
      */
-    public Job getActiveJob()
+    public Activity getActiveActivity()
     {
-        final Job activeJob = getActiveJobOrNull();
-        if( activeJob == null )
+        final Activity activeActivity = getActiveActivityOrNull();
+        if( activeActivity == null )
         {
-            throw new IllegalStateException( "no active job" ); //$NON-NLS-1$
+            throw new IllegalStateException( "no active activity" ); //$NON-NLS-1$
         }
 
-        return activeJob;
+        return activeActivity;
     }
 
     /**
-     * Gets the active job or {@code null} if no job is active.
+     * Gets the active activity or {@code null} if no activity is active.
      * 
-     * @return The active job or {@code null} if no job is active.
+     * @return The active activity or {@code null} if no activirt is active.
      */
     @Nullable
-    private Job getActiveJobOrNull()
+    private Activity getActiveActivityOrNull()
     {
-        if( !jobs_.isEmpty() )
+        if( !activities_.isEmpty() )
         {
-            final Job job = jobs_.get( jobs_.size() - 1 );
-            if( job.isActive() )
+            final Activity activity = activities_.get( activities_.size() - 1 );
+            if( activity.isActive() )
             {
-                return job;
+                return activity;
             }
         }
 
@@ -96,14 +96,14 @@ public final class TimeCard
     }
 
     /**
-     * Gets the collection of jobs in chronological order. The active job, if
-     * any, will be the the last entry.
+     * Gets the collection of activities in chronological order. The active
+     * activity, if any, will be the the last entry.
      * 
-     * @return The collection of jobs.
+     * @return The collection of activities.
      */
-    public List<Job> getJobs()
+    public List<Activity> getActivities()
     {
-        return new ArrayList<Job>( jobs_ );
+        return new ArrayList<Activity>( activities_ );
     }
 
     /**
@@ -113,7 +113,7 @@ public final class TimeCard
      */
     public boolean isActive()
     {
-        return getActiveJobOrNull() != null;
+        return getActiveActivityOrNull() != null;
     }
 
     /**
@@ -121,7 +121,7 @@ public final class TimeCard
      */
     public void reset()
     {
-        jobs_.clear();
+        activities_.clear();
 
         if( listener_ != null )
         {
@@ -144,61 +144,61 @@ public final class TimeCard
     }
 
     /**
-     * Starts a new job.
+     * Starts a new activity.
      * 
      * <p>
-     * If a job is currently active, it will be stopped, and a new job will be
-     * started.
+     * If an activity is currently active, it will be stopped, and a new
+     * activity will be started.
      * </p>
      * 
      * @param chargeNumber
-     *        The charge number to be billed.
+     *        The charge number of the job to be billed.
      * @param startTime
-     *        The time at which work on the new job started.
+     *        The time at which the new activity started.
      * 
      * @throws java.lang.IllegalArgumentException
-     *         If a job is currently active and {@code startTime} is less than
-     *         the time at which work on the active job started.
+     *         If an activity is currently active and {@code startTime} is less
+     *         than the time at which the active activity started.
      */
-    public void startJob(
+    public void startActivity(
         final ChargeNumber chargeNumber,
         final Date startTime )
     {
         if( isActive() )
         {
-            stopActiveJob( startTime );
+            stopActiveActivity( startTime );
         }
 
-        final Job job = Job.start( chargeNumber, startTime );
-        jobs_.add( job );
+        final Activity activity = Activity.start( chargeNumber, startTime );
+        activities_.add( activity );
 
         if( listener_ != null )
         {
-            listener_.onJobStarted( this, job );
+            listener_.onActivityStarted( this, activity );
         }
     }
 
     /**
-     * Stops the active job.
+     * Stops the active activity.
      * 
      * @param stopTime
-     *        The time at which work on the active job stopped.
+     *        The time at which the active activity stopped.
      * 
      * @throws java.lang.IllegalArgumentException
-     *         If {@code stopTime} is less than the time at which work on the
-     *         active job started.
+     *         If {@code stopTime} is less than the time at which the active
+     *         activity started.
      * @throws java.lang.IllegalStateException
      *         If the time card is inactive.
      */
-    public void stopActiveJob(
+    public void stopActiveActivity(
         final Date stopTime )
     {
-        final Job job = getActiveJob();
-        job.stop( stopTime );
+        final Activity activity = getActiveActivity();
+        activity.stop( stopTime );
 
         if( listener_ != null )
         {
-            listener_.onJobStopped( this, job );
+            listener_.onActivityStopped( this, activity );
         }
     }
 }

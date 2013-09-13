@@ -17,30 +17,30 @@
 			android:layout_width="fill_parent" />
 	<TextView
 			android:gravity="center"
-			android:id="@+id/activeJobChargeNumberTextView"
+			android:id="@+id/activeActivityChargeNumberTextView"
 			android:layout_below="@+id/timeCardStatusTextView"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent" />
 	<TextView
 			android:gravity="center"
-			android:id="@+id/activeJobStartTimeTextView"
-			android:layout_below="@+id/activeJobChargeNumberTextView"
+			android:id="@+id/activeActivityStartTimeTextView"
+			android:layout_below="@+id/activeActivityChargeNumberTextView"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent" />
 	<Button
-			android:id="@+id/startJobButton"
-			android:layout_above="@+id/stopJobButton"
+			android:id="@+id/startActivityButton"
+			android:layout_above="@+id/stopActivityButton"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
-			android:onClick="onClickStartJob"
-			android:text="@string/startJobButton_text" />
+			android:onClick="onClickStartActivity"
+			android:text="@string/startActivityButton_text" />
 	<Button
-			android:id="@+id/stopJobButton"
+			android:id="@+id/stopActivityButton"
 			android:layout_above="@+id/startTimeCardActivityButton"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
-			android:onClick="onClickStopJob"
-			android:text="@string/stopJobButton_text" />
+			android:onClick="onClickStopActivity"
+			android:text="@string/stopActivityButton_text" />
 	<Button
 			android:id="@+id/startTimeCardActivityButton"
 			android:layout_alignParentBottom="true"

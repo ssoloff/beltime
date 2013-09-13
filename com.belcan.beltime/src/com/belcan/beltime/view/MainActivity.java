@@ -24,9 +24,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.belcan.beltime.R;
+import com.belcan.beltime.model.Activity;
 import com.belcan.beltime.model.ChargeNumber;
 import com.belcan.beltime.model.ITimeCardListener;
-import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TimeCard;
 import com.belcan.beltime.util.Dates;
 import com.belcan.beltime.util.NullAnalysis;
@@ -42,14 +42,14 @@ public final class MainActivity
     // Fields
     // ======================================================================
 
-    /** The active job charge number text view. */
-    private TextView activeJobChargeNumberTextView_;
+    /** The active activity charge number text view. */
+    private TextView activeActivityChargeNumberTextView_;
 
-    /** The active job start time text view. */
-    private TextView activeJobStartTimeTextView_;
+    /** The active activity start time text view. */
+    private TextView activeActivityStartTimeTextView_;
 
-    /** The stop job button. */
-    private Button stopJobButton_;
+    /** The stop activity button. */
+    private Button stopActivityButton_;
 
     /** The time card status text view. */
     private TextView timeCardStatusTextView_;
@@ -64,9 +64,9 @@ public final class MainActivity
      */
     public MainActivity()
     {
-        activeJobChargeNumberTextView_ = null;
-        activeJobStartTimeTextView_ = null;
-        stopJobButton_ = null;
+        activeActivityChargeNumberTextView_ = null;
+        activeActivityStartTimeTextView_ = null;
+        stopActivityButton_ = null;
         timeCardStatusTextView_ = null;
     }
 
@@ -76,12 +76,12 @@ public final class MainActivity
     // ======================================================================
 
     /**
-     * Called when the start job button has been clicked.
+     * Called when the start activity button has been clicked.
      * 
      * @param view
-     *        The start job button.
+     *        The start activity button.
      */
-    public void onClickStartJob(
+    public void onClickStartActivity(
         final View view )
     {
         final EditText chargeNumberEditText = new EditText( this );
@@ -106,7 +106,7 @@ public final class MainActivity
                     final int which )
                 {
                     final ChargeNumber chargeNumber = ChargeNumber.fromString( NullAnalysis.nonNull( chargeNumberEditText.getText().toString() ) );
-                    getTimeCard().startJob( chargeNumber, Dates.now() );
+                    getTimeCard().startActivity( chargeNumber, Dates.now() );
                 }
             } ) //
             .setTitle( R.string.chargeNumberDialog_title ) //
@@ -128,15 +128,15 @@ public final class MainActivity
     }
 
     /**
-     * Called when the stop job button has been clicked.
+     * Called when the stop activity button has been clicked.
      * 
      * @param view
-     *        The stop job button.
+     *        The stop activity button.
      */
-    public void onClickStopJob(
+    public void onClickStopActivity(
         final View view )
     {
-        getTimeCard().stopActiveJob( Dates.now() );
+        getTimeCard().stopActiveActivity( Dates.now() );
     }
 
     /*
@@ -150,9 +150,9 @@ public final class MainActivity
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_main );
-        activeJobChargeNumberTextView_ = (TextView)findViewById( R.id.activeJobChargeNumberTextView );
-        activeJobStartTimeTextView_ = (TextView)findViewById( R.id.activeJobStartTimeTextView );
-        stopJobButton_ = (Button)findViewById( R.id.stopJobButton );
+        activeActivityChargeNumberTextView_ = (TextView)findViewById( R.id.activeActivityChargeNumberTextView );
+        activeActivityStartTimeTextView_ = (TextView)findViewById( R.id.activeActivityStartTimeTextView );
+        stopActivityButton_ = (Button)findViewById( R.id.stopActivityButton );
         timeCardStatusTextView_ = (TextView)findViewById( R.id.timeCardStatusTextView );
     }
 
@@ -197,19 +197,19 @@ public final class MainActivity
     private void update()
     {
         final boolean isTimeCardActive = getTimeCard().isActive();
-        stopJobButton_.setEnabled( isTimeCardActive );
+        stopActivityButton_.setEnabled( isTimeCardActive );
         timeCardStatusTextView_.setText( isTimeCardActive ? R.string.timeCardStatusTextView_text_active : R.string.timeCardStatusTextView_text_inactive );
 
         if( isTimeCardActive )
         {
-            final Job activeJob = getTimeCard().getActiveJob();
-            activeJobChargeNumberTextView_.setText( activeJob.getChargeNumber().toString() );
-            activeJobStartTimeTextView_.setText( activeJob.getStartTime().toString() );
+            final Activity activeActivity = getTimeCard().getActiveActivity();
+            activeActivityChargeNumberTextView_.setText( activeActivity.getChargeNumber().toString() );
+            activeActivityStartTimeTextView_.setText( activeActivity.getStartTime().toString() );
         }
         else
         {
-            activeJobChargeNumberTextView_.setText( "" ); //$NON-NLS-1$
-            activeJobStartTimeTextView_.setText( "" ); //$NON-NLS-1$
+            activeActivityChargeNumberTextView_.setText( "" ); //$NON-NLS-1$
+            activeActivityStartTimeTextView_.setText( "" ); //$NON-NLS-1$
         }
     }
 
@@ -242,23 +242,23 @@ public final class MainActivity
         // ==================================================================
 
         /*
-         * @see com.belcan.beltime.ITimeCardListener#onJobStarted(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+         * @see com.belcan.beltime.model.ITimeCardListener#onActivityStarted(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Activity)
          */
         @Override
-        public void onJobStarted(
+        public void onActivityStarted(
             final TimeCard timeCard,
-            final Job job )
+            final Activity activity )
         {
             update();
         }
 
         /*
-         * @see com.belcan.beltime.ITimeCardListener#onJobStopped(com.belcan.beltime.TimeCard, com.belcan.beltime.Job)
+         * @see com.belcan.beltime.model.ITimeCardListener#onActivityStopped(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Activity)
          */
         @Override
-        public void onJobStopped(
+        public void onActivityStopped(
             final TimeCard timeCard,
-            final Job job )
+            final Activity activity )
         {
             update();
         }

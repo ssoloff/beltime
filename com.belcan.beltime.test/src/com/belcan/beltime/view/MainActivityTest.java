@@ -55,43 +55,43 @@ public final class MainActivityTest
     // ======================================================================
 
     /**
-     * Clicks the start job button.
+     * Clicks the start activity button.
      */
-    private void clickStartJob()
+    private void clickStartActivity()
     {
-        solo_.clickOnView( getStartJobButton() );
+        solo_.clickOnView( getStartActivityButton() );
         assertTrue( "expected charge number dialog to be opened but was not opened", solo_.waitForDialogToOpen( 5000L ) ); //$NON-NLS-1$
     }
 
     /**
-     * Clicks the start job button and cancels input of the charge number.
+     * Clicks the start activity button and cancels input of the charge number.
      */
-    private void clickStartJobAndCancelChargeNumberInput()
+    private void clickStartActivityAndCancelChargeNumberInput()
     {
-        clickStartJob();
+        clickStartActivity();
         solo_.clickOnView( solo_.getView( android.R.id.button2 ) );
         assertTrue( "the charge number dialog was not closed", solo_.waitForDialogToClose( 5000L ) ); //$NON-NLS-1$
     }
 
     /**
-     * Clicks the start job button and inputs a default charge number.
+     * Clicks the start activity button and inputs a default charge number.
      */
     @SuppressWarnings( "null" )
-    private void clickStartJobAndInputChargeNumber()
+    private void clickStartActivityAndInputChargeNumber()
     {
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
     }
 
     /**
-     * Clicks the start job button and inputs the specified charge number.
+     * Clicks the start activity button and inputs the specified charge number.
      * 
      * @param chargeNumber
      *        The charge number.
      */
-    private void clickStartJobAndInputChargeNumber(
+    private void clickStartActivityAndInputChargeNumber(
         final ChargeNumber chargeNumber )
     {
-        clickStartJob();
+        clickStartActivity();
         solo_.enterText( 0, chargeNumber.toString() );
         solo_.clickOnView( solo_.getView( android.R.id.button1 ) );
         assertTrue( "the charge number dialog was not closed", solo_.waitForDialogToClose( 5000L ) ); //$NON-NLS-1$
@@ -107,42 +107,42 @@ public final class MainActivityTest
     }
 
     /**
-     * Clicks the stop job button.
+     * Clicks the stop activity button.
      */
-    private void clickStopJob()
+    private void clickStopActivity()
     {
-        solo_.clickOnView( getStopJobButton() );
+        solo_.clickOnView( getStopActivityButton() );
         getInstrumentation().waitForIdleSync();
     }
 
     /**
-     * Gets the active job charge number text view.
+     * Gets the active activity charge number text view.
      * 
-     * @return The active job charge number text view.
+     * @return The active activity charge number text view.
      */
-    private TextView getActiveJobChargeNumberTextView()
+    private TextView getActiveActivityChargeNumberTextView()
     {
-        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeJobChargeNumberTextView ) );
+        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeActivityChargeNumberTextView ) );
     }
 
     /**
-     * Gets the active job start time text view.
+     * Gets the active activity start time text view.
      * 
-     * @return The active job start time text view.
+     * @return The active activity start time text view.
      */
-    private TextView getActiveJobStartTimeTextView()
+    private TextView getActiveActivityStartTimeTextView()
     {
-        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeJobStartTimeTextView ) );
+        return NullAnalysis.nonNull( (TextView)solo_.getView( R.id.activeActivityStartTimeTextView ) );
     }
 
     /**
-     * Gets the start job button.
+     * Gets the start activity button.
      * 
-     * @return The start job button.
+     * @return The start activity button.
      */
-    private View getStartJobButton()
+    private View getStartActivityButton()
     {
-        return NullAnalysis.nonNull( solo_.getView( R.id.startJobButton ) );
+        return NullAnalysis.nonNull( solo_.getView( R.id.startActivityButton ) );
     }
 
     /**
@@ -156,13 +156,13 @@ public final class MainActivityTest
     }
 
     /**
-     * Gets the stop job button.
+     * Gets the stop activity button.
      * 
-     * @return The stop job button.
+     * @return The stop activity button.
      */
-    private View getStopJobButton()
+    private View getStopActivityButton()
     {
-        return NullAnalysis.nonNull( solo_.getView( R.id.stopJobButton ) );
+        return NullAnalysis.nonNull( solo_.getView( R.id.stopActivityButton ) );
     }
 
     /**
@@ -204,14 +204,15 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the start job button changes the active job status text
-     * views to reflect the new job when the time card is active.
+     * Ensures clicking the start activity button changes the active activity
+     * status text views to reflect the new activity when the time card is
+     * active.
      */
     @SuppressWarnings( "null" )
-    public void testClickStartJobButton_ChangesActiveJobStatusTextViewsToReflectNewJobWhenTimeCardActive()
+    public void testClickStartActivityButton_ChangesActiveActivityStatusTextViewsToReflectNewActivityWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -219,19 +220,20 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertEquals( "active job charge number text view text", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
-                assertEquals( "active job start time text view text", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active activity charge number text view text", getTimeCard().getActiveActivity().getChargeNumber().toString(), getActiveActivityChargeNumberTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active activity start time text view text", getTimeCard().getActiveActivity().getStartTime().toString(), getActiveActivityStartTimeTextView().getText() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the start job button changes the active job status text
-     * views to reflect the new job when the time card is inactive.
+     * Ensures clicking the start activity button changes the active activity
+     * status text views to reflect the new activity when the time card is
+     * inactive.
      */
-    public void testClickStartJobButton_ChangesActiveJobStatusTextViewsToReflectNewJobWhenTimeCardInactive()
+    public void testClickStartActivityButton_ChangesActiveActivityStatusTextViewsToReflectNewActivityWhenTimeCardInactive()
     {
-        clickStartJobAndInputChargeNumber();
+        clickStartActivityAndInputChargeNumber();
 
         runTestOnUiThread( new Runnable()
         {
@@ -239,19 +241,20 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertEquals( "active job charge number text view text", getTimeCard().getActiveJob().getChargeNumber().toString(), getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$
-                assertEquals( "active job start time text view text", getTimeCard().getActiveJob().getStartTime().toString(), getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active activity charge number text view text", getTimeCard().getActiveActivity().getChargeNumber().toString(), getActiveActivityChargeNumberTextView().getText() ); //$NON-NLS-1$
+                assertEquals( "active activity start time text view text", getTimeCard().getActiveActivity().getStartTime().toString(), getActiveActivityStartTimeTextView().getText() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the start job button changes the time card status text
-     * view to indicate the time card is active when the time card is inactive.
+     * Ensures clicking the start activity button changes the time card status
+     * text view to indicate the time card is active when the time card is
+     * inactive.
      */
-    public void testClickStartJobButton_ChangesTimeCardStatusTextViewToActiveWhenTimeCardInactive()
+    public void testClickStartActivityButton_ChangesTimeCardStatusTextViewToActiveWhenTimeCardInactive()
     {
-        clickStartJobAndInputChargeNumber();
+        clickStartActivityAndInputChargeNumber();
 
         runTestOnUiThread( new Runnable()
         {
@@ -265,14 +268,14 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the start job button does not change the time card
+     * Ensures clicking the start activity button does not change the time card
      * status text view when the time card is active.
      */
     @SuppressWarnings( "null" )
-    public void testClickStartJobButton_DoesNotChangeTimeCardStatusTextViewWhenTimeCardActive()
+    public void testClickStartActivityButton_DoesNotChangeTimeCardStatusTextViewWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -286,12 +289,12 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the start job button does not disable the start job
-     * button.
+     * Ensures clicking the start activity button does not disable the start
+     * activity button.
      */
-    public void testClickStartJobButton_DoesNotDisableStartJobButton()
+    public void testClickStartActivityButton_DoesNotDisableStartActivityButton()
     {
-        clickStartJobAndInputChargeNumber();
+        clickStartActivityAndInputChargeNumber();
 
         runTestOnUiThread( new Runnable()
         {
@@ -299,18 +302,18 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertTrue( "expected start job button to be enabled but was disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+                assertTrue( "expected start activity button to be enabled but was disabled", getStartActivityButton().isEnabled() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicks the start job button does not start a new job if the
-     * charge number input is cancelled.
+     * Ensures clicks the start activity button does not start a new activity if
+     * the charge number input is cancelled.
      */
-    public void testClickStartJobButton_DoesNotStartNewJobIfChargeNumberInputCancelled()
+    public void testClickStartActivityButton_DoesNotStartNewActivityIfChargeNumberInputCancelled()
     {
-        clickStartJobAndCancelChargeNumberInput();
+        clickStartActivityAndCancelChargeNumberInput();
 
         runTestOnUiThread( new Runnable()
         {
@@ -318,17 +321,18 @@ public final class MainActivityTest
             public void run()
             {
                 assertFalse( "expected time card to be inactive but was active", getTimeCard().isActive() ); //$NON-NLS-1$
-                assertEquals( "time card job count", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+                assertEquals( "time card activity count", 0, getTimeCard().getActivities().size() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the start job button enables the stop job button.
+     * Ensures clicking the start activity button enables the stop activity
+     * button.
      */
-    public void testClickStartJobButton_EnablesStopJobButton()
+    public void testClickStartActivityButton_EnablesStopActivityButton()
     {
-        clickStartJobAndInputChargeNumber();
+        clickStartActivityAndInputChargeNumber();
 
         runTestOnUiThread( new Runnable()
         {
@@ -336,20 +340,20 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertTrue( "expected stop job button to be enabled but was disabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+                assertTrue( "expected stop activity button to be enabled but was disabled", getStopActivityButton().isEnabled() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the start job button starts a new job when the time card
-     * is active.
+     * Ensures clicking the start activity button starts a new activity when the
+     * time card is active.
      */
     @SuppressWarnings( "null" )
-    public void testClickStartJobButton_StartsNewJobWhenTimeCardActive()
+    public void testClickStartActivityButton_StartsNewActivityWhenTimeCardActive()
     {
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
-        clickStartJobAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_1 );
+        clickStartActivityAndInputChargeNumber( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -357,19 +361,19 @@ public final class MainActivityTest
             public void run()
             {
                 assertTrue( "expected time card to be active but was inactive", getTimeCard().isActive() ); //$NON-NLS-1$
-                assertEquals( "time card job count", 2, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-                assertEquals( "latest time card job charge number", TestChargeNumbers.CHARGE_NUMBER_2, getTimeCard().getJobs().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
+                assertEquals( "time card activity count", 2, getTimeCard().getActivities().size() ); //$NON-NLS-1$
+                assertEquals( "latest time card activity charge number", TestChargeNumbers.CHARGE_NUMBER_2, getTimeCard().getActivities().get( 1 ).getChargeNumber() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the start job button starts a new job when the time card
-     * is inactive.
+     * Ensures clicking the start activity button starts a new activity when the
+     * time card is inactive.
      */
-    public void testClickStartJobButton_StartsNewJobWhenTimeCardInactive()
+    public void testClickStartActivityButton_StartsNewActivityWhenTimeCardInactive()
     {
-        clickStartJobAndInputChargeNumber();
+        clickStartActivityAndInputChargeNumber();
 
         runTestOnUiThread( new Runnable()
         {
@@ -377,8 +381,8 @@ public final class MainActivityTest
             public void run()
             {
                 assertTrue( "expected time card to be active but was inactive", getTimeCard().isActive() ); //$NON-NLS-1$
-                assertEquals( "time card job count", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
-                assertEquals( "latest time card job charge number", TestChargeNumbers.CHARGE_NUMBER_1, getTimeCard().getJobs().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
+                assertEquals( "time card activity count", 1, getTimeCard().getActivities().size() ); //$NON-NLS-1$
+                assertEquals( "latest time card activity charge number", TestChargeNumbers.CHARGE_NUMBER_1, getTimeCard().getActivities().get( 0 ).getChargeNumber() ); //$NON-NLS-1$
             }
         } );
     }
@@ -395,13 +399,13 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the stop job button changes the time card status text
-     * view to indicate the time card is inactive.
+     * Ensures clicking the stop activity button changes the time card status
+     * text view to indicate the time card is inactive.
      */
-    public void testClickStopJobButton_ChangesTimeCardStatusTextViewToInactive()
+    public void testClickStopActivityButton_ChangesTimeCardStatusTextViewToInactive()
     {
-        clickStartJobAndInputChargeNumber();
-        clickStopJob();
+        clickStartActivityAndInputChargeNumber();
+        clickStopActivity();
 
         runTestOnUiThread( new Runnable()
         {
@@ -415,13 +419,13 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the stop job button clears the active job status text
-     * views.
+     * Ensures clicking the stop activity button clears the active activity
+     * status text views.
      */
-    public void testClickStopJobButton_ClearsActiveJobStatusTextViews()
+    public void testClickStopActivityButton_ClearsActiveActivityStatusTextViews()
     {
-        clickStartJobAndInputChargeNumber();
-        clickStopJob();
+        clickStartActivityAndInputChargeNumber();
+        clickStopActivity();
 
         runTestOnUiThread( new Runnable()
         {
@@ -429,20 +433,40 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertEquals( "active job charge number text view text", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
-                assertEquals( "active job start time text view text", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+                assertEquals( "active activity charge number text view text", "", getActiveActivityChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+                assertEquals( "active activity start time text view text", "", getActiveActivityStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
             }
         } );
     }
 
     /**
-     * Ensures clicking the stop job button does not disable the start job
+     * Ensures clicking the stop activity button does not disable the start
+     * activity button.
+     */
+    public void testClickStopActivityButton_DoesNotDisableStartActivityButton()
+    {
+        clickStartActivityAndInputChargeNumber();
+        clickStopActivity();
+
+        runTestOnUiThread( new Runnable()
+        {
+            @Override
+            @SuppressWarnings( "synthetic-access" )
+            public void run()
+            {
+                assertTrue( "expected start activity button to be enabled but was disabled", getStartActivityButton().isEnabled() ); //$NON-NLS-1$
+            }
+        } );
+    }
+
+    /**
+     * Ensures clicking the stop activity button disables the stop activity
      * button.
      */
-    public void testClickStopJobButton_DoesNotDisableStartJobButton()
+    public void testClickStopActivityButton_DisablesStopActivityButton()
     {
-        clickStartJobAndInputChargeNumber();
-        clickStopJob();
+        clickStartActivityAndInputChargeNumber();
+        clickStopActivity();
 
         runTestOnUiThread( new Runnable()
         {
@@ -450,37 +474,18 @@ public final class MainActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertTrue( "expected start job button to be enabled but was disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
+                assertFalse( "expected stop activity button to be disabled but was enabled", getStopActivityButton().isEnabled() ); //$NON-NLS-1$
             }
         } );
     }
 
     /**
-     * Ensures clicking the stop job button disables the stop job button.
+     * Ensures clicking the stop activity button stops the active activity.
      */
-    public void testClickStopJobButton_DisablesStopJobButton()
+    public void testClickStopActivityButton_StopsActiveActivity()
     {
-        clickStartJobAndInputChargeNumber();
-        clickStopJob();
-
-        runTestOnUiThread( new Runnable()
-        {
-            @Override
-            @SuppressWarnings( "synthetic-access" )
-            public void run()
-            {
-                assertFalse( "expected stop job button to be disabled but was enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
-            }
-        } );
-    }
-
-    /**
-     * Ensures clicking the stop job button stops the active job.
-     */
-    public void testClickStopJobButton_StopsActiveJob()
-    {
-        clickStartJobAndInputChargeNumber();
-        clickStopJob();
+        clickStartActivityAndInputChargeNumber();
+        clickStopActivity();
 
         runTestOnUiThread( new Runnable()
         {
@@ -488,7 +493,7 @@ public final class MainActivityTest
             public void run()
             {
                 assertFalse( "expected time card to be inactive but was active", getTimeCard().isActive() ); //$NON-NLS-1$
-                assertEquals( "time card job count", 1, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+                assertEquals( "time card activity count", 1, getTimeCard().getActivities().size() ); //$NON-NLS-1$
             }
         } );
     }
@@ -500,13 +505,13 @@ public final class MainActivityTest
     public void testPreConditions()
     {
         assertFalse( "expected time card to be inactive but was active", getTimeCard().isActive() ); //$NON-NLS-1$
-        assertEquals( "time card job count", 0, getTimeCard().getJobs().size() ); //$NON-NLS-1$
+        assertEquals( "time card activity count", 0, getTimeCard().getActivities().size() ); //$NON-NLS-1$
 
         assertEquals( "time card status text view text", solo_.getString( R.string.timeCardStatusTextView_text_inactive ), getTimeCardStatusTextView().getText() ); //$NON-NLS-1$
-        assertEquals( "active job charge number text view text", "", getActiveJobChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals( "active job start time text view text", "", getActiveJobStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
-        assertTrue( "expected start job button to be enabled but was disabled", getStartJobButton().isEnabled() ); //$NON-NLS-1$
-        assertFalse( "expected stop job button to be disabled but was enabled", getStopJobButton().isEnabled() ); //$NON-NLS-1$
+        assertEquals( "active activity charge number text view text", "", getActiveActivityChargeNumberTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals( "active activity start time text view text", "", getActiveActivityStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
+        assertTrue( "expected start activity button to be enabled but was disabled", getStartActivityButton().isEnabled() ); //$NON-NLS-1$
+        assertFalse( "expected stop activity button to be disabled but was enabled", getStopActivityButton().isEnabled() ); //$NON-NLS-1$
         assertTrue( "expected start time card activity button to be enabled but was disabled", getStartTimeCardActivityButton().isEnabled() ); //$NON-NLS-1$
     }
 }

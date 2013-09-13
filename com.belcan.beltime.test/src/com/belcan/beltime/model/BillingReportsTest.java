@@ -88,9 +88,9 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -115,8 +115,8 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -150,8 +150,8 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 23 * ONE_HOUR ) );
-        timeCard.stopActiveJob( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 23 * ONE_HOUR ) );
+        timeCard.stopActiveActivity( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -188,12 +188,12 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 23 * ONE_HOUR ) );
-        timeCard.stopActiveJob( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_2_START_TIME + 6 * ONE_HOUR ) );
-        timeCard.stopActiveJob( new Date( DAY_2_START_TIME + 9 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 23 * ONE_HOUR ) );
+        timeCard.stopActiveActivity( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_2_START_TIME + 6 * ONE_HOUR ) );
+        timeCard.stopActiveActivity( new Date( DAY_2_START_TIME + 9 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -222,10 +222,10 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + 4 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + 4 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -250,10 +250,10 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + 3 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + 3 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -289,10 +289,10 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_2_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, new Date( DAY_2_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -328,10 +328,10 @@ public final class BillingReportsTest
             ) //
             );
         final TimeCard timeCard = new TimeCard();
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        timeCard.startJob( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_2_START_TIME ) );
-        timeCard.stopActiveJob( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        timeCard.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_2_START_TIME ) );
+        timeCard.stopActiveActivity( new Date( DAY_2_START_TIME + 2 * ONE_HOUR ) );
 
         assertEquals( expectedBillingReports, BillingReports.daily( timeCard ) );
     }
@@ -349,53 +349,53 @@ public final class BillingReportsTest
     }
 
     /**
-     * Ensures the {@link BillingReports#getJobDays} method returns the correct
-     * days when the job spans one day.
+     * Ensures the {@link BillingReports#getActivityDays} method returns the
+     * correct days when the activity spans one day.
      */
     @SuppressWarnings( "null" )
-    public void testGetJobDays_JobSpansOneDay()
+    public void testGetActivityDays_ActivitySpansOneDay()
     {
         final Collection<DateRange> expectedDays = Arrays.asList( //
             new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ) //
             );
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        job.stop( new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        activity.stop( new Date( DAY_1_START_TIME + 2 * ONE_HOUR ) );
 
-        assertEquals( expectedDays, BillingReports.getJobDays( job ) );
+        assertEquals( expectedDays, BillingReports.getActivityDays( activity ) );
     }
 
     /**
-     * Ensures the {@link BillingReports#getJobDays} method returns the correct
-     * days when the job spans three days.
+     * Ensures the {@link BillingReports#getActivityDays} method returns the
+     * correct days when the activity spans three days.
      */
     @SuppressWarnings( "null" )
-    public void testGetJobDays_JobSpansThreeDays()
+    public void testGetActivityDays_ActivitySpansThreeDays()
     {
         final Collection<DateRange> expectedDays = Arrays.asList( //
             new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
             new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ), //
             new DateRange( new Date( DAY_3_START_TIME ), new Date( DAY_3_END_TIME ) ) //
             );
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        job.stop( new Date( DAY_3_START_TIME + ONE_HOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        activity.stop( new Date( DAY_3_START_TIME + ONE_HOUR ) );
 
-        assertEquals( expectedDays, BillingReports.getJobDays( job ) );
+        assertEquals( expectedDays, BillingReports.getActivityDays( activity ) );
     }
 
     /**
-     * Ensures the {@link BillingReports#getJobDays} method returns the correct
-     * days when the job spans two days.
+     * Ensures the {@link BillingReports#getActivityDays} method returns the
+     * correct days when the activity spans two days.
      */
     @SuppressWarnings( "null" )
-    public void testGetJobDays_JobSpansTwoDays()
+    public void testGetActivityDays_ActivitySpansTwoDays()
     {
         final Collection<DateRange> expectedDays = Arrays.asList( //
             new DateRange( new Date( DAY_1_START_TIME ), new Date( DAY_1_END_TIME ) ), //
             new DateRange( new Date( DAY_2_START_TIME ), new Date( DAY_2_END_TIME ) ) //
             );
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
-        job.stop( new Date( DAY_2_START_TIME + ONE_HOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, new Date( DAY_1_START_TIME + ONE_HOUR ) );
+        activity.stop( new Date( DAY_2_START_TIME + ONE_HOUR ) );
 
-        assertEquals( expectedDays, BillingReports.getJobDays( job ) );
+        assertEquals( expectedDays, BillingReports.getActivityDays( activity ) );
     }
 }

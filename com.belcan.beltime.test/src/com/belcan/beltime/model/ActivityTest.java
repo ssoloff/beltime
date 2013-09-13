@@ -1,5 +1,5 @@
 /*
- * JobTest.java
+ * ActivityTest.java
  *
  * Copyright 2013 Beltime contributors and others.
  * All rights reserved.
@@ -19,9 +19,9 @@ import junit.framework.TestCase;
 import com.belcan.beltime.util.Duration;
 
 /**
- * A fixture for testing the {@link Job} class.
+ * A fixture for testing the {@link Activity} class.
  */
-public final class JobTest
+public final class ActivityTest
     extends TestCase
 {
     // ======================================================================
@@ -34,8 +34,8 @@ public final class JobTest
     /** The stop time for use in the fixture. */
     private static final Date STOP_TIME = new Date( 86400000L );
 
-    /** The job under test in the fixture. */
-    private Job job_;
+    /** The activity under test in the fixture. */
+    private Activity activity_;
 
 
     // ======================================================================
@@ -43,9 +43,9 @@ public final class JobTest
     // ======================================================================
 
     /**
-     * Initializes a new instance of the {@code JobTest} class.
+     * Initializes a new instance of the {@code ActivityTest} class.
      */
-    public JobTest()
+    public ActivityTest()
     {
     }
 
@@ -64,30 +64,31 @@ public final class JobTest
     {
         super.setUp();
 
-        job_ = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity_ = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
     }
 
     /**
-     * Ensures the {@link Job#getDuration} method returns the expected duration.
+     * Ensures the {@link Activity#getDuration} method returns the expected
+     * duration.
      */
     @SuppressWarnings( "null" )
     public void testGetDuration_ReturnsExpectedDuration()
     {
-        job_.stop( STOP_TIME );
+        activity_.stop( STOP_TIME );
         final Duration expectedDuration = Duration.fromMilliseconds( STOP_TIME.getTime() - START_TIME.getTime() );
 
-        assertEquals( expectedDuration, job_.getDuration() );
+        assertEquals( expectedDuration, activity_.getDuration() );
     }
 
     /**
-     * Ensures the {@link Job#getDuration} method throws an exception if the job
-     * is active.
+     * Ensures the {@link Activity#getDuration} method throws an exception if
+     * the activity is active.
      */
-    public void testGetDuration_ThrowsExceptionIfJobActive()
+    public void testGetDuration_ThrowsExceptionIfActivityActive()
     {
         try
         {
-            job_.getDuration();
+            activity_.getDuration();
             fail( "getDuration() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -97,42 +98,42 @@ public final class JobTest
     }
 
     /**
-     * Ensures the {@link Job#getStartTime} method returns a copy of the start
-     * time.
+     * Ensures the {@link Activity#getStartTime} method returns a copy of the
+     * start time.
      */
     public void testGetStartTime_ReturnsCopy()
     {
-        final Date startTime = job_.getStartTime();
+        final Date startTime = activity_.getStartTime();
         final Date expectedStartTime = new Date( startTime.getTime() );
         startTime.setTime( startTime.getTime() + 1L );
 
-        assertEquals( expectedStartTime, job_.getStartTime() );
+        assertEquals( expectedStartTime, activity_.getStartTime() );
     }
 
     /**
-     * Ensures the {@link Job#getStopTime} method returns a copy of the stop
-     * time.
+     * Ensures the {@link Activity#getStopTime} method returns a copy of the
+     * stop time.
      */
     @SuppressWarnings( "null" )
     public void testGetStopTime_ReturnsCopy()
     {
-        job_.stop( STOP_TIME );
-        final Date stopTime = job_.getStopTime();
+        activity_.stop( STOP_TIME );
+        final Date stopTime = activity_.getStopTime();
         final Date expectedStopTime = new Date( stopTime.getTime() );
         stopTime.setTime( stopTime.getTime() + 1L );
 
-        assertEquals( expectedStopTime, job_.getStopTime() );
+        assertEquals( expectedStopTime, activity_.getStopTime() );
     }
 
     /**
-     * Ensures the {@link Job#getStopTime} method throws an exception if the job
-     * is active.
+     * Ensures the {@link Activity#getStopTime} method throws an exception if
+     * the activity is active.
      */
-    public void testGetStopTime_ThrowsExceptionIfJobActive()
+    public void testGetStopTime_ThrowsExceptionIfActivityActive()
     {
         try
         {
-            job_.getStopTime();
+            activity_.getStopTime();
             fail( "getStopTime() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -142,63 +143,64 @@ public final class JobTest
     }
 
     /**
-     * Ensures the {@link Job#start} method copies the start time.
+     * Ensures the {@link Activity#start} method copies the start time.
      */
     @SuppressWarnings( "null" )
     public void testStart_CopiesStartTime()
     {
         final Date startTime = new Date( START_TIME.getTime() );
 
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, startTime );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, startTime );
         startTime.setTime( Long.MAX_VALUE );
 
-        assertEquals( START_TIME, job.getStartTime() );
+        assertEquals( START_TIME, activity.getStartTime() );
     }
 
     /**
-     * Ensures the {@link Job#start} method creates a job that is active.
+     * Ensures the {@link Activity#start} method creates an activity that is
+     * active.
      */
-    public void testStart_CreatesActiveJob()
+    public void testStart_CreatesActiveActivity()
     {
-        assertTrue( "job is not active", job_.isActive() ); //$NON-NLS-1$
+        assertTrue( "activity is not active", activity_.isActive() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link Job#stop} method copies the stop time.
+     * Ensures the {@link Activity#stop} method copies the stop time.
      */
     public void testStop_CopiesStopTime()
     {
         final Date stopTime = new Date( STOP_TIME.getTime() );
 
-        job_.stop( stopTime );
+        activity_.stop( stopTime );
         stopTime.setTime( Long.MAX_VALUE );
 
-        assertEquals( STOP_TIME, job_.getStopTime() );
+        assertEquals( STOP_TIME, activity_.getStopTime() );
     }
 
     /**
-     * Ensures the {@link Job#stop} method deactivates the job.
+     * Ensures the {@link Activity#stop} method deactivates the activity.
      */
     @SuppressWarnings( "null" )
-    public void testStop_DeactivatesJob()
+    public void testStop_DeactivatesActivity()
     {
-        job_.stop( STOP_TIME );
+        activity_.stop( STOP_TIME );
 
-        assertFalse( "job is active", job_.isActive() ); //$NON-NLS-1$
+        assertFalse( "activity is active", activity_.isActive() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link Job#stop} method throws an exception if the job is
-     * inactive.
+     * Ensures the {@link Activity#stop} method throws an exception if the
+     * activity is inactive.
      */
     @SuppressWarnings( "null" )
-    public void testStop_ThrowsExceptionIfJobInactive()
+    public void testStop_ThrowsExceptionIfActivityInactive()
     {
-        job_.stop( STOP_TIME );
+        activity_.stop( STOP_TIME );
 
         try
         {
-            job_.stop( STOP_TIME );
+            activity_.stop( STOP_TIME );
             fail( "stop() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
@@ -208,14 +210,14 @@ public final class JobTest
     }
 
     /**
-     * Ensures the {@link Job#stop} method throws an exception if the stop time
-     * is less than the start time.
+     * Ensures the {@link Activity#stop} method throws an exception if the stop
+     * time is less than the start time.
      */
     public void testStop_ThrowsExceptionIfStopTimeLessThanStartTime()
     {
         try
         {
-            job_.stop( new Date( job_.getStartTime().getTime() - 1L ) );
+            activity_.stop( new Date( activity_.getStartTime().getTime() - 1L ) );
             fail( "stop() did not throw IllegalArgumentException" ); //$NON-NLS-1$
         }
         catch( final IllegalArgumentException e )

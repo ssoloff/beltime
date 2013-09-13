@@ -17,7 +17,7 @@ package com.belcan.beltime.view;
 import java.util.Date;
 import android.test.AndroidTestCase;
 import com.belcan.beltime.R;
-import com.belcan.beltime.model.Job;
+import com.belcan.beltime.model.Activity;
 import com.belcan.beltime.model.TestChargeNumbers;
 import com.belcan.beltime.util.NullAnalysis;
 
@@ -37,10 +37,10 @@ public final class DisplayUtilsTest
     /** The number of milliseconds per decihour. */
     private static final long MILLISECONDS_PER_DECIHOUR = MILLISECONDS_PER_HOUR / 10L;
 
-    /** The job start time for use in the fixture. */
+    /** The activity start time for use in the fixture. */
     private static final Date START_TIME = new Date( 0L );
 
-    /** The job stop time for use in the fixture. */
+    /** The activity stop time for use in the fixture. */
     private static final Date STOP_TIME = new Date( 86400000L );
 
     /** The display utilities under test in the fixture. */
@@ -82,125 +82,126 @@ public final class DisplayUtilsTest
     @SuppressWarnings( "null" )
     public void testFormatChargeNumber()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
-        assertEquals( TestChargeNumbers.CHARGE_NUMBER_1.toString(), displayUtils_.formatChargeNumber( job ) );
+        assertEquals( TestChargeNumbers.CHARGE_NUMBER_1.toString(), displayUtils_.formatChargeNumber( activity ) );
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is active.
+     * expected value when the activity is active.
      */
     @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobActive()
+    public void testFormatDuration_WhenActivityActive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
-        assertEquals( getContext().getString( R.string.displayUtils_duration_active ), displayUtils_.formatDuration( job ) );
+        assertEquals( getContext().getString( R.string.displayUtils_duration_active ), displayUtils_.formatDuration( activity ) );
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is inactive and the job duration should not
-     * be rounded.
+     * expected value when the activity is inactive and the activity duration
+     * should not be rounded.
      */
     @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobInactiveAndDurationShouldNotRound()
+    public void testFormatDuration_WhenActivityInactiveAndDurationShouldNotRound()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR ) );
 
-        assertEquals( "1.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "1.0", displayUtils_.formatDuration( activity ) ); //$NON-NLS-1$
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is inactive and the job duration should be
-     * rounded down.
+     * expected value when the activity is inactive and the activity duration
+     * should be rounded down.
      */
     @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundDown()
+    public void testFormatDuration_WhenActivityInactiveAndDurationShouldRoundDown()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR - MILLISECONDS_PER_DECIHOUR ) );
 
-        assertEquals( "0.9", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "0.9", displayUtils_.formatDuration( activity ) ); //$NON-NLS-1$
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is inactive and the job duration should be
-     * rounded up.
+     * expected value when the activity is inactive and the activity duration
+     * should be rounded up.
      */
     @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobInactiveAndDurationShouldRoundUp()
+    public void testFormatDuration_WhenActivityInactiveAndDurationShouldRoundUp()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( new Date( START_TIME.getTime() + MILLISECONDS_PER_HOUR + MILLISECONDS_PER_DECIHOUR ) );
 
-        assertEquals( "1.1", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "1.1", displayUtils_.formatDuration( activity ) ); //$NON-NLS-1$
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatDuration} method returns the
-     * expected value when the job is inactive and the job duration is zero.
+     * expected value when the activity is inactive and the activity duration is
+     * zero.
      */
     @SuppressWarnings( "null" )
-    public void testFormatDuration_WhenJobInactiveAndDurationZero()
+    public void testFormatDuration_WhenActivityInactiveAndDurationZero()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( START_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( START_TIME );
 
-        assertEquals( "0.0", displayUtils_.formatDuration( job ) ); //$NON-NLS-1$
+        assertEquals( "0.0", displayUtils_.formatDuration( activity ) ); //$NON-NLS-1$
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatStartTime} method returns the
-     * expected value when the job is active.
+     * expected value when the activity is active.
      */
     @SuppressWarnings( "null" )
-    public void testFormatStartTime_WhenJobActive()
+    public void testFormatStartTime_WhenActivityActive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
-        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( job ) );
+        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( activity ) );
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatStartTime} method returns the
-     * expected value when the job is inactive.
+     * expected value when the activity is inactive.
      */
     @SuppressWarnings( "null" )
-    public void testFormatStartTime_WhenJobInactive()
+    public void testFormatStartTime_WhenActivityInactive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( STOP_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( STOP_TIME );
 
-        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( job ) );
+        assertEquals( START_TIME.toString(), displayUtils_.formatStartTime( activity ) );
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatStopTime} method returns the
-     * expected value when the job is active.
+     * expected value when the activity is active.
      */
     @SuppressWarnings( "null" )
-    public void testFormatStopTime_WhenJobActive()
+    public void testFormatStopTime_WhenActivityActive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
 
-        assertEquals( getContext().getString( R.string.displayUtils_stopTime_active ), displayUtils_.formatStopTime( job ) );
+        assertEquals( getContext().getString( R.string.displayUtils_stopTime_active ), displayUtils_.formatStopTime( activity ) );
     }
 
     /**
      * Ensures the {@link DisplayUtils#formatStopTime} method returns the
-     * expected value when the job is inactive.
+     * expected value when the activity is inactive.
      */
     @SuppressWarnings( "null" )
-    public void testFormatStopTime_WhenJobInactive()
+    public void testFormatStopTime_WhenActivityInactive()
     {
-        final Job job = Job.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
-        job.stop( STOP_TIME );
+        final Activity activity = Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, START_TIME );
+        activity.stop( STOP_TIME );
 
-        assertEquals( STOP_TIME.toString(), displayUtils_.formatStopTime( job ) );
+        assertEquals( STOP_TIME.toString(), displayUtils_.formatStopTime( activity ) );
     }
 }

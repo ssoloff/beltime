@@ -9,9 +9,9 @@
     <string name="displayUtils_duration">%.1f</string>
     <string name="displayUtils_duration_active">(active)</string>
     <string name="displayUtils_stopTime_active">-</string>
+    <string name="startActivityButton_text">Start Activity</string>
     <string name="startTimeCardActivityButton_text">View Time Card</string>
-    <string name="startJobButton_text">Start Job</string>
-    <string name="stopJobButton_text">Stop Job</string>
+    <string name="stopActivityButton_text">Stop Activity</string>
     <string name="timeCardActivity_label">Time Card</string>
     <string name="timeCardStatusTextView_text_active">Clocked In</string>
     <string name="timeCardStatusTextView_text_inactive">Clocked Out</string>

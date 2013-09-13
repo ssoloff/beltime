@@ -24,28 +24,28 @@ public interface ITimeCardListener
     // ======================================================================
 
     /**
-     * Called when a job has been started.
+     * Called when an activity has started.
      * 
      * @param timeCard
      *        The time card that fired the event.
-     * @param job
-     *        The job that has been started.
+     * @param activity
+     *        The activity that has started.
      */
-    public void onJobStarted(
+    public void onActivityStarted(
         TimeCard timeCard,
-        Job job );
+        Activity activity );
 
     /**
-     * Called when a job has been stopped.
+     * Called when an activity has stopped.
      * 
      * @param timeCard
      *        The time card that fired the event.
-     * @param job
-     *        The job that has been stopped.
+     * @param activity
+     *        The activity that has stopped.
      */
-    public void onJobStopped(
+    public void onActivityStopped(
         TimeCard timeCard,
-        Job job );
+        Activity activity );
 
     /**
      * Called when the time card has been reset.

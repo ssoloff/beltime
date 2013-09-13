@@ -23,8 +23,8 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.belcan.beltime.R;
+import com.belcan.beltime.model.Activity;
 import com.belcan.beltime.model.ChargeNumber;
-import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TestChargeNumbers;
 import com.belcan.beltime.util.Dates;
 import com.belcan.beltime.util.NullAnalysis;
@@ -65,58 +65,60 @@ public final class TimeCardActivityTest
     // ======================================================================
 
     /**
-     * Asserts that the jobs list view contains each of the specified jobs.
+     * Asserts that the activities list view contains each of the specified
+     * activities.
      * 
-     * @param jobs
-     *        The collection of jobs.
+     * @param activities
+     *        The collection of activities.
      * 
      * @throws junit.framework.AssertionFailedError
-     *         If the jobs list view does not contain the specified jobs.
+     *         If the activities list view does not contain the specified
+     *         activities.
      */
-    private void assertJobsListViewContains(
-        final List<Job> jobs )
+    private void assertActivitiesListViewContains(
+        final List<Activity> activities )
     {
-        final ListView jobsListView = getJobsListView();
-        final int itemCount = getJobsListView().getCount();
-        assertEquals( "jobs list view item count", jobs.size(), itemCount ); //$NON-NLS-1$
+        final ListView activitiesListView = getActivitiesListView();
+        final int itemCount = activitiesListView.getCount();
+        assertEquals( "activities list view item count", activities.size(), itemCount ); //$NON-NLS-1$
 
         for( int index = 0; index < itemCount; ++index )
         {
-            final Job job = jobs.get( index );
-            assert job != null;
-            final View row = jobsListView.getChildAt( index );
-            assertNotNull( String.format( Locale.US, "expected item in jobs list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
+            final Activity activity = activities.get( index );
+            assert activity != null;
+            final View row = activitiesListView.getChildAt( index );
+            assertNotNull( String.format( Locale.US, "expected item in activities list view at index %d", Integer.valueOf( index ) ), row ); //$NON-NLS-1$
 
             final TextView chargeNumberTextView = (TextView)row.findViewById( R.id.chargeNumberTextView );
             assertNotNull( "expected charge number text view", chargeNumberTextView ); //$NON-NLS-1$
-            final String expectedChargeNumberTextViewText = displayUtils_.formatChargeNumber( job );
+            final String expectedChargeNumberTextViewText = displayUtils_.formatChargeNumber( activity );
             assertEquals( "charge number text view text", expectedChargeNumberTextViewText, chargeNumberTextView.getText() ); //$NON-NLS-1$
 
             final TextView startTimeTextView = (TextView)row.findViewById( R.id.startTimeTextView );
             assertNotNull( "expected start time text view", startTimeTextView ); //$NON-NLS-1$
-            final String expectedStartTimeTextViewText = displayUtils_.formatStartTime( job );
+            final String expectedStartTimeTextViewText = displayUtils_.formatStartTime( activity );
             assertEquals( "start time text view text", expectedStartTimeTextViewText, startTimeTextView.getText() ); //$NON-NLS-1$
 
             final TextView stopTimeTextView = (TextView)row.findViewById( R.id.stopTimeTextView );
             assertNotNull( "expected stop time text view", stopTimeTextView ); //$NON-NLS-1$
-            final String expectedStopTimeTextViewText = displayUtils_.formatStopTime( job );
+            final String expectedStopTimeTextViewText = displayUtils_.formatStopTime( activity );
             assertEquals( "stop time text view text", expectedStopTimeTextViewText, stopTimeTextView.getText() ); //$NON-NLS-1$
 
             final TextView durationTextView = (TextView)row.findViewById( R.id.durationTextView );
             assertNotNull( "expected duration text view", durationTextView ); //$NON-NLS-1$
-            final String expectedDurationTextViewText = displayUtils_.formatDuration( job );
+            final String expectedDurationTextViewText = displayUtils_.formatDuration( activity );
             assertEquals( "duration text view text", expectedDurationTextViewText, durationTextView.getText() ); //$NON-NLS-1$
         }
     }
 
     /**
-     * Gets the jobs list view.
+     * Gets the activities list view.
      * 
-     * @return The jobs list view.
+     * @return The activities list view.
      */
-    private ListView getJobsListView()
+    private ListView getActivitiesListView()
     {
-        return NullAnalysis.nonNull( (ListView)solo_.getView( R.id.jobsListView ) );
+        return NullAnalysis.nonNull( (ListView)solo_.getView( R.id.activitiesListView ) );
     }
 
     /*
@@ -137,27 +139,27 @@ public final class TimeCardActivityTest
     }
 
     /**
-     * Starts a new job with the specified charge number.
+     * Starts a new activity with the specified charge number.
      * 
      * @param chargeNumber
      *        The charge number.
      * 
-     * @return The job that was started.
+     * @return The activity that was started.
      */
-    private Job startJob(
+    private Activity startActivity(
         final ChargeNumber chargeNumber )
     {
-        final AtomicReference<Job> jobRef = new AtomicReference<Job>();
+        final AtomicReference<Activity> activityRef = new AtomicReference<Activity>();
         runTestOnUiThread( new Runnable()
         {
             @Override
             public void run()
             {
-                getTimeCard().startJob( chargeNumber, Dates.now() );
-                jobRef.set( getTimeCard().getActiveJob() );
+                getTimeCard().startActivity( chargeNumber, Dates.now() );
+                activityRef.set( getTimeCard().getActiveActivity() );
             }
         } );
-        return NullAnalysis.nonNull( jobRef.get() );
+        return NullAnalysis.nonNull( activityRef.get() );
     }
 
     /*
@@ -178,17 +180,17 @@ public final class TimeCardActivityTest
     @UiThreadTest
     public void testPreConditions()
     {
-        assertEquals( "jobs list view item count", 0, getJobsListView().getCount() ); //$NON-NLS-1$
+        assertEquals( "activities list view item count", 0, getActivitiesListView().getCount() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures starting a new job updates the jobs list view.
+     * Ensures starting a new activity updates the activities list view.
      */
     @SuppressWarnings( "null" )
-    public void testStartJob_UpdatesJobsListView()
+    public void testStartActivity_UpdatesActivitiesListView()
     {
-        final Job job1 = startJob( TestChargeNumbers.CHARGE_NUMBER_1 );
-        final Job job2 = startJob( TestChargeNumbers.CHARGE_NUMBER_2 );
+        final Activity activity1 = startActivity( TestChargeNumbers.CHARGE_NUMBER_1 );
+        final Activity activity2 = startActivity( TestChargeNumbers.CHARGE_NUMBER_2 );
 
         runTestOnUiThread( new Runnable()
         {
@@ -196,7 +198,7 @@ public final class TimeCardActivityTest
             @SuppressWarnings( "synthetic-access" )
             public void run()
             {
-                assertJobsListViewContains( Arrays.asList( job1, job2 ) );
+                assertActivitiesListViewContains( Arrays.asList( activity1, activity2 ) );
             }
         } );
     }

@@ -137,18 +137,18 @@ public final class BillingReports
         final Map<ChargeNumber, Duration> durations = new HashMap<ChargeNumber, Duration>();
 
         DateRange currentDay = null;
-        for( final Job job : getInactiveJobs( timeCard ) )
+        for( final Activity activity : getInactiveActivities( timeCard ) )
         {
-            for( final DateRange day : getJobDays( NullAnalysis.nonNull( job ) ) )
+            for( final DateRange day : getActivityDays( NullAnalysis.nonNull( activity ) ) )
             {
                 if( (currentDay != null) && !currentDay.getBeginDate().equals( day.getBeginDate() ) )
                 {
                     billingReports.add( createBillingReport( currentDay, durations ) );
                 }
 
-                final long startTime = Math.max( job.getStartTime().getTime(), day.getBeginDate().getTime() );
-                final long stopTime = Math.min( job.getStopTime().getTime(), day.getEndDate().getTime() + 1L ); // add +1 to day.getEndDate() because stopTime is exclusive
-                updateDuration( durations, job.getChargeNumber(), startTime, stopTime );
+                final long startTime = Math.max( activity.getStartTime().getTime(), day.getBeginDate().getTime() );
+                final long stopTime = Math.min( activity.getStopTime().getTime(), day.getEndDate().getTime() + 1L ); // add +1 to day.getEndDate() because stopTime is exclusive
+                updateDuration( durations, activity.getChargeNumber(), startTime, stopTime );
 
                 currentDay = day;
             }
@@ -160,6 +160,34 @@ public final class BillingReports
         }
 
         return billingReports;
+    }
+
+    /**
+     * Gets the collection of days spanned by the specified activity.
+     * 
+     * @param activity
+     *        The activity.
+     * 
+     * @return The collection of days spanned by the specified activity. Each
+     *         day is represented as a {@link DateRange} whose beginning date
+     *         corresponds to time 00:00:00 on the specified day, and whose
+     *         ending date corresponds to time 23:59:59 on the specified day.
+     */
+    static Collection<DateRange> getActivityDays(
+        final Activity activity )
+    {
+        final Collection<DateRange> days = new ArrayList<DateRange>();
+        final Date startOfFirstDay = getStartOfDay( activity.getStartTime() );
+        final Date endOfLastDay = getEndOfDay( activity.getStopTime() );
+
+        final Date startOfDay = new Date( startOfFirstDay.getTime() );
+        while( startOfDay.compareTo( endOfLastDay ) < 0 )
+        {
+            days.add( new DateRange( startOfDay, getEndOfDay( startOfDay ) ) );
+            startOfDay.setTime( startOfDay.getTime() + MILLISECONDS_PER_DAY );
+        }
+
+        return days;
     }
 
     /**
@@ -183,48 +211,20 @@ public final class BillingReports
     }
 
     /**
-     * Gets the collection of inactive jobs in chronological order from the
-     * specified time card.
+     * Gets the collection of inactive activities in chronological order from
+     * the specified time card.
      * 
      * @param timeCard
      *        The time card.
      * 
-     * @return The collection of inactive jobs.
+     * @return The collection of inactive activities.
      */
-    private static List<Job> getInactiveJobs(
+    private static List<Activity> getInactiveActivities(
         final TimeCard timeCard )
     {
-        final List<Job> jobs = timeCard.getJobs();
-        final int lastIndex = jobs.size() - 1;
-        return (lastIndex >= 0) && jobs.get( lastIndex ).isActive() ? NullAnalysis.nonNull( jobs.subList( 0, lastIndex ) ) : jobs;
-    }
-
-    /**
-     * Gets the collection of days spanned by the specified job.
-     * 
-     * @param job
-     *        The job.
-     * 
-     * @return The collection of days spanned by the specified job. Each day is
-     *         represented as a {@link DateRange} whose beginning date
-     *         corresponds to time 00:00:00 on the specified day, and whose
-     *         ending date corresponds to time 23:59:59 on the specified day.
-     */
-    static Collection<DateRange> getJobDays(
-        final Job job )
-    {
-        final Collection<DateRange> days = new ArrayList<DateRange>();
-        final Date startOfFirstDay = getStartOfDay( job.getStartTime() );
-        final Date endOfLastDay = getEndOfDay( job.getStopTime() );
-
-        final Date startOfDay = new Date( startOfFirstDay.getTime() );
-        while( startOfDay.compareTo( endOfLastDay ) < 0 )
-        {
-            days.add( new DateRange( startOfDay, getEndOfDay( startOfDay ) ) );
-            startOfDay.setTime( startOfDay.getTime() + MILLISECONDS_PER_DAY );
-        }
-
-        return days;
+        final List<Activity> activities = timeCard.getActivities();
+        final int lastIndex = activities.size() - 1;
+        return (lastIndex >= 0) && activities.get( lastIndex ).isActive() ? NullAnalysis.nonNull( activities.subList( 0, lastIndex ) ) : activities;
     }
 
     /**

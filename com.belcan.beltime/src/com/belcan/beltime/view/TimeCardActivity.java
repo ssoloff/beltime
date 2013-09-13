@@ -23,8 +23,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.belcan.beltime.R;
+import com.belcan.beltime.model.Activity;
 import com.belcan.beltime.model.ITimeCardListener;
-import com.belcan.beltime.model.Job;
 import com.belcan.beltime.model.TimeCard;
 import org.eclipse.jdt.annotation.Nullable;
 
@@ -38,11 +38,11 @@ public final class TimeCardActivity
     // Fields
     // ======================================================================
 
+    /** The activities list view. */
+    private ListView activitiesListView_;
+
     /** The display utilities. */
     private final DisplayUtils displayUtils_;
-
-    /** The jobs list view. */
-    private ListView jobsListView_;
 
 
     // ======================================================================
@@ -63,11 +63,11 @@ public final class TimeCardActivity
     // ======================================================================
 
     /**
-     * Creates the adapter for the jobs list view.
+     * Creates the adapter for the activities list view.
      * 
-     * @return The adapter for the jobs list view.
+     * @return The adapter for the activities list view.
      */
-    private ListAdapter createJobsAdapter()
+    private ListAdapter createActivitiesAdapter()
     {
         final String chargeNumberColumnName = "chargeNumber"; //$NON-NLS-1$
         final String startTimeColumnName = "startTime"; //$NON-NLS-1$
@@ -86,19 +86,19 @@ public final class TimeCardActivity
             R.id.durationTextView
         };
 
-        final List<Map<String, Object>> jobsData = new ArrayList<Map<String, Object>>();
-        for( final Job job : getTimeCard().getJobs() )
+        final List<Map<String, Object>> activitiesData = new ArrayList<Map<String, Object>>();
+        for( final Activity activity : getTimeCard().getActivities() )
         {
-            assert job != null;
-            final Map<String, Object> jobData = new HashMap<String, Object>();
-            jobData.put( chargeNumberColumnName, displayUtils_.formatChargeNumber( job ) );
-            jobData.put( startTimeColumnName, displayUtils_.formatStartTime( job ) );
-            jobData.put( stopTimeColumnName, displayUtils_.formatStopTime( job ) );
-            jobData.put( durationColumnName, displayUtils_.formatDuration( job ) );
-            jobsData.add( jobData );
+            assert activity != null;
+            final Map<String, Object> activityData = new HashMap<String, Object>();
+            activityData.put( chargeNumberColumnName, displayUtils_.formatChargeNumber( activity ) );
+            activityData.put( startTimeColumnName, displayUtils_.formatStartTime( activity ) );
+            activityData.put( stopTimeColumnName, displayUtils_.formatStopTime( activity ) );
+            activityData.put( durationColumnName, displayUtils_.formatDuration( activity ) );
+            activitiesData.add( activityData );
         }
 
-        return new SimpleAdapter( this, jobsData, R.layout.view_job, from, to );
+        return new SimpleAdapter( this, activitiesData, R.layout.view_activity, from, to );
     }
 
     /*
@@ -112,7 +112,7 @@ public final class TimeCardActivity
         super.onCreate( savedInstanceState );
 
         setContentView( R.layout.activity_time_card );
-        jobsListView_ = (ListView)findViewById( R.id.jobsListView );
+        activitiesListView_ = (ListView)findViewById( R.id.activitiesListView );
     }
 
     /*
@@ -143,7 +143,7 @@ public final class TimeCardActivity
      */
     private void update()
     {
-        jobsListView_.setAdapter( createJobsAdapter() );
+        activitiesListView_.setAdapter( createActivitiesAdapter() );
     }
 
 
@@ -175,23 +175,23 @@ public final class TimeCardActivity
         // ==================================================================
 
         /*
-         * @see com.belcan.beltime.model.ITimeCardListener#onJobStarted(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Job)
+         * @see com.belcan.beltime.model.ITimeCardListener#onActivityStarted(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Activity)
          */
         @Override
-        public void onJobStarted(
+        public void onActivityStarted(
             final TimeCard timeCard,
-            final Job job )
+            final Activity activity )
         {
             update();
         }
 
         /*
-         * @see com.belcan.beltime.model.ITimeCardListener#onJobStopped(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Job)
+         * @see com.belcan.beltime.model.ITimeCardListener#onActivityStopped(com.belcan.beltime.model.TimeCard, com.belcan.beltime.model.Activity)
          */
         @Override
-        public void onJobStopped(
+        public void onActivityStopped(
             final TimeCard timeCard,
-            final Job job )
+            final Activity activity )
         {
             update();
         }

@@ -79,15 +79,15 @@ public final class TimeCardTest
     }
 
     /**
-     * Ensures the {@link TimeCard#getActiveJob} method throws an exception if
-     * the time card is inactive.
+     * Ensures the {@link TimeCard#getActiveActivity} method throws an exception
+     * if the time card is inactive.
      */
-    public void testGetActiveJob_ThrowsExceptionIfTimeCardInactive()
+    public void testGetActiveActivity_ThrowsExceptionIfTimeCardInactive()
     {
         try
         {
-            timeCard_.getActiveJob();
-            fail( "getActiveJob() did not throw IllegalStateException" ); //$NON-NLS-1$
+            timeCard_.getActiveActivity();
+            fail( "getActiveActivity() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
         {
@@ -96,17 +96,17 @@ public final class TimeCardTest
     }
 
     /**
-     * Ensures the {@link TimeCard#getJobs} method returns a copy of the jobs
-     * collection.
+     * Ensures the {@link TimeCard#getActivities} method returns a copy of the
+     * activities collection.
      */
     @SuppressWarnings( "null" )
-    public void testGetJobs_ReturnsCopy()
+    public void testGetActivities_ReturnsCopy()
     {
-        final List<Job> jobs = timeCard_.getJobs();
-        final List<Job> expectedJobs = new ArrayList<Job>( jobs );
-        jobs.add( Job.start( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() ) );
+        final List<Activity> activities = timeCard_.getActivities();
+        final List<Activity> expectedActivities = new ArrayList<Activity>( activities );
+        activities.add( Activity.start( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() ) );
 
-        assertEquals( expectedJobs, timeCard_.getJobs() );
+        assertEquals( expectedActivities, timeCard_.getActivities() );
     }
 
     /**
@@ -129,197 +129,199 @@ public final class TimeCardTest
     }
 
     /**
-     * Ensures the {@link TimeCard#reset} method removes all jobs if the time
-     * card is active.
+     * Ensures the {@link TimeCard#reset} method removes all activities if the
+     * time card is active.
      */
     @SuppressWarnings( "null" )
-    public void testReset_RemovesAllJobsIfTimeCardActive()
+    public void testReset_RemovesAllActivitiesIfTimeCardActive()
     {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
 
         timeCard_.reset();
 
         assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( 0, timeCard_.getJobs().size() );
+        assertEquals( 0, timeCard_.getActivities().size() );
     }
 
     /**
-     * Ensures the {@link TimeCard#reset} method removes all jobs if the time
-     * card is inactive.
+     * Ensures the {@link TimeCard#reset} method removes all activities if the
+     * time card is inactive.
      */
     @SuppressWarnings( "null" )
-    public void testReset_RemovesAllJobsIfTimeCardInactive()
+    public void testReset_RemovesAllActivitiesIfTimeCardInactive()
     {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
-        timeCard_.stopActiveJob( Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+        timeCard_.stopActiveActivity( Dates.now() );
 
         timeCard_.reset();
 
         assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
-        assertEquals( 0, timeCard_.getJobs().size() );
+        assertEquals( 0, timeCard_.getActivities().size() );
     }
 
     /**
-     * Ensures the {@link TimeCard#startJob} method activates the time card.
+     * Ensures the {@link TimeCard#startActivity} method activates the time
+     * card.
      */
     @SuppressWarnings( "null" )
-    public void testStartJob_ActivatesTimeCard()
+    public void testStartActivity_ActivatesTimeCard()
     {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
 
         assertTrue( "time card is not active", timeCard_.isActive() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link TimeCard#startJob} method activates a new job if the
+     * Ensures the {@link TimeCard#startActivity} method activates a new
+     * activity if the time card is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartActivity_ActivatesNewActivityIfActive()
+    {
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+
+        assertEquals( TestChargeNumbers.CHARGE_NUMBER_2, timeCard_.getActiveActivity().getChargeNumber() );
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startActivity} method activates a new
+     * activity if the time card is inactive.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartActicity_ActivatesNewActivityIfInactive()
+    {
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+
+        assertEquals( TestChargeNumbers.CHARGE_NUMBER_1, timeCard_.getActiveActivity().getChargeNumber() );
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startActivity} method deactivates the active
+     * activity if the time card is active.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartActivity_DeactivatesActiveActivityIfActive()
+    {
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+
+        assertFalse( "first activity not deactivated", timeCard_.getActivities().get( 0 ).isActive() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startActivity} method fires the
+     * {@link ITimeCardListener#onActivityStarted} event.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartActivity_FiresOnActivityStarted()
+    {
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
+        final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
+        timeCardListener.onActivityStarted( EasyMock.capture( timeCardCapture ), EasyMock.notNull( Activity.class ) );
+        mocksControl_.replay();
+
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startActivity} method fires the
+     * {@link ITimeCardListener#onActivityStopped} event if there is an active
+     * activity.
+     */
+    @SuppressWarnings( "null" )
+    public void testStartActivity_FiresOnActivityStoppedIfActivityActive()
+    {
+        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
+        final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
+        final Capture<Activity> activityCapture = new Capture<Activity>();
+        timeCardListener.onActivityStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( activityCapture ) );
+        timeCardListener.onActivityStarted( EasyMock.notNull( TimeCard.class ), EasyMock.notNull( Activity.class ) );
+        mocksControl_.replay();
+
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        final Activity activity = timeCard_.getActiveActivity();
+        timeCard_.setTimeCardListener( timeCardListener );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+
+        EasyMockJUnit3Utils.verify( mocksControl_ );
+        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
+        assertEquals( "expected previously active activity", activity, activityCapture.getValue() ); //$NON-NLS-1$
+    }
+
+    /**
+     * Ensures the {@link TimeCard#startActivity} method sets the stop time of
+     * the active activity equal to the start time of the new activity if the
      * time card is active.
      */
     @SuppressWarnings( "null" )
-    public void testStartJob_ActivatesNewJobIfActive()
+    public void testStartActivity_SetsStopTimeOfActiveActivityEqualToStartTimeOfNewActivityIfActive()
     {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
 
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
 
-        assertEquals( TestChargeNumbers.CHARGE_NUMBER_2, timeCard_.getActiveJob().getChargeNumber() );
+        final List<Activity> activities = timeCard_.getActivities();
+        final Activity previousActivity = activities.get( 0 );
+        final Activity activeActivity = activities.get( 1 );
+        assertEquals( "stop time of previous activity should be equal to start time of active activity", previousActivity.getStopTime(), activeActivity.getStartTime() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link TimeCard#startJob} method activates a new job if the
-     * time card is inactive.
+     * Ensures the {@link TimeCard#stopActiveActivity} method deactivates the
+     * time card if it is active.
      */
     @SuppressWarnings( "null" )
-    public void testStartJob_ActivatesNewJobIfInactive()
+    public void testStopActiveActivity_DeactivatesTimeCardIfActive()
     {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
 
-        assertEquals( TestChargeNumbers.CHARGE_NUMBER_1, timeCard_.getActiveJob().getChargeNumber() );
-    }
-
-    /**
-     * Ensures the {@link TimeCard#startJob} method deactivates the active job
-     * if the time card is active.
-     */
-    @SuppressWarnings( "null" )
-    public void testStartJob_DeactivatesActiveJobIfActive()
-    {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
-
-        assertFalse( "first job not deactivated", timeCard_.getJobs().get( 0 ).isActive() ); //$NON-NLS-1$
-    }
-
-    /**
-     * Ensures the {@link TimeCard#startJob} method fires the
-     * {@link ITimeCardListener#onJobStarted} event.
-     */
-    @SuppressWarnings( "null" )
-    public void testStartJob_FiresOnJobStarted()
-    {
-        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
-        final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
-        timeCardListener.onJobStarted( EasyMock.capture( timeCardCapture ), EasyMock.notNull( Job.class ) );
-        mocksControl_.replay();
-
-        timeCard_.setTimeCardListener( timeCardListener );
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-
-        EasyMockJUnit3Utils.verify( mocksControl_ );
-        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
-    }
-
-    /**
-     * Ensures the {@link TimeCard#startJob} method fires the
-     * {@link ITimeCardListener#onJobStopped} event if there is an active job.
-     */
-    @SuppressWarnings( "null" )
-    public void testStartJob_FiresOnJobStoppedIfJobActive()
-    {
-        final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
-        final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
-        final Capture<Job> jobCapture = new Capture<Job>();
-        timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
-        timeCardListener.onJobStarted( EasyMock.notNull( TimeCard.class ), EasyMock.notNull( Job.class ) );
-        mocksControl_.replay();
-
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-        final Job job = timeCard_.getActiveJob();
-        timeCard_.setTimeCardListener( timeCardListener );
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
-
-        EasyMockJUnit3Utils.verify( mocksControl_ );
-        assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
-        assertEquals( "expected previously active job", job, jobCapture.getValue() ); //$NON-NLS-1$
-    }
-
-    /**
-     * Ensures the {@link TimeCard#startJob} method sets the stop time of the
-     * active job equal to the start time of the new job if the time card is
-     * active.
-     */
-    @SuppressWarnings( "null" )
-    public void testStartJob_SetsStopTimeOfActiveJobEqualToStartTimeOfNewJobIfActive()
-    {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_2, Dates.now() );
-
-        final List<Job> jobs = timeCard_.getJobs();
-        final Job previousJob = jobs.get( 0 );
-        final Job activeJob = jobs.get( 1 );
-        assertEquals( "stop time of previous job should be equal to start time of active job", previousJob.getStopTime(), activeJob.getStartTime() ); //$NON-NLS-1$
-    }
-
-    /**
-     * Ensures the {@link TimeCard#stopActiveJob} method deactivates the time
-     * card if it is active.
-     */
-    @SuppressWarnings( "null" )
-    public void testStopActiveJob_DeactivatesTimeCardIfActive()
-    {
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-
-        timeCard_.stopActiveJob( Dates.now() );
+        timeCard_.stopActiveActivity( Dates.now() );
 
         assertFalse( "time card is active", timeCard_.isActive() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link TimeCard#stopActiveJob} method fires the
-     * {@link ITimeCardListener#onJobStopped} event.
+     * Ensures the {@link TimeCard#stopActiveActivity} method fires the
+     * {@link ITimeCardListener#onActivityStopped} event.
      */
     @SuppressWarnings( "null" )
-    public void testStopActiveJob_FiresOnJobStopped()
+    public void testStopActiveActivity_FiresOnActivityStopped()
     {
         final ITimeCardListener timeCardListener = mocksControl_.createMock( ITimeCardListener.class );
         final Capture<TimeCard> timeCardCapture = new Capture<TimeCard>();
-        final Capture<Job> jobCapture = new Capture<Job>();
-        timeCardListener.onJobStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( jobCapture ) );
+        final Capture<Activity> activityCapture = new Capture<Activity>();
+        timeCardListener.onActivityStopped( EasyMock.capture( timeCardCapture ), EasyMock.capture( activityCapture ) );
         mocksControl_.replay();
 
-        timeCard_.startJob( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
-        final Job job = timeCard_.getActiveJob();
+        timeCard_.startActivity( TestChargeNumbers.CHARGE_NUMBER_1, Dates.now() );
+        final Activity activity = timeCard_.getActiveActivity();
         timeCard_.setTimeCardListener( timeCardListener );
-        timeCard_.stopActiveJob( Dates.now() );
+        timeCard_.stopActiveActivity( Dates.now() );
 
         EasyMockJUnit3Utils.verify( mocksControl_ );
         assertEquals( "expected fixture time card", timeCard_, timeCardCapture.getValue() ); //$NON-NLS-1$
-        assertEquals( "expected previously active job", job, jobCapture.getValue() ); //$NON-NLS-1$
+        assertEquals( "expected previously active activity", activity, activityCapture.getValue() ); //$NON-NLS-1$
     }
 
     /**
-     * Ensures the {@link TimeCard#stopActiveJob} method throws an exception if
-     * the time card is inactive.
+     * Ensures the {@link TimeCard#stopActiveActivity} method throws an
+     * exception if the time card is inactive.
      */
-    public void testStopActiveJob_ThrowsExceptionIfTimeCardInactive()
+    public void testStopActiveActivity_ThrowsExceptionIfTimeCardInactive()
     {
         try
         {
-            timeCard_.stopActiveJob( Dates.now() );
-            fail( "stopActiveJob() did not throw IllegalStateException" ); //$NON-NLS-1$
+            timeCard_.stopActiveActivity( Dates.now() );
+            fail( "stopActiveActivity() did not throw IllegalStateException" ); //$NON-NLS-1$
         }
         catch( final IllegalStateException e )
         {
