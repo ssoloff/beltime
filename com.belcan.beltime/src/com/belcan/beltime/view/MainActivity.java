@@ -19,6 +19,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -116,18 +117,6 @@ public final class MainActivity
     }
 
     /**
-     * Called when the start time card activity button has been clicked.
-     * 
-     * @param view
-     *        The start time card activity button.
-     */
-    public void onClickStartTimeCardActivity(
-        final View view )
-    {
-        startActivity( new Intent( this, TimeCardActivity.class ) );
-    }
-
-    /**
      * Called when the stop activity button has been clicked.
      * 
      * @param view
@@ -166,6 +155,27 @@ public final class MainActivity
     {
         getMenuInflater().inflate( R.menu.main, menu );
         return true;
+    }
+
+    /*
+     * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+     */
+    @Override
+    public boolean onOptionsItemSelected(
+        @Nullable
+        final MenuItem item )
+    {
+        assert item != null;
+
+        switch( item.getItemId() )
+        {
+            case R.id.action_timeCard:
+                startActivity( new Intent( this, TimeCardActivity.class ) );
+                return true;
+
+            default:
+                return super.onOptionsItemSelected( item );
+        }
     }
 
     /*

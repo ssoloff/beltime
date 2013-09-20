@@ -98,21 +98,21 @@ public final class MainActivityTest
     }
 
     /**
-     * Clicks the start time card activity button.
-     */
-    private void clickStartTimeCardActivity()
-    {
-        solo_.clickOnView( getStartTimeCardActivityButton() );
-        assertTrue( "expected TimeCardActivity to be activated but was not activated", solo_.waitForActivity( TimeCardActivity.class, 5000 ) ); //$NON-NLS-1$
-    }
-
-    /**
      * Clicks the stop activity button.
      */
     private void clickStopActivity()
     {
         solo_.clickOnView( getStopActivityButton() );
         getInstrumentation().waitForIdleSync();
+    }
+
+    /**
+     * Clicks the time card menu item.
+     */
+    private void clickTimeCardMenuItem()
+    {
+        solo_.clickOnMenuItem( solo_.getString( R.string.action_timeCard ) );
+        assertTrue( "expected TimeCardActivity to be activated but was not activated", solo_.waitForActivity( TimeCardActivity.class, 5000 ) ); //$NON-NLS-1$
     }
 
     /**
@@ -143,16 +143,6 @@ public final class MainActivityTest
     private View getStartActivityButton()
     {
         return NullAnalysis.nonNull( solo_.getView( R.id.startActivityButton ) );
-    }
-
-    /**
-     * Gets the start time card activity button.
-     * 
-     * @return The start time card activity button.
-     */
-    private View getStartTimeCardActivityButton()
-    {
-        return NullAnalysis.nonNull( solo_.getView( R.id.startTimeCardActivityButton ) );
     }
 
     /**
@@ -388,17 +378,6 @@ public final class MainActivityTest
     }
 
     /**
-     * Ensures clicking the start time card activity button starts the time card
-     * activity.
-     */
-    public void testClickStartTimeCardActivityButton_StartsTimeCardActivity()
-    {
-        clickStartTimeCardActivity();
-
-        solo_.assertCurrentActivity( "active activity", TimeCardActivity.class ); //$NON-NLS-1$
-    }
-
-    /**
      * Ensures clicking the stop activity button changes the time card status
      * text view to indicate the time card is inactive.
      */
@@ -499,6 +478,16 @@ public final class MainActivityTest
     }
 
     /**
+     * Ensures clicking the time card menu item starts the time card activity.
+     */
+    public void testClickTimeCardMenuItem_StartsTimeCardActivity()
+    {
+        clickTimeCardMenuItem();
+
+        solo_.assertCurrentActivity( "active activity", TimeCardActivity.class ); //$NON-NLS-1$
+    }
+
+    /**
      * Ensures the activity pre-conditions are satisfied.
      */
     @UiThreadTest
@@ -512,6 +501,5 @@ public final class MainActivityTest
         assertEquals( "active activity start time text view text", "", getActiveActivityStartTimeTextView().getText() ); //$NON-NLS-1$ //$NON-NLS-2$
         assertTrue( "expected start activity button to be enabled but was disabled", getStartActivityButton().isEnabled() ); //$NON-NLS-1$
         assertFalse( "expected stop activity button to be disabled but was enabled", getStopActivityButton().isEnabled() ); //$NON-NLS-1$
-        assertTrue( "expected start time card activity button to be enabled but was disabled", getStartTimeCardActivityButton().isEnabled() ); //$NON-NLS-1$
     }
 }
