@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="app_name">Beltime</string>
-	<string name="action_timeCard">Time Card</string>
+	<string name="billingReportsActivity_label">Billing Reports</string>
 	<string name="chargeNumberDialog_negativeButton_text">Cancel</string>
 	<string name="chargeNumberDialog_positiveButton_text">OK</string>
 	<string name="chargeNumberDialog_title">Enter Charge Number</string>
 	<string name="displayUtils_duration">%.1f</string>
 	<string name="displayUtils_duration_active">(active)</string>
 	<string name="displayUtils_stopTime_active">-</string>
+	<string name="menuItem_billingReports">Billing Reports</string>
+	<string name="menuItem_timeCard">Time Card</string>
 	<string name="startActivityButton_text">Start Activity</string>
 	<string name="stopActivityButton_text">Stop Activity</string>
 	<string name="timeCardActivity_label">Time Card</string>

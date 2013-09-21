@@ -55,6 +55,15 @@ public final class MainActivityTest
     // ======================================================================
 
     /**
+     * Clicks the billing reports menu item.
+     */
+    private void clickBillingReportsMenuItem()
+    {
+        solo_.clickOnMenuItem( solo_.getString( R.string.menuItem_billingReports ) );
+        assertTrue( "expected BillingReportsActivity to be activated but was not activated", solo_.waitForActivity( BillingReportsActivity.class, 5000 ) ); //$NON-NLS-1$
+    }
+
+    /**
      * Clicks the start activity button.
      */
     private void clickStartActivity()
@@ -111,7 +120,7 @@ public final class MainActivityTest
      */
     private void clickTimeCardMenuItem()
     {
-        solo_.clickOnMenuItem( solo_.getString( R.string.action_timeCard ) );
+        solo_.clickOnMenuItem( solo_.getString( R.string.menuItem_timeCard ) );
         assertTrue( "expected TimeCardActivity to be activated but was not activated", solo_.waitForActivity( TimeCardActivity.class, 5000 ) ); //$NON-NLS-1$
     }
 
@@ -191,6 +200,17 @@ public final class MainActivityTest
         solo_.finishOpenedActivities();
 
         super.tearDown();
+    }
+
+    /**
+     * Ensures clicking the billing reports menu item starts the billing reports
+     * activity.
+     */
+    public void testClickBillingReportsMenuItem_StartsBillingReportsActivity()
+    {
+        clickBillingReportsMenuItem();
+
+        solo_.assertCurrentActivity( "active activity", BillingReportsActivity.class ); //$NON-NLS-1$
     }
 
     /**

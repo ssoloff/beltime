@@ -24,6 +24,10 @@
 			</intent-filter>
 		</activity>
 		<activity
+				android:label="@string/billingReportsActivity_label"
+				android:name="com.belcan.beltime.view.BillingReportsActivity">
+		</activity>
+				<activity
 				android:label="@string/timeCardActivity_label"
 				android:name="com.belcan.beltime.view.TimeCardActivity">
 		</activity>

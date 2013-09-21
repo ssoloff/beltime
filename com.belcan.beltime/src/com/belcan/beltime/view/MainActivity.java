@@ -169,7 +169,11 @@ public final class MainActivity
 
         switch( item.getItemId() )
         {
-            case R.id.action_timeCard:
+            case R.id.menuItem_billingReports:
+                startActivity( new Intent( this, BillingReportsActivity.class ) );
+                return true;
+
+            case R.id.menuItem_timeCard:
                 startActivity( new Intent( this, TimeCardActivity.class ) );
                 return true;
 
