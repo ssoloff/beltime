@@ -1,7 +1,7 @@
 /*
  * BillingReportsActivityTest.java
  *
- * Copyright 2013 Beltime contributors and others.
+ * Copyright 2014 Beltime contributors and others.
  * All rights reserved.
  *
  * This program and the accompanying materials are made available
