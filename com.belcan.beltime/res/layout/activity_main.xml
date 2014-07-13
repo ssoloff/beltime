@@ -14,24 +14,24 @@
 			android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<TextView
 			android:gravity="center"
 			android:id="@+id/activeActivityChargeNumberTextView"
 			android:layout_below="@+id/timeCardStatusTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<TextView
 			android:gravity="center"
 			android:id="@+id/activeActivityStartTimeTextView"
 			android:layout_below="@+id/activeActivityChargeNumberTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<Button
 			android:id="@+id/startActivityButton"
 			android:layout_above="@+id/stopActivityButton"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:onClick="onClickStartActivity"
 			android:text="@string/startActivityButton_text" />
 	<Button
@@ -39,7 +39,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_alignParentLeft="true"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:onClick="onClickStopActivity"
 			android:text="@string/stopActivityButton_text" />
 </RelativeLayout>

@@ -1,22 +1,22 @@
 <LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:orientation="vertical"
 		xmlns:android="http://schemas.android.com/apk/res/android">
 	<TextView
 			android:id="@+id/chargeNumberTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<TextView
 			android:id="@+id/startTimeTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<TextView
 			android:id="@+id/stopTimeTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 	<TextView
 			android:id="@+id/durationTextView"
 			android:layout_height="wrap_content"
-			android:layout_width="fill_parent" />
+			android:layout_width="match_parent" />
 </LinearLayout>
